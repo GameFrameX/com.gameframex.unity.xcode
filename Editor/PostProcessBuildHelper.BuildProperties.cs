@@ -19,13 +19,13 @@ namespace GameFrameX.Xcode.Editor
         {
             if (table != null)
             {
-                Hashtable setTable = table.SGet<Hashtable>("=");
+                Hashtable setTable = table.Get<Hashtable>("=");
                 foreach (DictionaryEntry i in setTable)
                 {
                     proj.SetBuildProperty(targetGuid, i.Key.ToString(), i.Value.ToString());
                 }
 
-                Hashtable addTable = table.SGet<Hashtable>("+");
+                Hashtable addTable = table.Get<Hashtable>("+");
                 foreach (DictionaryEntry i in addTable)
                 {
                     ArrayList array = i.Value as ArrayList;
@@ -41,7 +41,7 @@ namespace GameFrameX.Xcode.Editor
                     proj.UpdateBuildProperty(targetGuid, i.Key.ToString(), list, null);
                 }
 
-                Hashtable removeTable = table.SGet<Hashtable>("-");
+                Hashtable removeTable = table.Get<Hashtable>("-");
                 foreach (DictionaryEntry i in removeTable)
                 {
                     ArrayList array = i.Value as ArrayList;

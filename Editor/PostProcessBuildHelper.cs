@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Text;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
@@ -12,8 +11,6 @@ namespace GameFrameX.Xcode.Editor
 {
     internal partial class PostProcessBuildHelper
     {
-        private static XcodeConfig _xcodeConfig;
-
         [PostProcessBuild(ushort.MaxValue)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
@@ -24,9 +21,19 @@ namespace GameFrameX.Xcode.Editor
 
             try
             {
-                _xcodeConfig = SettingLoader.LoadSettingData<XcodeConfig>();
-                if (_xcodeConfig == null)
+                //读取配置文件
+                string jsonPath = SettingLoader.LoadSettingData("XCodeConfig.json");
+                if (jsonPath == null || !File.Exists(jsonPath))
                 {
+                    LogHelper.Error("XCodeConfig.json 不存在,跳过设置");
+                    return;
+                }
+
+                string json = File.ReadAllText(jsonPath);
+                Hashtable table = json.HashtableFromJson();
+                if (table == null)
+                {
+                    LogHelper.Error("XCodeConfig.json 解析失败,跳过设置");
                     return;
                 }
 
@@ -34,21 +41,20 @@ namespace GameFrameX.Xcode.Editor
                 var project = new PBXProject();
                 project.ReadFromString(File.ReadAllText(projectPath));
                 // 配置主项目
-                Run(project, project.GetUnityMainTargetGuid(), table.SGet<Hashtable>("unityMain"), path);
+                Run(project, project.GetUnityMainTargetGuid(), table.Get<Hashtable>("unityMain"), path);
                 // Unity项目
-                Run(project, project.GetUnityFrameworkTargetGuid(), table.SGet<Hashtable>("unityFramework"), path);
+                Run(project, project.GetUnityFrameworkTargetGuid(), table.Get<Hashtable>("unityFramework"), path);
                 // 保存文件
                 File.WriteAllText(projectPath, project.WriteToString());
 
-                RunUnityMain(projectPath);
-                RunUnityFramework(projectPath);
-                RunPlist(project, path, table.SGet<Hashtable>("plist"));
+                // 设置Info.Plist
+                RunPlist(project, path, table.Get<Hashtable>("plist"));
                 // 启动环境变量
-                RunEnvironmentVariables(path, table.SGet<Hashtable>("environmentVariables"));
+                RunEnvironmentVariables(path, table.Get<Hashtable>("environmentVariables"));
                 // 运行启动参数
-                RunArgument(path, table.SGet("launcherArgs") as ArrayList);
+                RunArgument(path, table.Get("launcherArgs") as ArrayList);
                 // PodFile
-                RunPodfile(path,table.SGet("podSource") as ArrayList);
+                RunPodfile(path, table.Get("podSource") as ArrayList);
             }
             catch (Exception e)
             {
