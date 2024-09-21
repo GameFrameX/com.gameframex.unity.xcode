@@ -1,7 +1,5 @@
 #if UNITY_IOS
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using UnityEditor.iOS.Xcode;
 
 namespace GameFrameX.Xcode.Editor
@@ -14,11 +12,16 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="proj"></param>
         /// <param name="targetGuid"></param>
         /// <param name="table"></param>
-        private static void AddOtherLinkFlag(PBXProject proj, string targetGuid, List<XcodeConfigMap> table)
+        private static void AddOtherLinkFlag(PBXProject proj, string targetGuid, Hashtable table)
         {
-            foreach (var kv in table)
+            if (table == null)
             {
-                proj.AddBuildProperty(targetGuid, kv.key, kv.value);
+                return;
+            }
+
+            foreach (DictionaryEntry kv in table)
+            {
+                proj.AddBuildProperty(targetGuid, kv.Key.ToString().Trim(), kv.Value.ToString().Trim());
             }
         }
     }
