@@ -16,12 +16,7 @@ namespace GameFrameX.Xcode.Editor
             string plistPath = path + "/Info.plist";
             PlistDocument plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
-
             SetPlist(project, plist.root, hashtable);
-
-            // plist.root.SetBoolean("ITSAppUsesNonExemptEncryption", false);
-            // plist.root.SetString("NSUserTrackingUsageDescription", "此标识符将用于向您推荐个性化广告");
-            // SetPlist(proj, rootDict, table.SGet<Hashtable>("plist"));
             //写入
             plist.WriteToFile(plistPath);
             LogHelper.Log("设置项目[Info.plist]结束");
