@@ -9,24 +9,22 @@ namespace GameFrameX.Xcode.Editor
 {
     internal partial class PostProcessBuildHelper
     {
-        private static void RunPlist(string path, List<XcodeConfigPlist> xcodeConfigPlists)
+        private static void RunPlist(PBXProject project, string path, Hashtable hashtable)
         {
+            LogHelper.Log("设置项目[Info.plist]开始");
             //plist
             string plistPath = path + "/Info.plist";
             PlistDocument plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
 
-            foreach (var configPlist in xcodeConfigPlists)
-            {
-                
-            }
-            
-            plist.root.SetBoolean("ITSAppUsesNonExemptEncryption", false);
-            plist.root.SetString("NSUserTrackingUsageDescription", "此标识符将用于向您推荐个性化广告");
+            SetPlist(project, plist.root, hashtable);
+
+            // plist.root.SetBoolean("ITSAppUsesNonExemptEncryption", false);
+            // plist.root.SetString("NSUserTrackingUsageDescription", "此标识符将用于向您推荐个性化广告");
             // SetPlist(proj, rootDict, table.SGet<Hashtable>("plist"));
             //写入
             plist.WriteToFile(plistPath);
-            Debug.Log("设置项目[Info.plist]结束");
+            LogHelper.Log("设置项目[Info.plist]结束");
         }
 
 

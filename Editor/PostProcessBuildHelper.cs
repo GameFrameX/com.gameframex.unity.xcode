@@ -42,7 +42,7 @@ namespace GameFrameX.Xcode.Editor
 
                 RunUnityMain(projectPath);
                 RunUnityFramework(projectPath);
-                RunPlist(path,_xcodeConfig.plist);
+                RunPlist(project, path, table.SGet<Hashtable>("plist"));
                 // 启动环境变量
                 RunEnvironmentVariables(path, table.SGet<Hashtable>("environmentVariables"));
                 // 运行启动参数
