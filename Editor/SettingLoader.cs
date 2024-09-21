@@ -1,4 +1,5 @@
 #if UNITY_IOS
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,36 +10,23 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 加载相关的配置文件
         /// </summary>
-        public static TSetting LoadSettingData<TSetting>() where TSetting : ScriptableObject
+        public static string LoadSettingData(string fileName)
         {
-            var settingType = typeof(TSetting);
-            var guids = AssetDatabase.FindAssets($"t:{settingType.Name}");
-            if (guids.Length == 0)
-            {
-                Debug.LogWarning($"Create new {settingType.Name}.asset");
-                var setting = ScriptableObject.CreateInstance<TSetting>();
-                string filePath = $"Assets/{settingType.Name}.asset";
-                AssetDatabase.CreateAsset(setting, filePath);
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-                return setting;
-            }
-            else
-            {
-                if (guids.Length != 1)
-                {
-                    foreach (var guid in guids)
-                    {
-                        string path = AssetDatabase.GUIDToAssetPath(guid);
-                        Debug.LogWarning($"Found multiple file : {path}");
-                    }
-                    throw new System.Exception($"Found multiple {settingType.Name} files !");
-                }
+            var guids = AssetDatabase.FindAssets($"t:textasset");
 
-                string filePath = AssetDatabase.GUIDToAssetPath(guids[0]);
-                var setting = AssetDatabase.LoadAssetAtPath<TSetting>(filePath);
-                return setting;
+            foreach (var guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+
+                var newFileName = Path.GetFileName(path);
+                if (fileName == newFileName)
+                {
+                    return path;
+                }
             }
+
+            File.WriteAllText(fileName, "");
+            return null;
         }
     }
 }
