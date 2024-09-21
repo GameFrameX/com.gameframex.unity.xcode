@@ -1,5 +1,6 @@
 #if UNITY_IOS
 using System;
+using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
@@ -35,13 +36,15 @@ namespace GameFrameX.Xcode.Editor
         /// 添加环境变量
         /// </summary>
         /// <param name="path">项目路径</param>
-        private static async void RunEnvironmentVariables(string path)
+        /// <param name="map"></param>
+        private static async void RunEnvironmentVariables(string path, Hashtable map)
         {
             await Task.Delay(TimeSpan.FromSeconds(1));
-            foreach (var map in _xcodeConfig.environmentVariables)
+            foreach (DictionaryEntry entry in map)
             {
-                AddEnvironmentVariablesPassedOnLaunch(path, map.key, map.value);
+                AddEnvironmentVariablesPassedOnLaunch(path, entry.Key.ToString(), entry.Value.ToString());
             }
+
 
             // AddEnvironmentVariablesPassedOnLaunch(path, "IDEPreferLogStreaming", "YES");
             // AddEnvironmentVariablesPassedOnLaunch(path, "OS_ACTIVITY_MODE", "disable");
