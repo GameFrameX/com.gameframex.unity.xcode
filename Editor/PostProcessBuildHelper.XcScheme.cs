@@ -7,7 +7,6 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using UnityEditor.iOS.Xcode;
-using UnityEngine;
 
 namespace GameFrameX.Xcode.Editor
 {
@@ -17,19 +16,27 @@ namespace GameFrameX.Xcode.Editor
         /// 设置项目[XcScheme-Argument]
         /// </summary>
         /// <param name="path">项目路径</param>
-        private static async void RunArgument(string path)
+        /// <param name="arrayList"></param>
+        private static async void RunArgument(string path, ArrayList arrayList)
         {
+            LogHelper.Log("设置项目[XcScheme-Argument]开始");
+            if (arrayList == null || arrayList.Count <= 0)
+            {
+                LogHelper.Log("[XcScheme-Argument] 参数为空或数据为空，跳过设置");
+                return;
+            }
+
             await Task.Delay(TimeSpan.FromSeconds(1));
             string projectPath = path + "/Unity-iPhone.xcodeproj/xcshareddata/xcschemes/Unity-iPhone.xcscheme";
             XcScheme xcScheme = new XcScheme();
             xcScheme.ReadFromFile(projectPath);
-            foreach (var argument in _xcodeConfig.launcherArgs)
+            foreach (var argument in arrayList)
             {
-                xcScheme.AddArgumentPassedOnLaunch(argument);
+                xcScheme.AddArgumentPassedOnLaunch(argument.ToString());
             }
 
             xcScheme.WriteToFile(projectPath);
-            Debug.Log("设置项目[XcScheme-Argument]结束");
+            LogHelper.Log("设置项目[XcScheme-Argument]结束");
         }
 
         /// <summary>
@@ -39,14 +46,22 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="map"></param>
         private static async void RunEnvironmentVariables(string path, Hashtable map)
         {
+            LogHelper.Log("设置项目[XcScheme-EnvironmentVariables]开始");
+            if (map == null || map.Count <= 0)
+            {
+                LogHelper.Log("[XcScheme-EnvironmentVariables] 参数为空或数据为空，跳过设置");
+                return;
+            }
+
             await Task.Delay(TimeSpan.FromSeconds(1));
             foreach (DictionaryEntry entry in map)
             {
                 AddEnvironmentVariablesPassedOnLaunch(path, entry.Key.ToString(), entry.Value.ToString());
             }
+
             // AddEnvironmentVariablesPassedOnLaunch(path, "IDEPreferLogStreaming", "YES");
             // AddEnvironmentVariablesPassedOnLaunch(path, "OS_ACTIVITY_MODE", "disable");
-            Debug.Log("设置项目[XcScheme-EnvironmentVariables]结束");
+            LogHelper.Log("设置项目[XcScheme-EnvironmentVariables]结束");
         }
 
         /// <summary>

@@ -46,7 +46,7 @@ namespace GameFrameX.Xcode.Editor
                 // 启动环境变量
                 RunEnvironmentVariables(path, table.SGet<Hashtable>("environmentVariables"));
                 // 运行启动参数
-                RunArgument(path);
+                RunArgument(path, table.SGet("launcherArgs") as ArrayList);
                 // PodFile
                 RunPodfile(path);
             }
