@@ -62,9 +62,9 @@ namespace GameFrameX.Xcode.Editor
             // 设置框架
             SetFrameworks(pbxProject,targetGuid,xcodeConfigData.frameworks);
             // 复制文件
-            RunCopyFiles(pbxProject, targetGuid, path, xcodeConfigData.files);
+            RunCopyFiles(pbxProject, targetGuid, path, hashtable.SGet<Hashtable>("files"));
             // 复制文件夹
-            CopyFolders(pbxProject, targetGuid, path, xcodeConfigData.folders);
+            CopyFolders(pbxProject, targetGuid, path, hashtable.SGet<Hashtable>("folders"));
             // 设置文件编译标记
             SetFilesCompileFlag(pbxProject, targetGuid, xcodeConfigData.filesCompileFlag);
             // Linker Flag
