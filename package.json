@@ -1,0 +1,23 @@
+{
+  "name": "com.gameframex.unity.xcode",
+  "displayName": "Game Frame X XCode",
+  "category": "Game Framework X",
+  "description": "Game Frame X Xcode Config",
+  "version": "1.0.0",
+  "unity": "2017.1",
+  "keywords": [
+    "Game Framework X"
+  ],
+  "repository": {
+    "name": "com.gameframex.unity.xcode",
+    "url": "https://github.com/gameframex/com.gameframex.unity.xcode.git",
+    "type": "git"
+  },
+  "author": {
+    "name": "Blank",
+    "email": "alianblank@outlook.com",
+    "url": "https://alianblank.com/"
+  },
+  "dependencies": {
+  }
+}

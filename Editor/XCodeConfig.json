@@ -1,0 +1,92 @@
+﻿{
+  "libs": {
+    "+": [
+      "libicucore.tbd",
+      "libz.tbd",
+      "libstdc++.tbd",
+      "libsqlite3.tbd"
+    ],
+    "-": []
+  },
+  "frameworks": {
+    "+": [
+      "JavaScriptCore.framework",
+      "AdServices.framework",
+      "Security.framework",
+      "CoreVideo.framework",
+      "SystemConfiguration.framework",
+      "AdSupport.framework",
+      "WebKit.framework",
+      "UserNotifications.framework",
+      "AppTrackingTransparency.framework",
+      "AssetsLibrary.framework"
+    ],
+    "-": []
+  },
+  "properties": {
+    "=": {
+      "ENABLE_BITCODE": "NO",
+      "GCC_ENABLE_OBJC_EXCEPTIONS": true
+    },
+    "+": {},
+    "-": {}
+  },
+  "plist": {
+    "CFBundleURLTypes": [
+      {
+        "CFBundleTypeRole": "Editor",
+        "CFBundleURLSchemes": [
+          "bbqgame"
+        ],
+        "CFBundleURLName": "com.smartdogx.bbq"
+      },
+      {
+        "CFBundleTypeRole": "Editor",
+        "CFBundleURLSchemes": [
+          "wx5dfe430e96b395a6"
+        ]
+      },
+      {
+        "CFBundleTypeRole": "Editor",
+        "CFBundleURLSchemes": [
+          "QQ41E77C8B"
+        ]
+      }
+    ],
+    "LSApplicationQueriesSchemes": [
+      "weixin",
+      "wechat",
+      "mqqapi",
+      "mqqopensdkapiV2",
+      "mqqopensdkapiV3",
+      "mqqOpensdkSSoLogin",
+      "mqqwpa",
+      "mqq"
+    ],
+    "NSAppTransportSecurity": {
+      "NSAllowsArbitraryLoads": true,
+      "NSExceptionDomains": {
+        "qq.com": {
+          "NSIncludesSubdomains": true,
+          "NSThirdPartyExceptionAllowsInsecureHTTPLoads": true,
+          "NSThirdPartyExceptionRequiresForwardSecrecy": false
+        }
+      }
+    },
+    "NSCameraUsageDescription": "需要您的相机权限,APP才能识别图书",
+    "NSLocationWhenInUseUsageDescription": "需要您的位置权限,APP才能确定您的所属位置",
+    "NSMicrophoneUsageDescription": "需要您的麦克风权限,APP才能正常使用部分功能",
+    "NSPhotoLibraryAddUsageDescription": "需要您的相册权限,APP才能保存照片到相册",
+    "NSPhotoLibraryUsageDescription": "需要您的相册权限,APP才能保存照片到相册",
+    "ITSAppUsesNonExemptEncryption": false,
+    "NSUserTrackingUsageDescription": "此标识符将用于向您推荐个性化广告"
+  },
+  "files": {},
+  "folders": {},
+  "filesCompileFlag": {},
+  "otherLinkerFlag": [
+    {
+      "OTHER_LDFLAGS": "-ObjC"
+    }
+  ]
+}

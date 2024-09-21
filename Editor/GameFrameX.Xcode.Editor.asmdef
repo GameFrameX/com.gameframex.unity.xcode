@@ -1,0 +1,20 @@
+{
+    "name": "GameFrameX.Xcode.Editor",
+    "rootNamespace": "GameFrameX.Xcode.Editor",
+    "references": [
+        "GameFrameX.Xcode.Runtime",
+        "GameFrameX.Editor",
+        "GameFrameX.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
