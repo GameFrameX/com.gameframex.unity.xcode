@@ -4,6 +4,9 @@ GameFrameX 的 Xcode 导出项目配置
 
 # 使用文档(文档编写于GPT4)
 
+1. 请将包内的 `XCodeConfigDemo.json` 复制到项目中修改为 `XCodeConfig.json`
+2. 按需修改自己的参数配置
+
 ## 参数解析
 
 - plist plist配置
