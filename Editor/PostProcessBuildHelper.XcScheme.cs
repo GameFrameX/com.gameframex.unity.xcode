@@ -32,6 +32,11 @@ namespace GameFrameX.Xcode.Editor
             xcScheme.ReadFromFile(projectPath);
             foreach (var argument in arrayList)
             {
+                if (string.IsNullOrWhiteSpace(argument.ToString().Trim()))
+                {
+                    continue;
+                }
+
                 xcScheme.AddArgumentPassedOnLaunch(argument.ToString());
             }
 
