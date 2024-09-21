@@ -1,5 +1,6 @@
 #if UNITY_IOS
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.iOS.Xcode;
@@ -9,21 +10,30 @@ namespace GameFrameX.Xcode.Editor
     internal partial class PostProcessBuildHelper
     {
         /// <summary>
-        /// 设置文件编译标记
+        /// 设置框架
         /// </summary>
         /// <param name="proj"></param>
         /// <param name="targetGuid"></param>
-        /// <param name="xcodeConfigChange"></param>
-        private static void SetFrameworks(PBXProject proj, string targetGuid, XcodeConfigChange xcodeConfigChange)
+        /// <param name="hashtable"></param>
+        private static void SetFrameworks(PBXProject proj, string targetGuid, Hashtable hashtable)
         {
-            foreach (var name in xcodeConfigChange.add)
+            if (hashtable != null)
             {
-                proj.AddFrameworkToProject(targetGuid, name, false);
-            }
+                if (hashtable["+"] is ArrayList addList)
+                {
+                    foreach (string framework in addList)
+                    {
+                        proj.AddFrameworkToProject(targetGuid, framework, false);
+                    }
+                }
 
-            foreach (var name in xcodeConfigChange.remove)
-            {
-                proj.RemoveFrameworkFromProject(targetGuid, name);
+                if (hashtable["-"] is ArrayList removeList)
+                {
+                    foreach (string framework in removeList)
+                    {
+                        proj.RemoveFrameworkFromProject(targetGuid, framework);
+                    }
+                }
             }
         }
     }

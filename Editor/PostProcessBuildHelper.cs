@@ -60,7 +60,7 @@ namespace GameFrameX.Xcode.Editor
         {
             SetBuildProperties(pbxProject,targetGuid, xcodeConfigData.properties);
             // 设置框架
-            SetFrameworks(pbxProject,targetGuid,xcodeConfigData.frameworks);
+            SetFrameworks(pbxProject, targetGuid, hashtable.SGet<Hashtable>("frameworks"));
             // 复制文件
             RunCopyFiles(pbxProject, targetGuid, path, hashtable.SGet<Hashtable>("files"));
             // 复制文件夹
