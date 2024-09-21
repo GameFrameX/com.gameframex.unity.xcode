@@ -207,6 +207,8 @@ GameFrameX 的 Xcode 导出项目配置
 
 ## 注意事项
 
+- 配置文件的名称必须为 `XCodeConfig.json`
+
 # 使用方式(任选其一)
 
 1. 直接在 `manifest.json` 的文件中的 `dependencies` 节点下添加以下内容
