@@ -13,14 +13,14 @@ namespace GameFrameX.Xcode.Editor
     internal partial class PostProcessBuildHelper
     {
         //复制文件夹
-        private static void CopyFolders(PBXProject proj, string targetGuid, string xcodePath, List<XcodeConfigMap> list)
+        private static void CopyFolders(PBXProject proj, string targetGuid, string xcodePath, Hashtable hashtable)
         {
-            foreach (var map in list)
+            foreach (DictionaryEntry map in hashtable)
             {
-                string src = Path.Combine(Environment.CurrentDirectory, map.key);
-                string des = Path.Combine(xcodePath, map.value);
+                string src = Path.Combine(Environment.CurrentDirectory, map.Key.ToString().Trim());
+                string des = Path.Combine(xcodePath, map.Value.ToString().Trim());
                 CopyFolder(src, des);
-                AddFolderBuild(proj, targetGuid, xcodePath, map.value);
+                AddFolderBuild(proj, targetGuid, xcodePath, map.Value.ToString().Trim());
             }
         }
 
