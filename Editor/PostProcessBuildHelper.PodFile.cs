@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace GameFrameX.Xcode.Editor
 {
@@ -19,6 +20,7 @@ namespace GameFrameX.Xcode.Editor
 
             if (!File.Exists(podfilePath))
             {
+                Debug.LogWarning("当前不是Pod 项目结构");
                 return;
             }
 
