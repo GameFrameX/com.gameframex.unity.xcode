@@ -50,7 +50,7 @@ namespace GameFrameX.Xcode.Editor
             }
 
             File.WriteAllText(podfilePath, stringBuilder.ToString());
-            LogHelper.Log("修改PodFile 文件的源,  开始");
+            LogHelper.Log("修改PodFile 文件的源,  结束");
         }
     }
 }
