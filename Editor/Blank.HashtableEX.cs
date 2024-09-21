@@ -9,7 +9,7 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// ??????????????????????
         /// </summary>
-        public static object SGet(this Hashtable inst, object key)
+        public static object Get(this Hashtable inst, object key)
         {
             if (inst == null)
             {
@@ -51,7 +51,7 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// ??????????????????????
         /// </summary>
-        public static T SGet<T>(this Hashtable inst, object key)
+        public static T Get<T>(this Hashtable inst, object key)
         {
             if (inst == null)
             {
