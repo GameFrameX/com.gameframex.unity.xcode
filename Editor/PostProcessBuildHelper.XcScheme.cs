@@ -44,8 +44,6 @@ namespace GameFrameX.Xcode.Editor
             {
                 AddEnvironmentVariablesPassedOnLaunch(path, entry.Key.ToString(), entry.Value.ToString());
             }
-
-
             // AddEnvironmentVariablesPassedOnLaunch(path, "IDEPreferLogStreaming", "YES");
             // AddEnvironmentVariablesPassedOnLaunch(path, "OS_ACTIVITY_MODE", "disable");
             Debug.Log("设置项目[XcScheme-EnvironmentVariables]结束");

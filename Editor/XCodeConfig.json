@@ -87,6 +87,10 @@
   "otherLinkerFlag": [
     {
       "OTHER_LDFLAGS": "-ObjC"
+  "environmentVariables": {
+    "IDEPreferLogStreaming": "YES",
+    "OS_ACTIVITY_MODE": "disable"
+  },
     }
   ]
 }

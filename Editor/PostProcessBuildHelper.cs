@@ -44,7 +44,7 @@ namespace GameFrameX.Xcode.Editor
                 RunUnityFramework(projectPath);
                 RunPlist(path,_xcodeConfig.plist);
                 // 启动环境变量
-                RunEnvironmentVariables(path);
+                RunEnvironmentVariables(path, table.SGet<Hashtable>("environmentVariables"));
                 // 运行启动参数
                 RunArgument(path);
                 // PodFile
