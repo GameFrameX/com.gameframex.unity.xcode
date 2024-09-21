@@ -34,9 +34,9 @@ namespace GameFrameX.Xcode.Editor
                 var project = new PBXProject();
                 project.ReadFromString(File.ReadAllText(projectPath));
                 // 配置主项目
-                Run(project, project.GetUnityMainTargetGuid(), _xcodeConfig.unityMain, path);
+                Run(project, project.GetUnityMainTargetGuid(), table.SGet<Hashtable>("unityMain"), path);
                 // Unity项目
-                Run(project, project.GetUnityFrameworkTargetGuid(), _xcodeConfig.unityFrameWork, path);
+                Run(project, project.GetUnityFrameworkTargetGuid(), table.SGet<Hashtable>("unityFramework"), path);
                 // 保存文件
                 File.WriteAllText(projectPath, project.WriteToString());
 
@@ -56,9 +56,11 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
-        static void Run(PBXProject pbxProject, string targetGuid, XcodeConfigData xcodeConfigData, string path)
+
+        static void Run(PBXProject pbxProject, string targetGuid, Hashtable hashtable, string path)
         {
-            SetBuildProperties(pbxProject,targetGuid, xcodeConfigData.properties);
+            // 设置构建属性
+            SetBuildProperties(pbxProject, targetGuid, hashtable.SGet<Hashtable>("properties"));
             // 设置框架
             SetFrameworks(pbxProject, targetGuid, hashtable.SGet<Hashtable>("frameworks"));
             // 复制文件
