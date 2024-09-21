@@ -88,51 +88,6 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
-        //设置编译属性
-        private static void SetBuildProperties(PBXProject proj, string targetGuid, Hashtable table)
-        {
-            if (table != null)
-            {
-                Hashtable setTable = table.SGet<Hashtable>("=");
-                foreach (DictionaryEntry i in setTable)
-                {
-                    proj.SetBuildProperty(targetGuid, i.Key.ToString(), i.Value.ToString());
-                }
-
-                Hashtable addTable = table.SGet<Hashtable>("+");
-                foreach (DictionaryEntry i in addTable)
-                {
-                    ArrayList array = i.Value as ArrayList;
-                    List<string> list = new List<string>();
-                    if (array != null)
-                    {
-                        foreach (var flag in array)
-                        {
-                            list.Add(flag.ToString());
-                        }
-                    }
-
-                    proj.UpdateBuildProperty(targetGuid, i.Key.ToString(), list, null);
-                }
-
-                Hashtable removeTable = table.SGet<Hashtable>("-");
-                foreach (DictionaryEntry i in removeTable)
-                {
-                    ArrayList array = i.Value as ArrayList;
-                    List<string> list = new List<string>();
-                    if (array != null)
-                    {
-                        foreach (var flag in array)
-                        {
-                            list.Add(flag.ToString());
-                        }
-                    }
-
-                    proj.UpdateBuildProperty(targetGuid, i.Key.ToString(), null, list);
-                }
-            }
-        }
-
         private static bool IsNeedCopy(string file)
         {
             string fileName = Path.GetFileNameWithoutExtension(file);
