@@ -48,7 +48,7 @@ namespace GameFrameX.Xcode.Editor
                 // 运行启动参数
                 RunArgument(path, table.SGet("launcherArgs") as ArrayList);
                 // PodFile
-                RunPodfile(path);
+                RunPodfile(path,table.SGet("podSource") as ArrayList);
             }
             catch (Exception e)
             {

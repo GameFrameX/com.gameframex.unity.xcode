@@ -91,6 +91,9 @@
     "IDEPreferLogStreaming": "YES",
     "OS_ACTIVITY_MODE": "disable"
   },
+  "podSource": [
+    "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
+  ],
     }
   ]
 }
