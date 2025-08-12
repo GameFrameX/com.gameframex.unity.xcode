@@ -1,4 +1,4 @@
-﻿{
+{
   "plist": {
     "CFBundleURLTypes": [
       {
@@ -61,6 +61,20 @@
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "capabilities": {
+    "inAppPurchase": true,
+    "gameCenter": false,
+    "pushNotifications": false,
+    "signInWithApple": false,
+    "backgroundModes": [],
+    "iCloud": {
+      "keyValueStorage": false,
+      "iCloudDocument": false,
+      "customContainers": []
+    },
+    "appGroups": [],
+    "associatedDomains": []
+  },
   "unityFramework": {
     "libs": {
       "+": [
@@ -145,6 +159,9 @@
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
+      "OTHER_LDFLAGS": "-ObjC"
+    },
+    "runPathSearchPaths": {
       "OTHER_LDFLAGS": "-ObjC"
     },
     "files": {

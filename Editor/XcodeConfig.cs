@@ -12,6 +12,8 @@ namespace GameFrameX.Xcode.Editor
 
         [Header("Plist列表")] [SerializeField] public List<XcodeConfigPlist> plist = new List<XcodeConfigPlist>();
 
+        [Header("Capabilities配置")] [SerializeField] public XcodeConfigCapabilities capabilities = new XcodeConfigCapabilities();
+
         [Header("主项目")] [SerializeField] public XcodeConfigData unityMain = new XcodeConfigData();
 
         [Header("UnityFrameWork")] [SerializeField]
@@ -61,5 +63,20 @@ namespace GameFrameX.Xcode.Editor
     {
         [Header("增加")] [SerializeField] public string[] add;
         [Header("删除")] [SerializeField] public string[] remove;
+    }
+
+    [Serializable]
+    public sealed class XcodeConfigCapabilities
+    {
+        [Header("In-App Purchase")] [SerializeField] public bool inAppPurchase = false;
+        [Header("Game Center")] [SerializeField] public bool gameCenter = false;
+        [Header("Push Notifications")] [SerializeField] public bool pushNotifications = false;
+        [Header("Sign In with Apple")] [SerializeField] public bool signInWithApple = false;
+        [Header("Background Modes")] [SerializeField] public string[] backgroundModes = new string[0];
+        [Header("iCloud Key-Value Storage")] [SerializeField] public bool iCloudKeyValueStorage = false;
+        [Header("iCloud Documents")] [SerializeField] public bool iCloudDocuments = false;
+        [Header("iCloud Custom Containers")] [SerializeField] public string[] iCloudCustomContainers = new string[0];
+        [Header("App Groups")] [SerializeField] public string[] appGroups = new string[0];
+        [Header("Associated Domains")] [SerializeField] public string[] associatedDomains = new string[0];
     }
 }

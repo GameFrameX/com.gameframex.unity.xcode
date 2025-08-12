@@ -31,5 +31,28 @@
     {
       "OTHER_LDFLAGS": "-ObjC"
     }
-  ]
+  ],
+  "tip4": "capabilities配置，用于设置iOS应用的各种能力",
+  "capabilities": {
+    "tip0": "In-App Purchase功能，布尔值",
+    "inAppPurchase": true,
+    "tip1": "Game Center功能，布尔值",
+    "gameCenter": false,
+    "tip2": "推送通知功能，布尔值",
+    "pushNotifications": false,
+    "tip3": "Sign In with Apple功能，布尔值",
+    "signInWithApple": false,
+    "tip4": "后台模式，字符串数组，可选值: audio, location, voip, newsstand, external, bluetooth, bluetooth-peripheral, fetch, remote-notification",
+    "backgroundModes": [],
+    "tip5": "iCloud配置，包含keyValueStorage和iCloudDocument布尔值，以及customContainers字符串数组",
+    "iCloud": {
+      "keyValueStorage": false,
+      "iCloudDocument": false,
+      "customContainers": []
+    },
+    "tip6": "App Groups，字符串数组",
+    "appGroups": [],
+    "tip7": "Associated Domains，字符串数组",
+    "associatedDomains": []
+  }
 }

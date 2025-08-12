@@ -55,6 +55,9 @@ namespace GameFrameX.Xcode.Editor
                 RunArgument(path, table.Get("launcherArgs") as ArrayList);
                 // PodFile
                 RunPodfile(path, table.Get("podSource") as ArrayList);
+
+                // 设置Capabilities (只在主项目上设置)
+                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, table.Get<Hashtable>("capabilities"));
             }
             catch (Exception e)
             {
@@ -77,6 +80,8 @@ namespace GameFrameX.Xcode.Editor
             SetFilesCompileFlag(pbxProject, targetGuid, hashtable.Get<Hashtable>("filesCompileFlag"));
             // Linker Flag
             AddOtherLinkFlag(pbxProject, targetGuid, hashtable.Get<Hashtable>("otherLinkerFlag"));
+            // Run Path Search Paths
+            AddRunPathSearchPaths(pbxProject, targetGuid, hashtable.Get<Hashtable>("runPathSearchPaths"));
         }
     }
 }
