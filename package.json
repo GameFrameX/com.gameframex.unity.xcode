@@ -16,7 +16,16 @@
   "author": {
     "name": "Blank",
     "email": "alianblank@outlook.com",
-    "url": "https://alianblank.com/"
+    "url": "https://gameframex.doc.alianblank.com"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "semantic-release": "^24.2.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.cnb.cool/GameFrameX/npm/-/packages/"
+  }
 }
