@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.1.1...1.2.0) (2025-12-23)
+
+
+### Features
+
+* **ci:** change ci ([19068ee](https://github.com/gameframex/com.gameframex.unity.xcode/commit/19068ee24327abbeb878575377ac9cbfa4cf0cd2))
+
 # Changelog
 
 ## [1.1.1](https://github.com/GameFrameX/com.gameframex.unity.xcode/tree/1.1.1) (2025-06-01)

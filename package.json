@@ -3,14 +3,14 @@
   "displayName": "Game Frame X XCode",
   "category": "Game Framework X",
   "description": "Game Frame X Xcode Config",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "unity": "2017.1",
   "keywords": [
     "Game Framework X"
   ],
   "repository": {
     "name": "com.gameframex.unity.xcode",
-    "url": "https://github.com/gameframex/com.gameframex.unity.xcode.git",
+    "url": "git+https://github.com/gameframex/com.gameframex.unity.xcode.git",
     "type": "git"
   },
   "author": {
