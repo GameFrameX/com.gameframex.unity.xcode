@@ -12,9 +12,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 设置框架
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="hashtable"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="targetGuid">目标GUID</param>
+        /// <param name="hashtable">框架配置哈希表</param>
         private static void SetFrameworks(PBXProject proj, string targetGuid, Hashtable hashtable)
         {
             if (hashtable != null)
