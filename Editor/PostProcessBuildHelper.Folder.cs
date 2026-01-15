@@ -12,7 +12,13 @@ namespace GameFrameX.Xcode.Editor
 {
     internal partial class PostProcessBuildHelper
     {
-        //复制文件夹
+        /// <summary>
+        /// 复制文件夹到 Xcode 工程
+        /// </summary>
+        /// <param name="proj">PBXProject 对象</param>
+        /// <param name="targetGuid">目标 GUID</param>
+        /// <param name="xcodePath">Xcode 工程路径</param>
+        /// <param name="hashtable">配置数据，Key为源路径，Value为目标路径</param>
         private static void CopyFolders(PBXProject proj, string targetGuid, string xcodePath, Hashtable hashtable)
         {
             foreach (DictionaryEntry map in hashtable)
@@ -24,6 +30,13 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
+        /// <summary>
+        /// 将文件夹内容添加到构建列表
+        /// </summary>
+        /// <param name="proj">PBXProject 对象</param>
+        /// <param name="targetGuid">目标 GUID</param>
+        /// <param name="xcodePath">Xcode 工程路径</param>
+        /// <param name="root">相对根目录</param>
         private static void AddFolderBuild(PBXProject proj, string targetGuid, string xcodePath, string root)
         {
             //获得源文件下所有目录文件
@@ -68,6 +81,11 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
+        /// <summary>
+        /// 递归复制文件夹
+        /// </summary>
+        /// <param name="srcPath">源文件夹路径</param>
+        /// <param name="dstPath">目标文件夹路径</param>
         private static void CopyFolder(string srcPath, string dstPath)
         {
             if (Directory.Exists(dstPath))
