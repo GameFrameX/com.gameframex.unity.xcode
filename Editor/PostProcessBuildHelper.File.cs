@@ -38,10 +38,10 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 在复制文件加入工程时，当文件中有framework、h、a文件时，自动添加相应的搜索路径
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="xcodePath"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="filePath"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="xcodePath">Xcode项目路径</param>
+        /// <param name="targetGuid">目标GUID</param>
+        /// <param name="filePath">文件路径</param>
         private static void AutoAddSearchPath(PBXProject proj, string xcodePath, string targetGuid, string filePath)
         {
             if (filePath.EndsWith(".framework"))
