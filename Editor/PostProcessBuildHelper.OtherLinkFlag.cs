@@ -9,9 +9,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 添加其他链接标记
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="table"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="targetGuid">目标GUID</param>
+        /// <param name="table">其他链接标记MAP</param>
         private static void AddOtherLinkFlag(PBXProject proj, string targetGuid, Hashtable table)
         {
             if (table == null)
