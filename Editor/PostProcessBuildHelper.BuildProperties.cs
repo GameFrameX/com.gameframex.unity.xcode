@@ -12,9 +12,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 设置构建属性
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="table"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="targetGuid">目标GUID</param>
+        /// <param name="table">配置数据</param>
         private static void SetBuildProperties(PBXProject proj, string targetGuid, Hashtable table)
         {
             if (table != null)
