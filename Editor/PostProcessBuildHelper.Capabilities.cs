@@ -26,7 +26,7 @@ namespace GameFrameX.Xcode.Editor
 
                 Debug.Log("开始设置Capabilities");
 
-                var projectCapabilityManager = new ProjectCapabilityManager(path + "/Unity-iPhone.xcodeproj/project.pbxproj", "gameframex.entitlements", "Unity-iPhone");
+                var projectCapabilityManager = new ProjectCapabilityManager(path + "/Unity-iPhone.xcodeproj/project.pbxproj", "gameframex.entitlements", null, targetGuid);
 
                 // In-App Purchase
                 if (hashtable.ContainsKey("inAppPurchase") && (bool)hashtable["inAppPurchase"])
