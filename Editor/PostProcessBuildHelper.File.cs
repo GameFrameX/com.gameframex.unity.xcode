@@ -42,7 +42,7 @@ namespace GameFrameX.Xcode.Editor
             bool needCopy = IsNeedCopy(src);
             if (needCopy)
             {
-                File.Copy(src, des);
+                File.Copy(src, des, true);
                 proj.AddFileToBuild(targetGuid, proj.AddFile(des, des.Replace(xcodePath + "/", ""), PBXSourceTree.Absolute));
                 AutoAddSearchPath(proj, xcodePath, targetGuid, des);
                 Debug.Log("copy file " + src + " -> " + des);
