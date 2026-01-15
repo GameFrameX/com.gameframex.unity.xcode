@@ -16,7 +16,7 @@ namespace GameFrameX.Xcode.Editor
         /// 设置项目[XcScheme-Argument]
         /// </summary>
         /// <param name="path">项目路径</param>
-        /// <param name="arrayList"></param>
+        /// <param name="arrayList">参数列表</param>
         private static async void RunArgument(string path, ArrayList arrayList)
         {
             LogHelper.Log("设置项目[XcScheme-Argument]开始");
@@ -48,7 +48,7 @@ namespace GameFrameX.Xcode.Editor
         /// 添加环境变量
         /// </summary>
         /// <param name="path">项目路径</param>
-        /// <param name="map"></param>
+        /// <param name="map">环境变量MAP</param>
         private static async void RunEnvironmentVariables(string path, Hashtable map)
         {
             LogHelper.Log("设置项目[XcScheme-EnvironmentVariables]开始");
@@ -75,8 +75,7 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="path">项目路径</param>
         /// <param name="key">环境变量KEY</param>
         /// <param name="value">环境变量值</param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">项目路径不存在</exception>
         private static void AddEnvironmentVariablesPassedOnLaunch(string path, string key, string value)
         {
             string projectPath = path + "/Unity-iPhone.xcodeproj/xcshareddata/xcschemes/Unity-iPhone.xcscheme";
@@ -88,6 +87,7 @@ namespace GameFrameX.Xcode.Editor
             }));
             if (mDoc.Root != null)
             {
+                // 检查是否存在 LaunchAction 节点
                 XElement node = mDoc.Root.XPathSelectElement("./LaunchAction");
                 XElement xElement;
                 if (node != null)
