@@ -12,9 +12,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 设置文件编译标记
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="hashtable"></param>
+        /// <param name="proj">PBXProject 对象</param>
+        /// <param name="targetGuid">目标 GUID</param>
+        /// <param name="hashtable">配置数据，Key为文件路径，Value为编译标记字符串（空格分隔）</param>
         private static void SetFilesCompileFlag(PBXProject proj, string targetGuid, Hashtable hashtable)
         {
             if (hashtable == null)
