@@ -9,9 +9,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 添加运行搜索路径
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="targetGuid"></param>
-        /// <param name="table"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="targetGuid">目标GUID</param>
+        /// <param name="table">运行搜索路径MAP</param>
         private static void AddRunPathSearchPaths(PBXProject proj, string targetGuid, Hashtable table)
         {
             if (table == null)
