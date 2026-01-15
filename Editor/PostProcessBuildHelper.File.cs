@@ -12,7 +12,13 @@ namespace GameFrameX.Xcode.Editor
 {
     internal partial class PostProcessBuildHelper
     {
-        //复制文件
+        /// <summary>
+        /// 复制文件到 Xcode 工程
+        /// </summary>
+        /// <param name="proj">PBXProject 对象</param>
+        /// <param name="targetGuid">目标 GUID</param>
+        /// <param name="xcodePath">Xcode 工程路径</param>
+        /// <param name="hashtable">配置数据，Key为源路径，Value为目标路径</param>
         private static void RunCopyFiles(PBXProject proj, string targetGuid, string xcodePath, Hashtable hashtable)
         {
             foreach (DictionaryEntry map in hashtable)
@@ -23,6 +29,14 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
+        /// <summary>
+        /// 复制单个文件并添加到工程
+        /// </summary>
+        /// <param name="proj">PBXProject 对象</param>
+        /// <param name="targetGuid">目标 GUID</param>
+        /// <param name="xcodePath">Xcode 工程路径</param>
+        /// <param name="src">源文件路径</param>
+        /// <param name="des">目标文件路径</param>
         private static void CopyFile(PBXProject proj, string targetGuid, string xcodePath, string src, string des)
         {
             bool needCopy = IsNeedCopy(src);
@@ -88,6 +102,11 @@ namespace GameFrameX.Xcode.Editor
             }
         }
 
+        /// <summary>
+        /// 判断文件是否需要复制
+        /// </summary>
+        /// <param name="file">文件路径</param>
+        /// <returns>是否需要复制</returns>
         private static bool IsNeedCopy(string file)
         {
             string fileName = Path.GetFileNameWithoutExtension(file);
