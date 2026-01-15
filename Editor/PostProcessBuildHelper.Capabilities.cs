@@ -13,7 +13,7 @@ namespace GameFrameX.Xcode.Editor
         /// </summary>
         /// <param name="pbxProject">PBX项目</param>
         /// <param name="targetGuid">目标GUID</param>
-        /// <param name="path"></param>
+        /// <param name="path">项目路径</param>
         /// <param name="hashtable">配置数据</param>
         static void SetCapabilities(PBXProject pbxProject, string targetGuid, string path, Hashtable hashtable)
         {
