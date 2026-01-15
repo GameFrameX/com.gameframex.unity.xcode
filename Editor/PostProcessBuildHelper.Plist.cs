@@ -26,9 +26,9 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 设置plist
         /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="node"></param>
-        /// <param name="arg"></param>
+        /// <param name="proj">PBX项目</param>
+        /// <param name="node">Plist元素字典</param>
+        /// <param name="arg">参数MAP</param>
         private static void SetPlist(PBXProject proj, PlistElementDict node, Hashtable arg)
         {
             if (arg != null)
