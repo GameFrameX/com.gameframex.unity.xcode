@@ -13,8 +13,8 @@ namespace GameFrameX.Xcode.Editor
         /// <summary>
         /// 修改PodFile 文件的源
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="arrayList"></param>
+        /// <param name="path">项目路径</param>
+        /// <param name="arrayList">源列表</param>
         private static async void RunPodfile(string path, ArrayList arrayList)
         {
             LogHelper.Log("修改PodFile 文件的源,  开始");
