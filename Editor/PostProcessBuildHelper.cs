@@ -22,21 +22,13 @@ namespace GameFrameX.Xcode.Editor
             try
             {
                 //读取配置文件
-                var jsonPaths = SettingLoader.LoadSettingDatas("XCodeConfig");
+                var jsonPaths = SettingLoader.LoadSettingsData("XCodeConfig.json");
                 
-                // 如果没有找到任何匹配的文件，尝试使用默认的查找逻辑（为了兼容性）
+                // 如果没有找到任何匹配的文件，直接返回
                 if (jsonPaths.Count == 0)
                 {
-                    string defaultJsonPath = SettingLoader.LoadSettingData("XCodeConfig.json");
-                    if (defaultJsonPath != null && File.Exists(defaultJsonPath))
-                    {
-                        jsonPaths.Add(defaultJsonPath);
-                    }
-                    else
-                    {
-                        LogHelper.Error("未找到任何 XCodeConfig 相关配置文件, 跳过设置");
-                        return;
-                    }
+                    LogHelper.Error("未找到任何 XCodeConfig 相关配置文件, 跳过设置");
+                    return;
                 }
 
                 // 合并所有配置文件的内容
