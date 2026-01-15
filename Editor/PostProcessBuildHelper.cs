@@ -22,42 +22,74 @@ namespace GameFrameX.Xcode.Editor
             try
             {
                 //读取配置文件
-                string jsonPath = SettingLoader.LoadSettingData("XCodeConfig.json");
-                if (jsonPath == null || !File.Exists(jsonPath))
+                var jsonPaths = SettingLoader.LoadSettingDatas("XCodeConfig");
+                
+                // 如果没有找到任何匹配的文件，尝试使用默认的查找逻辑（为了兼容性）
+                if (jsonPaths.Count == 0)
                 {
-                    LogHelper.Error("XCodeConfig.json 不存在,跳过设置");
-                    return;
+                    string defaultJsonPath = SettingLoader.LoadSettingData("XCodeConfig.json");
+                    if (defaultJsonPath != null && File.Exists(defaultJsonPath))
+                    {
+                        jsonPaths.Add(defaultJsonPath);
+                    }
+                    else
+                    {
+                        LogHelper.Error("未找到任何 XCodeConfig 相关配置文件, 跳过设置");
+                        return;
+                    }
                 }
 
-                string json = File.ReadAllText(jsonPath);
-                Hashtable table = json.HashtableFromJson();
-                if (table == null)
+                // 合并所有配置文件的内容
+                Hashtable finalConfig = new Hashtable();
+                foreach (var jsonPath in jsonPaths)
                 {
-                    LogHelper.Error("XCodeConfig.json 解析失败,跳过设置");
+                    LogHelper.Log($"[MergeConfig] 正在合并配置: {jsonPath}");
+                    string json = File.ReadAllText(jsonPath);
+                    Hashtable table = json.HashtableFromJson();
+                    if (table == null)
+                    {
+                        LogHelper.Error($"{jsonPath} 解析失败, 跳过合并");
+                        continue;
+                    }
+                    
+                    // 使用扩展方法合并 Hashtable
+                    finalConfig.Merge(table);
+                }
+
+                if (finalConfig.Count == 0)
+                {
+                    LogHelper.Error("合并后的配置为空，跳过设置");
                     return;
                 }
 
                 string projectPath = path + "/Unity-iPhone.xcodeproj/project.pbxproj";
                 var project = new PBXProject();
                 project.ReadFromString(File.ReadAllText(projectPath));
+
+                // 第一阶段：应用所有配置到 PBXProject
+                LogHelper.Log("[PBXProject] 正在应用最终合并配置...");
                 // 配置主项目
-                Run(project, project.GetUnityMainTargetGuid(), table.Get<Hashtable>("unityMain"), path);
+                Run(project, project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("unityMain"), path);
                 // Unity项目
-                Run(project, project.GetUnityFrameworkTargetGuid(), table.Get<Hashtable>("unityFramework"), path);
-                // 保存文件
+                Run(project, project.GetUnityFrameworkTargetGuid(), finalConfig.Get<Hashtable>("unityFramework"), path);
+
+                // 保存 PBXProject
                 File.WriteAllText(projectPath, project.WriteToString());
 
+                // 第二阶段：应用其他配置 (Plist, Env, Args, Pod, Capabilities)
+                LogHelper.Log("[OtherSettings] 正在应用最终合并配置...");
+                
                 // 设置Info.Plist
-                RunPlist(project, path, table.Get<Hashtable>("plist"));
+                RunPlist(project, path, finalConfig.Get<Hashtable>("plist"));
                 // 启动环境变量
-                RunEnvironmentVariables(path, table.Get<Hashtable>("environmentVariables"));
+                RunEnvironmentVariables(path, finalConfig.Get<Hashtable>("environmentVariables"));
                 // 运行启动参数
-                RunArgument(path, table.Get("launcherArgs") as ArrayList);
+                RunArgument(path, finalConfig.Get("launcherArgs") as ArrayList);
                 // PodFile
-                RunPodfile(path, table.Get("podSource") as ArrayList);
+                RunPodfile(path, finalConfig.Get("podSource") as ArrayList);
 
                 // 设置Capabilities (只在主项目上设置)
-                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, table.Get<Hashtable>("capabilities"));
+                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
             }
             catch (Exception e)
             {
