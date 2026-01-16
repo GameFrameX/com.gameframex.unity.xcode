@@ -23,7 +23,7 @@ namespace GameFrameX.Xcode.Editor
             {
                 //读取配置文件
                 var jsonPaths = SettingLoader.LoadSettingsData("XCodeConfig.json");
-                
+
                 // 如果没有找到任何匹配的文件，直接返回
                 if (jsonPaths.Count == 0)
                 {
@@ -43,7 +43,7 @@ namespace GameFrameX.Xcode.Editor
                         LogHelper.Error($"{jsonPath} 解析失败, 跳过合并");
                         continue;
                     }
-                    
+
                     // 使用扩展方法合并 Hashtable
                     finalConfig.Merge(table);
                 }
@@ -70,21 +70,22 @@ namespace GameFrameX.Xcode.Editor
 
                 // 第二阶段：应用其他配置 (Plist, Env, Args, Pod, Capabilities)
                 LogHelper.Log("[OtherSettings] 正在应用最终合并配置...");
-                
+
                 // 设置Info.Plist
                 RunPlist(project, path, finalConfig.Get<Hashtable>("plist"));
                 // 启动环境变量
                 RunEnvironmentVariables(path, finalConfig.Get<Hashtable>("environmentVariables"));
                 // 运行启动参数
                 RunArgument(path, finalConfig.Get("launcherArgs") as ArrayList);
-                // PodFile
-                RunPodfile(path, finalConfig.Get("podSource") as ArrayList);
+
+                // 设置Capabilities (只在主项目上设置)
+                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
 
                 // Localization
                 RunLocalization(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get("localizations") as ArrayList);
 
-                // 设置Capabilities (只在主项目上设置)
-                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
+                // PodFile
+                RunPodfile(path, finalConfig.Get("podSource") as ArrayList);
             }
             catch (Exception e)
             {
