@@ -40,6 +40,11 @@ namespace GameFrameX.Xcode.Editor
         /// </summary>
         [Header("UnityFrameWork")] [SerializeField]
         public XcodeConfigData unityFrameWork = new XcodeConfigData();
+
+        /// <summary>
+        /// 本地化 列表
+        /// </summary>
+        [Header("本地化列表")] [SerializeField] public List<XcodeConfigLocalization> localizations = new List<XcodeConfigLocalization>();
     }
 
     /// <summary>
@@ -236,5 +241,23 @@ namespace GameFrameX.Xcode.Editor
         /// 关联域名
         /// </summary>
         [Header("Associated Domains")] [SerializeField] public string[] associatedDomains = new string[0];
+    }
+
+
+    /// <summary>
+    /// Xcode Localization 本地化配置
+    /// </summary>
+    [Serializable]
+    public sealed class XcodeConfigLocalization
+    {
+        /// <summary>
+        /// 语言代码. 例如: en, zh-Hans, zh-Hant, ja
+        /// </summary>
+        [Header("语言代码")] [SerializeField] public string languageCode;
+
+        /// <summary>
+        /// 本地化内容
+        /// </summary>
+        [Header("本地化内容")] [SerializeField] public List<XcodeConfigMap> validMap = new List<XcodeConfigMap>();
     }
 }

@@ -80,6 +80,9 @@ namespace GameFrameX.Xcode.Editor
                 // PodFile
                 RunPodfile(path, finalConfig.Get("podSource") as ArrayList);
 
+                // Localization
+                RunLocalization(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get("localizations") as ArrayList);
+
                 // 设置Capabilities (只在主项目上设置)
                 SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
             }
