@@ -58,6 +58,26 @@
     "aaaa",
     "bbbbb"
   ],
+  "localizations": [
+    {
+      "languageCode": "en",
+      "validMap": [
+        {
+          "key": "CFBundleDisplayName",
+          "value": "My Game"
+        }
+      ]
+    },
+    {
+      "languageCode": "zh-Hans",
+      "validMap": [
+        {
+          "key": "CFBundleDisplayName",
+          "value": "我的游戏"
+        }
+      ]
+    }
+  ],
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],

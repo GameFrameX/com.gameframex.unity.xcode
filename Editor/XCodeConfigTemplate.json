@@ -54,5 +54,20 @@
     "appGroups": [],
     "tip7": "Associated Domains，字符串数组",
     "associatedDomains": []
-  }
+  },
+  "localizations": [
+    {
+      "tip0": "语言代码",
+      "languageCode": "en",
+      "tip1": "本地化内容",
+      "validMap": [
+        {
+          "tip0": "Key",
+          "key": "CFBundleDisplayName",
+          "tip1": "Value",
+          "value": "My Game"
+        }
+      ]
+    }
+  ]
 }
