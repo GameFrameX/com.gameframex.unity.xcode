@@ -1,3 +1,18 @@
+# [1.3.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.2.0...1.3.0) (2026-01-16)
+
+
+### Bug Fixes
+
+* **Xcode:** 修复Capabilities设置中的targetGuid参数问题 ([e353bfc](https://github.com/gameframex/com.gameframex.unity.xcode/commit/e353bfcd1e0c0dc8f2ec56bf98758243e00faebd))
+* 修复文件复制时覆盖已存在文件的问题 ([8700265](https://github.com/gameframex/com.gameframex.unity.xcode/commit/870026517347ef23e46567b510e510b8ee5025ce))
+
+
+### Features
+
+* **HashtableEX:** 添加深度合并Hashtable的功能 ([5b2cd1a](https://github.com/gameframex/com.gameframex.unity.xcode/commit/5b2cd1af5cf1d9a2f4f877261d73c26a966f078a))
+* **Xcode编辑器:** 添加加载匹配配置文件的功能 ([e1c93e2](https://github.com/gameframex/com.gameframex.unity.xcode/commit/e1c93e2c1f9a6131208d229bf71149348c92b57b))
+* **XCode配置:** 支持合并多个XCodeConfig配置文件并优化处理流程 ([0cd6f38](https://github.com/gameframex/com.gameframex.unity.xcode/commit/0cd6f3810634cc2697d4c69533ff434d90a1a62f))
+
 # [1.2.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.1.1...1.2.0) (2025-12-23)
 
 
