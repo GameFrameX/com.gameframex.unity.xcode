@@ -1,10 +1,8 @@
 #if UNITY_IOS
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using UnityEditor.iOS.Xcode;
 
 namespace GameFrameX.Xcode.Editor
@@ -84,17 +82,17 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
 
-            // 更新 Info.plist，将本地化键的值设置为 $(KEY) 格式
+            // 更新 Info.plist，将本地化键的值设置为 ${KEY} 格式
             UpdateInfoPlistForLocalization(path, localizationKeys);
 
-            // 使用 PBXProjectExtensions 添加本地化支持
-            AddLocalizationToProject(path, localizations);
+            // 使用 PBXProject API 添加本地化文件到项目
+            AddLocalizationToProject(project, path, localizations);
 
             LogHelper.Log("Setting project [Localization] finished");
         }
 
         /// <summary>
-        /// 更新 Info.plist，将本地化键的值设置为 $(KEY) 格式
+        /// 更新 Info.plist，将本地化键的值设置为 ${KEY} 格式
         /// 这样 iOS 系统会自动从 InfoPlist.strings 中读取对应语言的值
         /// </summary>
         /// <param name="projectPath">Xcode 项目路径</param>
@@ -133,20 +131,17 @@ namespace GameFrameX.Xcode.Editor
 
         /// <summary>
         /// 添加本地化资源到 Xcode 项目
-        /// 这个方法直接操作 project.pbxproj 文件来添加 VariantGroup
+        /// 使用 PBXProject API 安全地添加本地化文件引用
         /// </summary>
-        private static void AddLocalizationToProject(string projectPath, ArrayList localizations)
+        /// <param name="project">PBXProject 实例</param>
+        /// <param name="projectPath">Xcode 项目路径</param>
+        /// <param name="localizations">本地化配置列表</param>
+        private static void AddLocalizationToProject(PBXProject project, string projectPath, ArrayList localizations)
         {
             string pbxprojPath = Path.Combine(projectPath, "Unity-iPhone.xcodeproj/project.pbxproj");
-            string pbxContent = File.ReadAllText(pbxprojPath);
 
-            // 生成唯一的 GUID
-            string variantGroupGuid = GenerateGuid();
-            string variantGroupName = "InfoPlist.strings";
-
-            StringBuilder childrenBuilder = new StringBuilder();
-            StringBuilder fileRefsBuilder = new StringBuilder();
-            StringBuilder buildFileBuilder = new StringBuilder();
+            // 获取主 target 的 GUID
+            string mainTargetGuid = project.GetUnityMainTargetGuid();
 
             foreach (Hashtable loc in localizations)
             {
@@ -161,140 +156,29 @@ namespace GameFrameX.Xcode.Editor
                     continue;
                 }
 
-                string fileRefGuid = GenerateGuid();
                 string lprojName = langCode + ".lproj";
-                string relativePath = $"{lprojName}/InfoPlist.strings";
+                string infoPlistStringsPath = Path.Combine(lprojName, "InfoPlist.strings");
+                string fullPath = Path.Combine(projectPath, infoPlistStringsPath);
 
-                // 添加到 children 列表
-                childrenBuilder.AppendLine($"\t\t\t\t{fileRefGuid} /* {langCode} */,");
-
-                // 添加 PBXFileReference
-                fileRefsBuilder.AppendLine($"\t\t{fileRefGuid} /* {langCode} */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = {langCode}; path = {relativePath}; sourceTree = \"<group>\"; }};");
-            }
-
-            // 创建 PBXVariantGroup
-            string variantGroupSection = $@"
-/* Begin PBXVariantGroup section */
-		{variantGroupGuid} /* {variantGroupName} */ = {{
-			isa = PBXVariantGroup;
-			children = (
-{childrenBuilder.ToString().TrimEnd()}
-			);
-			name = {variantGroupName};
-			sourceTree = ""<group>"";
-		}};
-/* End PBXVariantGroup section */";
-
-            // 检查是否已经有 PBXVariantGroup section
-            if (pbxContent.Contains("/* Begin PBXVariantGroup section */"))
-            {
-                // 在现有的 section 中添加
-                pbxContent = pbxContent.Replace(
-                    "/* End PBXVariantGroup section */",
-                    $@"		{variantGroupGuid} /* {variantGroupName} */ = {{
-			isa = PBXVariantGroup;
-			children = (
-{childrenBuilder.ToString().TrimEnd()}
-			);
-			name = {variantGroupName};
-			sourceTree = ""<group>"";
-		}};
-/* End PBXVariantGroup section */");
-            }
-            else
-            {
-                // 在 PBXSourcesBuildPhase section 之前插入新的 section
-                pbxContent = pbxContent.Replace(
-                    "/* Begin PBXSourcesBuildPhase section */",
-                    variantGroupSection + "\n/* Begin PBXSourcesBuildPhase section */");
-            }
-
-            // 添加 PBXFileReference 条目
-            string fileRefInsert = fileRefsBuilder.ToString();
-            pbxContent = pbxContent.Replace(
-                "/* End PBXFileReference section */",
-                fileRefInsert + "/* End PBXFileReference section */");
-
-            // 将 VariantGroup 添加到主 Group 的 children 中
-            // 查找 CustomTemplate 或 Unity-iPhone 组并添加引用
-            string mainGroupPattern = @"(mainGroup = )([A-F0-9]+)";
-            Match mainGroupMatch = Regex.Match(pbxContent, mainGroupPattern);
-            if (mainGroupMatch.Success)
-            {
-                string mainGroupGuid = mainGroupMatch.Groups[2].Value;
-                // 找到这个 group 并添加 variant group 到 children
-                string groupPattern = $@"({mainGroupGuid} \/\* .* \*\/ = \{{\s*isa = PBXGroup;\s*children = \()";
-                pbxContent = Regex.Replace(pbxContent, groupPattern,
-                                           $"$1\n\t\t\t\t{variantGroupGuid} /* {variantGroupName} */,");
-            }
-
-            // 添加到 Resources build phase
-            string targetGuid = GetUnityMainTargetGuidFromContent(pbxContent);
-            if (!string.IsNullOrEmpty(targetGuid))
-            {
-                string buildFileGuid = GenerateGuid();
-
-                // 添加 PBXBuildFile
-                string buildFileEntry = $"\t\t{buildFileGuid} /* {variantGroupName} in Resources */ = {{isa = PBXBuildFile; fileRef = {variantGroupGuid} /* {variantGroupName} */; }};\n";
-                pbxContent = pbxContent.Replace(
-                    "/* End PBXBuildFile section */",
-                    buildFileEntry + "/* End PBXBuildFile section */");
-
-                // 添加到 Resources build phase
-                string resourcesPhasePattern = @"(isa = PBXResourcesBuildPhase;[^}]*files = \()";
-                pbxContent = Regex.Replace(pbxContent, resourcesPhasePattern,
-                                           $"$1\n\t\t\t\t{buildFileGuid} /* {variantGroupName} in Resources */,");
-            }
-
-            // 添加 knownRegions
-            foreach (Hashtable loc in localizations)
-            {
-                if (!loc.ContainsKey("languageCode"))
+                // 检查文件是否存在
+                if (!File.Exists(fullPath))
                 {
+                    LogHelper.Log($"InfoPlist.strings not found at: {fullPath}");
                     continue;
                 }
 
-                string langCode = loc["languageCode"].ToString();
-                if (string.IsNullOrEmpty(langCode))
-                {
-                    continue;
-                }
+                // 使用 PBXProject API 添加文件到项目
+                string fileGuid = project.AddFile(infoPlistStringsPath, infoPlistStringsPath, PBXSourceTree.Source);
 
-                // 检查是否已有这个区域
-                if (!pbxContent.Contains($"\"{langCode}\"") && !pbxContent.Contains($"{langCode},"))
-                {
-                    string knownRegionsPattern = @"(knownRegions = \()";
-                    pbxContent = Regex.Replace(pbxContent, knownRegionsPattern,
-                                               $"$1\n\t\t\t\t{langCode},");
-                }
+                // 将文件添加到主 target 的 Resources 构建阶段
+                project.AddFileToBuild(mainTargetGuid, fileGuid);
+
+                LogHelper.Log($"Added localization file to project: {infoPlistStringsPath}");
             }
 
-            File.WriteAllText(pbxprojPath, pbxContent);
-            LogHelper.Log("Added localization variant groups to project.pbxproj");
-        }
-
-        /// <summary>
-        /// 生成一个 Xcode 风格的 24 位十六进制 GUID
-        /// </summary>
-        private static string GenerateGuid()
-        {
-            return Guid.NewGuid().ToString("N").Substring(0, 24).ToUpper();
-        }
-
-        /// <summary>
-        /// 从 pbxproj 内容中获取 Unity-iPhone target 的 GUID
-        /// </summary>
-        private static string GetUnityMainTargetGuidFromContent(string content)
-        {
-            // 查找 Unity-iPhone target
-            string pattern = @"([A-F0-9]+) \/\* Unity-iPhone \*\/ = \{\s*isa = PBXNativeTarget";
-            Match match = Regex.Match(content, pattern);
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-
-            return null;
+            // 保存项目文件
+            project.WriteToFile(pbxprojPath);
+            LogHelper.Log("Localization files added to Xcode project");
         }
     }
 }
