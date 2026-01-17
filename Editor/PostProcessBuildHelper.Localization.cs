@@ -27,6 +27,9 @@ namespace GameFrameX.Xcode.Editor
 
             string pbxprojPath = Path.Combine(path, "Unity-iPhone.xcodeproj/project.pbxproj");
 
+            // 标记是否包含 CFBundleDisplayName 本地化
+            bool hasLocalizedDisplayName = false;
+
             // 收集所有需要本地化的键，用于更新 Info.plist
             // HashSet<string> localizationKeys = new HashSet<string>();
 
@@ -67,6 +70,12 @@ namespace GameFrameX.Xcode.Editor
                         string value = map["value"].ToString();
                         sb.Append($"\"{key}\" = \"{value}\";\n");
 
+                        // 检查是否包含 CFBundleDisplayName
+                        if (key == "CFBundleDisplayName")
+                        {
+                            hasLocalizedDisplayName = true;
+                        }
+
                         // 记录需要本地化的键
                         // localizationKeys.Add(key);
                     }
@@ -84,6 +93,20 @@ namespace GameFrameX.Xcode.Editor
 
             // 更新 Info.plist，将本地化键的值设置为 ${KEY} 格式
             // UpdateInfoPlistForLocalization(path, localizationKeys);
+
+            // 如果存在显示名称本地化，设置 LSHasLocalizedDisplayName 为 true
+            if (hasLocalizedDisplayName)
+            {
+                string plistPath = Path.Combine(path, "Info.plist");
+                if (File.Exists(plistPath))
+                {
+                    PlistDocument plist = new PlistDocument();
+                    plist.ReadFromString(File.ReadAllText(plistPath));
+                    plist.root.SetBoolean("LSHasLocalizedDisplayName", true);
+                    plist.WriteToFile(plistPath);
+                    LogHelper.Log("Updated Info.plist: Set LSHasLocalizedDisplayName to true");
+                }
+            }
 
             // 使用 PBXProject API 添加本地化文件到项目
             AddLocalizationToProject(project, path, localizations);
