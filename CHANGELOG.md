@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.4.0...1.5.0) (2026-01-17)
+
+
+### Features
+
+* **Xcode编辑器:** 添加对CFBundleDisplayName本地化的支持 ([8bdea75](https://github.com/gameframex/com.gameframex.unity.xcode/commit/8bdea75076438da74caba2bef1a802003ef20f3b))
+
 # [1.4.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.3.0...1.4.0) (2026-01-17)
 
 
