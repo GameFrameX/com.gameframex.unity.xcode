@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.3.0...1.4.0) (2026-01-17)
+
+
+### Bug Fixes
+
+* **Xcode本地化:** 修复本地化文件添加到Xcode项目的问题 ([9f5db58](https://github.com/gameframex/com.gameframex.unity.xcode/commit/9f5db5862ce18ff9ba240d0fffb6ea1249d38a0b))
+
+
+### Features
+
+* **Xcode:** 添加iOS项目本地化支持 ([ee401b8](https://github.com/gameframex/com.gameframex.unity.xcode/commit/ee401b829328918ef0cdea1728a6dfbcbacd016c))
+* **XCode配置:** 添加应用本地化配置支持 ([72a7bf0](https://github.com/gameframex/com.gameframex.unity.xcode/commit/72a7bf0c2b0555a7af75d5c65e7f33bd5ad0c6fa))
+* **本地化:** 添加对Info.plist的本地化键自动更新功能 ([8f47e84](https://github.com/gameframex/com.gameframex.unity.xcode/commit/8f47e84d6391c46c077eef1aab67de193c7edfc5))
+
 # [1.3.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.2.0...1.3.0) (2026-01-16)
 
 
