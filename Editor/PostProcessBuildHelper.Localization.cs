@@ -28,7 +28,7 @@ namespace GameFrameX.Xcode.Editor
             string pbxprojPath = Path.Combine(path, "Unity-iPhone.xcodeproj/project.pbxproj");
 
             // 收集所有需要本地化的键，用于更新 Info.plist
-            HashSet<string> localizationKeys = new HashSet<string>();
+            // HashSet<string> localizationKeys = new HashSet<string>();
 
             foreach (Hashtable loc in localizations)
             {
@@ -68,7 +68,7 @@ namespace GameFrameX.Xcode.Editor
                         sb.Append($"\"{key}\" = \"{value}\";\n");
 
                         // 记录需要本地化的键
-                        localizationKeys.Add(key);
+                        // localizationKeys.Add(key);
                     }
                 }
 
@@ -83,7 +83,7 @@ namespace GameFrameX.Xcode.Editor
             }
 
             // 更新 Info.plist，将本地化键的值设置为 ${KEY} 格式
-            UpdateInfoPlistForLocalization(path, localizationKeys);
+            // UpdateInfoPlistForLocalization(path, localizationKeys);
 
             // 使用 PBXProject API 添加本地化文件到项目
             AddLocalizationToProject(project, path, localizations);
@@ -91,6 +91,7 @@ namespace GameFrameX.Xcode.Editor
             LogHelper.Log("Setting project [Localization] finished");
         }
 
+        /*
         /// <summary>
         /// 更新 Info.plist，将本地化键的值设置为 ${KEY} 格式
         /// 这样 iOS 系统会自动从 InfoPlist.strings 中读取对应语言的值
@@ -128,6 +129,7 @@ namespace GameFrameX.Xcode.Editor
             plist.WriteToFile(plistPath);
             LogHelper.Log("Info.plist updated with localization references");
         }
+        */
 
         /// <summary>
         /// 添加本地化资源到 Xcode 项目
