@@ -1,6 +1,7 @@
 #if UNITY_IOS
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,6 +28,9 @@ namespace GameFrameX.Xcode.Editor
             LogHelper.Log("Setting project [Localization] started");
 
             string pbxprojPath = Path.Combine(path, "Unity-iPhone.xcodeproj/project.pbxproj");
+
+            // 收集所有需要本地化的键，用于更新 Info.plist
+            HashSet<string> localizationKeys = new HashSet<string>();
 
             foreach (Hashtable loc in localizations)
             {
@@ -64,6 +68,9 @@ namespace GameFrameX.Xcode.Editor
                         string key = map["key"].ToString();
                         string value = map["value"].ToString();
                         sb.Append($"\"{key}\" = \"{value}\";\n");
+
+                        // 记录需要本地化的键
+                        localizationKeys.Add(key);
                     }
                 }
 
@@ -77,10 +84,51 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
 
+            // 更新 Info.plist，将本地化键的值设置为 $(KEY) 格式
+            UpdateInfoPlistForLocalization(path, localizationKeys);
+
             // 使用 PBXProjectExtensions 添加本地化支持
             AddLocalizationToProject(path, localizations);
 
             LogHelper.Log("Setting project [Localization] finished");
+        }
+
+        /// <summary>
+        /// 更新 Info.plist，将本地化键的值设置为 $(KEY) 格式
+        /// 这样 iOS 系统会自动从 InfoPlist.strings 中读取对应语言的值
+        /// </summary>
+        /// <param name="projectPath">Xcode 项目路径</param>
+        /// <param name="localizationKeys">需要本地化的键集合</param>
+        private static void UpdateInfoPlistForLocalization(string projectPath, HashSet<string> localizationKeys)
+        {
+            if (localizationKeys == null || localizationKeys.Count == 0)
+            {
+                return;
+            }
+
+            string plistPath = Path.Combine(projectPath, "Info.plist");
+            if (!File.Exists(plistPath))
+            {
+                LogHelper.Log($"Info.plist not found at: {plistPath}");
+                return;
+            }
+
+            PlistDocument plist = new PlistDocument();
+            plist.ReadFromString(File.ReadAllText(plistPath));
+            PlistElementDict root = plist.root;
+
+            foreach (string key in localizationKeys)
+            {
+                // 构造本地化引用格式 ${KEY}
+                string localizedValue = $"${{{key}}}";
+
+                // 使用 PlistDocument API 设置值
+                root.SetString(key, localizedValue);
+                LogHelper.Log($"Updated Info.plist key '{key}' to localized format: {localizedValue}");
+            }
+
+            plist.WriteToFile(plistPath);
+            LogHelper.Log("Info.plist updated with localization references");
         }
 
         /// <summary>
