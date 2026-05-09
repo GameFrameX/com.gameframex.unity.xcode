@@ -98,7 +98,7 @@ namespace GameFrameX.Xcode.Editor
             var inst = new Hashtable();
             if (p != null)
             {
-                for (int i = 0; i < p.Length;)
+                for (int i = 0; i + 1 < p.Length;)
                 {
                     inst.Add(p[i], p[i + 1]);
                     i = i + 2;
