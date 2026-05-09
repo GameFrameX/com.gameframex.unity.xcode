@@ -35,6 +35,7 @@ Unity iOS ビルド後に Xcode プロジェクトを自動設定するエディ
 - **コンパイルフラグ** — 特定のソースファイルにコンパイルオプションを設定
 - **リンカフラグ** — `OTHER_LDFLAGS` などの設定
 - **Run Path Search Paths** — ランタイム検索パスの設定
+- **コード署名** — Team ID、バンドル ID（Bundle Identifier）、署名アイデンティティ、プロビジョニングプロファイルの設定
 - **マルチ設定マージ** — 複数の `XCodeConfig.json` の深層再帰マージをサポート、マルチモジュール連携に最適
 
 ## インストール
@@ -76,6 +77,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {},
   "plist": {},
   "environmentVariables": {},
   "launcherArgs": [],
@@ -89,6 +91,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | フィールド | 型 | 説明 |
 | :--- | :--- | :--- |
+| `signing` | object | コード署名設定（下記参照） |
 | `plist` | object | Info.plist のキーと値のペア、値は任意の型をサポート |
 | `environmentVariables` | object | XcScheme 環境変数、キーと値はともに文字列 |
 | `launcherArgs` | string[] | XcScheme 起動引数リスト |
@@ -221,6 +224,30 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 }
 ```
 
+### signing — コード署名
+
+Unity-iPhone（メイン）ターゲットにのみ適用されます。すべてのフィールドは省略可能です。
+
+```json
+{
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  }
+}
+```
+
+| フィールド | 型 | 説明 |
+| :--- | :--- | :--- |
+| `teamId` | string | Apple Developer Team ID（`DEVELOPMENT_TEAM`） |
+| `bundleId` | string | アプリのバンドル ID（`PRODUCT_BUNDLE_IDENTIFIER`） |
+| `codeSignIdentity` | string | コード署名アイデンティティ、オプション：`Apple Development`、`Apple Distribution`、`iPhone Developer`、`iPhone Distribution` |
+| `codeSignStyle` | string | 署名方式：`Automatic` または `Manual` |
+| `provisioningProfileSpecifier` | string | プロビジョニングプロファイル名（Manual モードで必要） |
+
 ### capabilities — アプリ機能
 
 ```json
@@ -317,6 +344,13 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  },
   "plist": {
     "CFBundleURLTypes": [
       {
