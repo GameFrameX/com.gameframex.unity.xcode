@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -17,7 +17,7 @@ namespace GameFrameX.Xcode.Editor
         /// </summary>
         /// <param name="path">项目路径</param>
         /// <param name="arrayList">参数列表</param>
-        private static async void RunArgument(string path, ArrayList arrayList)
+        private static void RunArgument(string path, ArrayList arrayList)
         {
             LogHelper.Log("设置项目[XcScheme-Argument]开始");
             if (arrayList == null || arrayList.Count <= 0)
@@ -26,7 +26,7 @@ namespace GameFrameX.Xcode.Editor
                 return;
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            Thread.Sleep(1000);
             string projectPath = path + "/Unity-iPhone.xcodeproj/xcshareddata/xcschemes/Unity-iPhone.xcscheme";
             XcScheme xcScheme = new XcScheme();
             xcScheme.ReadFromFile(projectPath);
@@ -49,7 +49,7 @@ namespace GameFrameX.Xcode.Editor
         /// </summary>
         /// <param name="path">项目路径</param>
         /// <param name="map">环境变量MAP</param>
-        private static async void RunEnvironmentVariables(string path, Hashtable map)
+        private static void RunEnvironmentVariables(string path, Hashtable map)
         {
             LogHelper.Log("设置项目[XcScheme-EnvironmentVariables]开始");
             if (map == null || map.Count <= 0)
@@ -58,7 +58,7 @@ namespace GameFrameX.Xcode.Editor
                 return;
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            Thread.Sleep(1000);
             foreach (DictionaryEntry entry in map)
             {
                 AddEnvironmentVariablesPassedOnLaunch(path, entry.Key.ToString(), entry.Value.ToString());
