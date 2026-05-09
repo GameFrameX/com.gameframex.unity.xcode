@@ -1,4 +1,17 @@
 {
+  "tip_signing": "签名配置，只在主项目上设置，所有字段均可选",
+  "signing": {
+    "tip0": "Apple Developer Team ID",
+    "teamId": "",
+    "tip1": "应用包名 (PRODUCT_BUNDLE_IDENTIFIER)",
+    "bundleId": "",
+    "tip2": "签名身份，可选值: Apple Development, Apple Distribution, iPhone Developer, iPhone Distribution",
+    "codeSignIdentity": "",
+    "tip3": "签名方式，可选值: Automatic, Manual",
+    "codeSignStyle": "",
+    "tip4": "描述文件名称 (仅 Manual 模式需要)",
+    "provisioningProfileSpecifier": ""
+  },
   "libs": {
     "tip0": "+里面是要添加的，值都是string",
     "+": [],

@@ -65,6 +65,9 @@ namespace GameFrameX.Xcode.Editor
                 // Unity项目
                 Run(project, project.GetUnityFrameworkTargetGuid(), finalConfig.Get<Hashtable>("unityFramework"), path);
 
+                // 设置签名配置（只在主项目上设置）
+                SetSigning(project, project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("signing"));
+
                 // 保存 PBXProject
                 File.WriteAllText(projectPath, project.WriteToString());
 
