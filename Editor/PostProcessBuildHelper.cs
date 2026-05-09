@@ -80,7 +80,11 @@ namespace GameFrameX.Xcode.Editor
 
                 // 设置Capabilities (只在主项目上设置)
                 SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
-                
+
+                // Capabilities 通过 ProjectCapabilityManager 独立写盘，需要重新读取以保留其修改
+                project = new PBXProject();
+                project.ReadFromString(File.ReadAllText(projectPath));
+
                 // Localization
                 RunLocalization(project, project.ProjectGuid(), path, finalConfig.Get("localizations") as ArrayList);
 
