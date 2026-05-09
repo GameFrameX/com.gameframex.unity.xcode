@@ -1,10 +1,8 @@
 #if UNITY_IOS
-using System;
 using System.Collections;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+using System.Threading;
 
 namespace GameFrameX.Xcode.Editor
 {
@@ -15,7 +13,7 @@ namespace GameFrameX.Xcode.Editor
         /// </summary>
         /// <param name="path">项目路径</param>
         /// <param name="arrayList">源列表</param>
-        private static async void RunPodfile(string path, ArrayList arrayList)
+        private static void RunPodfile(string path, ArrayList arrayList)
         {
             LogHelper.Log("修改PodFile 文件的源,  开始");
 
@@ -32,8 +30,7 @@ namespace GameFrameX.Xcode.Editor
                 return;
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(3));
-
+            Thread.Sleep(3000);
             StringBuilder stringBuilder = new StringBuilder();
             foreach (var source in arrayList)
             {
