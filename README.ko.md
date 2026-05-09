@@ -35,6 +35,7 @@ Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 �
 - **컴파일 플래그** — 특정 소스 파일에 컴파일 옵션 설정
 - **링커 플래그** — `OTHER_LDFLAGS` 등 구성
 - **Run Path Search Paths** — 런타임 검색 경로 구성
+- **코드 서명** — Team ID, 번들 ID(Bundle Identifier), 서명 아이덴티티, 프로비저닝 프로필 설정
 - **다중 설정 병합** — 여러 `XCodeConfig.json` 파일의 깊은 재귀 병합 지원, 다중 모듈 협업에 적합
 
 ## 설치
