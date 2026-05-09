@@ -1,3 +1,14 @@
+## [1.5.1](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.5.0...1.5.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* **Capabilities:** 使用安全的类型检查替代强制转换 ([0efc455](https://github.com/gameframex/com.gameframex.unity.xcode/commit/0efc4552ed0fea0f1c235a103dcc29ccff0f3c3e))
+* **HashtableEX:** 修复键值对解析越界访问 ([330e0d5](https://github.com/gameframex/com.gameframex.unity.xcode/commit/330e0d5bba6cf0dda8b47f2f54c8e97d46b50caf))
+* **MiniJSON:** 使用InvariantCulture解析浮点数 ([5e921b2](https://github.com/gameframex/com.gameframex.unity.xcode/commit/5e921b2044e571eb6d2c5344ef16da1ab1561b0a))
+* **Plist:** 添加缺失的using System指令 ([9496973](https://github.com/gameframex/com.gameframex.unity.xcode/commit/9496973e281be196658ad60c52f27138d3cc0855))
+* **PostProcessBuildHelper:** 重新读取PBXProject以保留Capabilities修改 ([266c0a2](https://github.com/gameframex/com.gameframex.unity.xcode/commit/266c0a21628f407bec722e746e1a2f373dab90b0))
+
 # [1.5.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.4.0...1.5.0) (2026-01-17)
 
 
