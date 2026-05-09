@@ -344,6 +344,13 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  },
   "plist": {
     "CFBundleURLTypes": [
       {
