@@ -29,28 +29,28 @@ namespace GameFrameX.Xcode.Editor
                 var projectCapabilityManager = new ProjectCapabilityManager(path + "/Unity-iPhone.xcodeproj/project.pbxproj", "gameframex.entitlements", null, targetGuid);
 
                 // In-App Purchase
-                if (hashtable.ContainsKey("inAppPurchase") && (bool)hashtable["inAppPurchase"])
+                if (hashtable.ContainsKey("inAppPurchase") && hashtable["inAppPurchase"] is bool inAppPurchase && inAppPurchase)
                 {
                     projectCapabilityManager.AddInAppPurchase();
                     Debug.Log("已添加 In-App Purchase Capability");
                 }
 
                 // Game Center
-                if (hashtable.ContainsKey("gameCenter") && (bool)hashtable["gameCenter"])
+                if (hashtable.ContainsKey("gameCenter") && hashtable["gameCenter"] is bool gameCenter && gameCenter)
                 {
                     projectCapabilityManager.AddGameCenter();
                     Debug.Log("已添加 Game Center Capability");
                 }
 
                 // Push Notifications
-                if (hashtable.ContainsKey("pushNotifications") && (bool)hashtable["pushNotifications"])
+                if (hashtable.ContainsKey("pushNotifications") && hashtable["pushNotifications"] is bool pushNotifications && pushNotifications)
                 {
                     projectCapabilityManager.AddPushNotifications(false);
                     Debug.Log("已添加 Push Notifications Capability");
                 }
 
                 // Sign In with Apple
-                if (hashtable.ContainsKey("signInWithApple") && (bool)hashtable["signInWithApple"])
+                if (hashtable.ContainsKey("signInWithApple") && hashtable["signInWithApple"] is bool signInWithApple && signInWithApple)
                 {
                     projectCapabilityManager.AddSignInWithApple();
                     Debug.Log("已添加 Sign In with Apple Capability");
@@ -63,9 +63,15 @@ namespace GameFrameX.Xcode.Editor
                     if (backgroundModes != null && backgroundModes.Count > 0)
                     {
                         var modes = new BackgroundModesOptions();
-                        foreach (string mode in backgroundModes)
+                        foreach (var modeObj in backgroundModes)
                         {
-                            switch (mode.ToLower())
+                            string mode = modeObj?.ToString()?.ToLower();
+                            if (string.IsNullOrEmpty(mode))
+                            {
+                                continue;
+                            }
+
+                            switch (mode)
                             {
                                 case "audio":
                                     modes |= BackgroundModesOptions.AudioAirplayPiP;
@@ -108,8 +114,8 @@ namespace GameFrameX.Xcode.Editor
                     var iCloudConfig = hashtable["iCloud"] as Hashtable;
                     if (iCloudConfig != null)
                     {
-                        bool enableKeyValueStorage = iCloudConfig.ContainsKey("keyValueStorage") && (bool)iCloudConfig["keyValueStorage"];
-                        bool enableiCloudDocument = iCloudConfig.ContainsKey("iCloudDocument") && (bool)iCloudConfig["iCloudDocument"];
+                        bool enableKeyValueStorage = iCloudConfig.ContainsKey("keyValueStorage") && iCloudConfig["keyValueStorage"] is bool kvStorage && kvStorage;
+                        bool enableiCloudDocument = iCloudConfig.ContainsKey("iCloudDocument") && iCloudConfig["iCloudDocument"] is bool iCloudDoc && iCloudDoc;
 
                         var customContainers = iCloudConfig["customContainers"] as ArrayList;
                         string[] containers = null;
