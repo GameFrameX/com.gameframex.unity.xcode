@@ -77,6 +77,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {},
   "plist": {},
   "environmentVariables": {},
   "launcherArgs": [],
@@ -90,6 +91,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | 필드 | 타입 | 설명 |
 | :--- | :--- | :--- |
+| `signing` | object | 코드 서명 설정 (아래 참조) |
 | `plist` | object | Info.plist 키-값 쌍, 값은 모든 타입 지원 |
 | `environmentVariables` | object | XcScheme 환경 변수, 키와 값 모두 문자열 |
 | `launcherArgs` | string[] | XcScheme 실행 인수 목록 |
@@ -222,6 +224,30 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 }
 ```
 
+### signing — 코드 서명
+
+Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사항입니다.
+
+```json
+{
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  }
+}
+```
+
+| 필드 | 타입 | 설명 |
+| :--- | :--- | :--- |
+| `teamId` | string | Apple Developer Team ID (`DEVELOPMENT_TEAM`) |
+| `bundleId` | string | 앱 번들 ID (`PRODUCT_BUNDLE_IDENTIFIER`) |
+| `codeSignIdentity` | string | 코드 서명 아이덴티티, 옵션: `Apple Development`, `Apple Distribution`, `iPhone Developer`, `iPhone Distribution` |
+| `codeSignStyle` | string | 서명 방식: `Automatic` 또는 `Manual` |
+| `provisioningProfileSpecifier` | string | 프로비저닝 프로필 이름 (Manual 모드에서 필요) |
+
 ### capabilities — 앱 기능
 
 ```json
@@ -318,6 +344,13 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  },
   "plist": {
     "CFBundleURLTypes": [
       {
