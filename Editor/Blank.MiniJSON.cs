@@ -366,7 +366,7 @@ namespace GameFrameX.Xcode.Editor
 
             Array.Copy(json, index, numberCharArray, 0, charLength);
             index = lastIndex + 1;
-            return Double.Parse(new string(numberCharArray)); // , CultureInfo.InvariantCulture);
+            return Double.Parse(new string(numberCharArray), CultureInfo.InvariantCulture);
         }
 
 
