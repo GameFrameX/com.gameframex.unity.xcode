@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
@@ -21,6 +19,11 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="hashtable">配置数据，Key为源路径，Value为目标路径</param>
         private static void CopyFolders(PBXProject proj, string targetGuid, string xcodePath, Hashtable hashtable)
         {
+            if (hashtable == null)
+            {
+                return;
+            }
+
             foreach (DictionaryEntry map in hashtable)
             {
                 string src = Path.Combine(Environment.CurrentDirectory, map.Key.ToString().Trim());
@@ -90,7 +93,7 @@ namespace GameFrameX.Xcode.Editor
         {
             if (Directory.Exists(dstPath))
             {
-                Directory.Delete(dstPath);
+                Directory.Delete(dstPath, true);
             }
 
             if (File.Exists(dstPath))

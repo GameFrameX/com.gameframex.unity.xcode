@@ -1,9 +1,7 @@
 #if UNITY_IOS
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor.iOS.Xcode;
-using UnityEngine;
 
 namespace GameFrameX.Xcode.Editor
 {
@@ -48,8 +46,7 @@ namespace GameFrameX.Xcode.Editor
                     }
                     else if (vType == typeof(double))
                     {
-                        int v = int.Parse(val.ToString());
-                        node.SetInteger(key, v);
+                        node.SetInteger(key, Convert.ToInt32((double)val));
                     }
                     else if (vType == typeof(ArrayList))
                     {
@@ -85,8 +82,7 @@ namespace GameFrameX.Xcode.Editor
                     }
                     else if (vType == typeof(double))
                     {
-                        int v = int.Parse(val.ToString());
-                        node.AddInteger(v);
+                        node.AddInteger(Convert.ToInt32((double)val));
                     }
                     else if (vType == typeof(ArrayList))
                     {

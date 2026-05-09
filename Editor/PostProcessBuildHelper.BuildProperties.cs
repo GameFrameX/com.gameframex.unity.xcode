@@ -1,8 +1,6 @@
 #if UNITY_IOS
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor.iOS.Xcode;
 
 namespace GameFrameX.Xcode.Editor
