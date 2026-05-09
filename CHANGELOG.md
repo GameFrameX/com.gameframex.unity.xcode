@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.5.1...1.6.0) (2026-05-09)
+
+
+### Features
+
+* **signing:** 添加 Xcode 签名配置支持 ([0c3d5a2](https://github.com/gameframex/com.gameframex.unity.xcode/commit/0c3d5a2a11a9dd622d64fc75eccac4599afbdd75))
+
 ## [1.5.1](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.5.0...1.5.1) (2026-05-09)
 
 
