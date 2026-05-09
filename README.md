@@ -35,6 +35,7 @@ An editor tool that automatically configures Xcode projects after Unity iOS buil
 - **Compile Flags** — Set compile options for specific source files
 - **Linker Flags** — Configure `OTHER_LDFLAGS` etc.
 - **Run Path Search Paths** — Configure runtime search paths
+- **Code Signing** — Configure Team ID, bundle identifier, code sign identity, and provisioning profile
 - **Multi-Config Merge** — Support deep recursive merge of multiple `XCodeConfig.json` files for multi-module collaboration
 
 ## Installation
@@ -76,6 +77,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 
 ```json
 {
+  "signing": {},
   "plist": {},
   "environmentVariables": {},
   "launcherArgs": [],
@@ -89,6 +91,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
+| `signing` | object | Code signing configuration (see below) |
 | `plist` | object | Info.plist key-value pairs, values support any type |
 | `environmentVariables` | object | XcScheme environment variables, both keys and values are strings |
 | `launcherArgs` | string[] | XcScheme launch arguments list |
@@ -221,6 +224,30 @@ Both share the same structure, targeting UnityFramework and Unity-iPhone respect
 }
 ```
 
+### signing — Code Signing
+
+Applied to the Unity-iPhone (main) target only. All fields are optional.
+
+```json
+{
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  }
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `teamId` | string | Apple Developer Team ID (`DEVELOPMENT_TEAM`) |
+| `bundleId` | string | App bundle identifier (`PRODUCT_BUNDLE_IDENTIFIER`) |
+| `codeSignIdentity` | string | Code signing identity, options: `Apple Development`, `Apple Distribution`, `iPhone Developer`, `iPhone Distribution` |
+| `codeSignStyle` | string | Signing style: `Automatic` or `Manual` |
+| `provisioningProfileSpecifier` | string | Provisioning profile name (required for Manual mode) |
+
 ### capabilities — App Capabilities
 
 ```json
@@ -317,6 +344,13 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
 
 ```json
 {
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  },
   "plist": {
     "CFBundleURLTypes": [
       {

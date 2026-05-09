@@ -35,6 +35,7 @@ Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配
 - **编译标志** — 对指定源文件设置编译选项
 - **链接器标志** — 配置 `OTHER_LDFLAGS` 等
 - **Run Path Search Paths** — 配置运行时搜索路径
+- **代码签名** — 配置 Team ID、包名（Bundle Identifier）、签名身份和描述文件
 - **多配置合并** — 支持多个 `XCodeConfig.json` 深度递归合并，适合多模块协作
 
 ## 安装
@@ -76,6 +77,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "signing": {},
   "plist": {},
   "environmentVariables": {},
   "launcherArgs": [],
@@ -89,6 +91,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | 字段 | 类型 | 说明 |
 | :--- | :--- | :--- |
+| `signing` | object | 代码签名配置（详见下方） |
 | `plist` | object | Info.plist 键值对，值支持任意类型 |
 | `environmentVariables` | object | XcScheme 环境变量，键值均为字符串 |
 | `launcherArgs` | string[] | XcScheme 启动参数列表 |
@@ -220,6 +223,30 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   }
 }
 ```
+
+### signing — 代码签名
+
+仅在 Unity-iPhone（主）target 上生效，所有字段均可选。
+
+```json
+{
+  "signing": {
+    "teamId": "XXXXXXXXXX",
+    "bundleId": "com.company.app",
+    "codeSignIdentity": "Apple Development",
+    "codeSignStyle": "Automatic",
+    "provisioningProfileSpecifier": ""
+  }
+}
+```
+
+| 字段 | 类型 | 说明 |
+| :--- | :--- | :--- |
+| `teamId` | string | Apple 开发者团队 ID（`DEVELOPMENT_TEAM`） |
+| `bundleId` | string | 应用包名（`PRODUCT_BUNDLE_IDENTIFIER`） |
+| `codeSignIdentity` | string | 签名身份，可选值：`Apple Development`、`Apple Distribution`、`iPhone Developer`、`iPhone Distribution` |
+| `codeSignStyle` | string | 签名方式：`Automatic`（自动）或 `Manual`（手动） |
+| `provisioningProfileSpecifier` | string | 描述文件名称（仅 Manual 模式需要） |
 
 ### capabilities — 应用能力
 
