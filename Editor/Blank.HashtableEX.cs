@@ -22,9 +22,13 @@ namespace GameFrameX.Xcode.Editor
                 return null;
             }
             else if (inst.ContainsKey(key))
+            {
                 return inst[key];
+            }
             else
+            {
                 return null;
+            }
         }
 
         /// <summary>
@@ -43,9 +47,13 @@ namespace GameFrameX.Xcode.Editor
                 return;
             }
             else if (inst.ContainsKey(key))
+            {
                 inst[key] = value;
+            }
             else
+            {
                 inst.Add(key, value);
+            }
         }
 
         /// <summary>
@@ -75,7 +83,9 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
             else
+            {
                 return default(T);
+            }
         }
 
         /// <summary>
@@ -122,7 +132,9 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -173,17 +185,9 @@ namespace GameFrameX.Xcode.Editor
                     // 如果目标不存在该键，根据类型决定是否需要克隆
                     if (value is Hashtable sourceTable)
                     {
-                        // 创建新的 Hashtable 并深度复制内容，避免引用污染
-                        // 这里为了简化，我们调用 Clone。虽然 Hashtable.Clone 是浅拷贝，但对于我们的一层结构合并足够。
-                        // 如果需要完全深度克隆，需要另外实现。但在合并配置的场景下，
-                        // 通常我们是将多个配置合并到一个新的空配置中，或者合并到一个已有的配置中。
-                        // 如果直接赋值引用，后续修改 target[key] 会影响 sourceTable。
-                        // 在当前场景下，source 是从 JSON 解析出来的临时对象，所以直接赋值引用通常是安全的。
-                        // 但为了保险起见，可以手动复制。
-                        // 考虑到 JSON 解析出的 Hashtable 包含的也是基本类型或 ArrayList/Hashtable。
-                        
-                        // 简单处理：直接赋值。因为 source 通常是一次性的。
-                        target[key] = value; 
+                        var cloned = new Hashtable();
+                        cloned.Merge(sourceTable);
+                        target[key] = cloned;
                     }
                     else if (value is ArrayList sourceList)
                     {
