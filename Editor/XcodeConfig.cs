@@ -241,6 +241,36 @@ namespace GameFrameX.Xcode.Editor
         /// 关联域名
         /// </summary>
         [Header("Associated Domains")] [SerializeField] public string[] associatedDomains = new string[0];
+
+        /// <summary>
+        /// Keychain Sharing
+        /// </summary>
+        [Header("Keychain Sharing")] [SerializeField] public bool keychainSharing = false;
+
+        /// <summary>
+        /// Keychain Sharing 访问组
+        /// </summary>
+        [Header("Keychain Sharing Access Groups")] [SerializeField] public string[] keychainSharingAccessGroups = new string[0];
+
+        /// <summary>
+        /// HealthKit
+        /// </summary>
+        [Header("HealthKit")] [SerializeField] public bool healthKit = false;
+
+        /// <summary>
+        /// Siri
+        /// </summary>
+        [Header("Siri")] [SerializeField] public bool siri = false;
+
+        /// <summary>
+        /// Personal VPN
+        /// </summary>
+        [Header("Personal VPN")] [SerializeField] public bool personalVPN = false;
+
+        /// <summary>
+        /// Data Protection
+        /// </summary>
+        [Header("Data Protection")] [SerializeField] public bool dataProtection = false;
     }
 
 

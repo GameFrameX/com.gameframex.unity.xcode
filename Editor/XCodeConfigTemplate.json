@@ -66,7 +66,17 @@
     "tip6": "App Groups，字符串数组",
     "appGroups": [],
     "tip7": "Associated Domains，字符串数组",
-    "associatedDomains": []
+    "associatedDomains": [],
+    "tip8": "Keychain Sharing，布尔值或对象（含accessGroups字符串数组）",
+    "keychainSharing": false,
+    "tip9": "HealthKit功能，布尔值",
+    "healthKit": false,
+    "tip10": "Siri功能，布尔值",
+    "siri": false,
+    "tip13": "Personal VPN功能，布尔值",
+    "personalVPN": false,
+    "tip14": "Data Protection功能，布尔值",
+    "dataProtection": false
   },
   "localizations": [
     {

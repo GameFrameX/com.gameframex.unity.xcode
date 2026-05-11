@@ -200,6 +200,34 @@ namespace GameFrameX.Xcode.Editor
                     }
                 }
 
+                // HealthKit
+                if (hashtable.ContainsKey("healthKit") && hashtable["healthKit"] is bool healthKit && healthKit)
+                {
+                    projectCapabilityManager.AddHealthKit();
+                    Debug.Log("已添加 HealthKit Capability");
+                }
+
+                // Siri
+                if (hashtable.ContainsKey("siri") && hashtable["siri"] is bool siri && siri)
+                {
+                    projectCapabilityManager.AddSiri();
+                    Debug.Log("已添加 Siri Capability");
+                }
+
+                // Personal VPN
+                if (hashtable.ContainsKey("personalVPN") && hashtable["personalVPN"] is bool personalVPN && personalVPN)
+                {
+                    projectCapabilityManager.AddPersonalVPN();
+                    Debug.Log("已添加 Personal VPN Capability");
+                }
+
+                // Data Protection
+                if (hashtable.ContainsKey("dataProtection") && hashtable["dataProtection"] is bool dataProtection && dataProtection)
+                {
+                    projectCapabilityManager.AddDataProtection();
+                    Debug.Log("已添加 Data Protection Capability");
+                }
+
                 projectCapabilityManager.WriteToFile();
             }
             catch (Exception e)

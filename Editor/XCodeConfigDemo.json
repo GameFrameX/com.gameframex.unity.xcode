@@ -100,7 +100,12 @@
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   },
   "unityFramework": {
     "libs": {
