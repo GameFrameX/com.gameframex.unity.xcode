@@ -48,6 +48,17 @@ namespace GameFrameX.Xcode.Editor
             {
                 Debug.LogFormat("add framework or bundle to build:{0}->{1}", currDir, root);
                 proj.AddFileToBuild(targetGuid, proj.AddFile(currDir, root, PBXSourceTree.Source));
+                // 添加为 linked framework
+                proj.AddFrameworkToProject(targetGuid, root, false);
+                return;
+            }
+
+            if (root.EndsWith(".a"))
+            {
+                Debug.LogFormat("add static library to build:{0}->{1}", currDir, root);
+                // 静态库添加到 Link Binary With Libraries 阶段
+                string fileGuid = proj.AddFile(currDir, root, PBXSourceTree.Source);
+                proj.AddFileToBuild(targetGuid, fileGuid);
                 return;
             }
 
@@ -60,7 +71,19 @@ namespace GameFrameX.Xcode.Editor
                 if (folder.EndsWith(".framework") || folder.EndsWith(".bundle"))
                 {
                     Debug.LogFormat("add framework or bundle to build:{0}->{1}", filePath, projectPath);
-                    proj.AddFileToBuild(targetGuid, proj.AddFile(filePath, projectPath, PBXSourceTree.Source));
+                    string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
+                    proj.AddFileToBuild(targetGuid, fileGuid);
+                    if (folder.EndsWith(".framework"))
+                    {
+                        proj.AddFrameworkToProject(targetGuid, name, false);
+                    }
+                    AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
+                }
+                else if (folder.EndsWith(".a"))
+                {
+                    Debug.LogFormat("add static library to build:{0}->{1}", filePath, projectPath);
+                    string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
+                    proj.AddFileToBuild(targetGuid, fileGuid);
                     AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
                 }
                 else
@@ -77,9 +100,31 @@ namespace GameFrameX.Xcode.Editor
                     string name = Path.GetFileName(file);
                     string filePath = Path.Combine(currDir, name);
                     string projectPath = Path.Combine(root, name);
-                    proj.AddFileToBuild(targetGuid, proj.AddFile(filePath, projectPath, PBXSourceTree.Source));
-                    AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
-                    Debug.Log("add file to build:" + Path.Combine(root, file));
+
+                    if (file.EndsWith(".framework") || file.EndsWith(".bundle"))
+                    {
+                        Debug.LogFormat("add framework or bundle to build:{0}->{1}", filePath, projectPath);
+                        string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
+                        proj.AddFileToBuild(targetGuid, fileGuid);
+                        if (file.EndsWith(".framework"))
+                        {
+                            proj.AddFrameworkToProject(targetGuid, name, false);
+                        }
+                        AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
+                    }
+                    else if (file.EndsWith(".a"))
+                    {
+                        Debug.LogFormat("add static library to build:{0}->{1}", filePath, projectPath);
+                        string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
+                        proj.AddFileToBuild(targetGuid, fileGuid);
+                        AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
+                    }
+                    else
+                    {
+                        proj.AddFileToBuild(targetGuid, proj.AddFile(filePath, projectPath, PBXSourceTree.Source));
+                        AutoAddSearchPath(proj, xcodePath, targetGuid, filePath);
+                        Debug.Log("add file to build:" + Path.Combine(root, file));
+                    }
                 }
             }
         }
