@@ -109,6 +109,8 @@ namespace GameFrameX.Xcode.Editor
             SetBuildProperties(pbxProject, targetGuid, hashtable.Get<Hashtable>("properties"));
             // 设置框架
             SetFrameworks(pbxProject, targetGuid, hashtable.Get<Hashtable>("frameworks"));
+            // 设置系统库
+            SetLibs(pbxProject, targetGuid, hashtable.Get<Hashtable>("libs"));
             // 复制文件
             RunCopyFiles(pbxProject, targetGuid, path, hashtable.Get<Hashtable>("files"));
             // 复制文件夹
