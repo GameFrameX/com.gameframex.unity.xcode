@@ -82,7 +82,9 @@ namespace GameFrameX.Xcode.Editor
                 RunArgument(path, finalConfig.Get("launcherArgs") as ArrayList);
 
                 // 设置Capabilities (只在主项目上设置)
-                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"));
+                var signingConfig = finalConfig.Get<Hashtable>("signing");
+                string bundleId = signingConfig != null ? signingConfig.Get("bundleId") as string : null;
+                SetCapabilities(project, project.GetUnityMainTargetGuid(), path, finalConfig.Get<Hashtable>("capabilities"), bundleId);
 
                 // Capabilities 通过 ProjectCapabilityManager 独立写盘，需要重新读取以保留其修改
                 project = new PBXProject();

@@ -15,7 +15,7 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="targetGuid">目标GUID</param>
         /// <param name="path">项目路径</param>
         /// <param name="hashtable">配置数据</param>
-        static void SetCapabilities(PBXProject pbxProject, string targetGuid, string path, Hashtable hashtable)
+        static void SetCapabilities(PBXProject pbxProject, string targetGuid, string path, Hashtable hashtable, string bundleId)
         {
             try
             {
@@ -147,6 +147,39 @@ namespace GameFrameX.Xcode.Editor
 
                         projectCapabilityManager.AddAppGroups(groups);
                         Debug.Log($"已添加 App Groups Capability: {string.Join(", ", groups)}");
+                    }
+                }
+
+                // Keychain Sharing
+                if (hashtable.ContainsKey("keychainSharing"))
+                {
+                    var keychainValue = hashtable["keychainSharing"];
+                    string[] groups = null;
+
+                    if (keychainValue is bool b && b)
+                    {
+                        if (!string.IsNullOrEmpty(bundleId))
+                        {
+                            groups = new string[] { "$(AppIdentifierPrefix)" + bundleId };
+                        }
+                    }
+                    else if (keychainValue is Hashtable keychainConfig)
+                    {
+                        var accessGroups = keychainConfig["accessGroups"] as ArrayList;
+                        if (accessGroups != null && accessGroups.Count > 0)
+                        {
+                            groups = new string[accessGroups.Count];
+                            for (int i = 0; i < accessGroups.Count; i++)
+                            {
+                                groups[i] = accessGroups[i].ToString();
+                            }
+                        }
+                    }
+
+                    if (groups != null && groups.Length > 0)
+                    {
+                        projectCapabilityManager.AddKeychainSharing(groups);
+                        Debug.Log($"已添加 Keychain Sharing Capability: {string.Join(", ", groups)}");
                     }
                 }
 
