@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.6.0...1.7.0) (2026-05-11)
+
+
+### Features
+
+* **capabilities:** 扩展 HealthKit/Siri/VPN/DataProtection 支持 ([7e92d74](https://github.com/gameframex/com.gameframex.unity.xcode/commit/7e92d744f9360d74189ba3974f60390ee16de583))
+* **capabilities:** 添加 Keychain Sharing 支持 ([932f233](https://github.com/gameframex/com.gameframex.unity.xcode/commit/932f23303a03279e45ef7f113f45cd45fb9288d7))
+
 # [1.6.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.5.1...1.6.0) (2026-05-09)
 
 
