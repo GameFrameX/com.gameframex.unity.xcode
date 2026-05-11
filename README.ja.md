@@ -27,7 +27,7 @@ Unity iOS ビルド後に Xcode プロジェクトを自動設定するエディ
 - **Info.plist** — 文字列、ブール値、整数、配列、辞書などの型をサポート、再帰的に書き込み
 - **システムフレームワーク/ライブラリ** — `.framework` / `.tbd` の自動追加・削除
 - **ビルドプロパティ** — Build Settings の設定・追加・削除（`ENABLE_BITCODE`、`GCC_ENABLE_OBJC_EXCEPTIONS` など）
-- **Capabilities** — アプリ内課金、Game Center、プッシュ通知、Sign In with Apple、バックグラウンドモード、iCloud、App Groups、Associated Domains
+- **Capabilities** — アプリ内課金、Game Center、プッシュ通知、Sign In with Apple、バックグラウンドモード、iCloud、App Groups、Associated Domains、Keychain Sharing、HealthKit、Siri、Personal VPN、Data Protection
 - **ローカライズ** — `.lproj/InfoPlist.strings` の自動生成、アプリ名の多言語対応
 - **CocoaPods** — Podfile デフォルトソースの置き換え、複数ミラーソースの設定
 - **XcScheme** — 環境変数と起動引数の注入
@@ -264,7 +264,12 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   }
 }
 ```
@@ -281,6 +286,11 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
 | `iCloud.customContainers` | string[] | iCloud カスタムコンテナ |
 | `appGroups` | string[] | App Group 識別子 |
 | `associatedDomains` | string[] | 関連ドメイン（Universal Links） |
+| `keychainSharing` | bool または object | Keychain Sharing。`false` で無効、`true` でデフォルトグループ、または `{"accessGroups": ["group1"]}` でカスタムグループを指定 |
+| `healthKit` | bool | HealthKit ヘルスデータアクセス |
+| `siri` | bool | Siri（SiriKit 統合） |
+| `personalVPN` | bool | Personal VPN（アプリごとの VPN） |
+| `dataProtection` | bool | Data Protection（ファイルレベルの暗号化） |
 
 ### localizations — ローカライズ
 
@@ -416,7 +426,12 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   },
   "unityFramework": {
     "libs": {

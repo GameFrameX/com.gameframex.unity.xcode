@@ -27,7 +27,7 @@ Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配
 - **Info.plist** — 支持字符串、布尔、整数、数组、字典等类型，递归写入
 - **系统框架/库** — 自动添加或移除 `.framework` / `.tbd`
 - **构建属性** — 设置、追加、移除 Build Settings（如 `ENABLE_BITCODE`、`GCC_ENABLE_OBJC_EXCEPTIONS`）
-- **Capabilities** — 内购、Game Center、推送、Sign In with Apple、后台模式、iCloud、App Groups、Associated Domains
+- **Capabilities** — 内购、Game Center、推送、Sign In with Apple、后台模式、iCloud、App Groups、Associated Domains、Keychain Sharing、HealthKit、Siri、Personal VPN、Data Protection
 - **本地化** — 自动生成 `.lproj/InfoPlist.strings`，支持应用名多语言
 - **CocoaPods** — 替换 Podfile 默认源，支持配置多个镜像源
 - **XcScheme** — 注入环境变量和启动参数
@@ -264,7 +264,12 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   }
 }
 ```
@@ -281,6 +286,11 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `iCloud.customContainers` | string[] | iCloud 自定义容器 |
 | `appGroups` | string[] | App Groups 标识符 |
 | `associatedDomains` | string[] | 关联域名（Universal Links） |
+| `keychainSharing` | bool 或 object | Keychain Sharing。`false` 禁用，`true` 使用默认分组，或 `{"accessGroups": ["group1"]}` 指定自定义分组 |
+| `healthKit` | bool | HealthKit 健康数据访问 |
+| `siri` | bool | Siri 语音助手集成 |
+| `personalVPN` | bool | Personal VPN 个人 VPN |
+| `dataProtection` | bool | Data Protection 文件级加密 |
 
 ### localizations — 本地化
 
@@ -416,7 +426,12 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   },
   "unityFramework": {
     "libs": {

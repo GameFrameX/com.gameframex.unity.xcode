@@ -27,7 +27,7 @@ An editor tool that automatically configures Xcode projects after Unity iOS buil
 - **Info.plist** — Supports string, boolean, integer, array, dictionary types with recursive writing
 - **System Frameworks/Libraries** — Automatically add or remove `.framework` / `.tbd`
 - **Build Properties** — Set, append, or remove Build Settings (e.g. `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
-- **Capabilities** — In-App Purchase, Game Center, Push Notifications, Sign In with Apple, Background Modes, iCloud, App Groups, Associated Domains
+- **Capabilities** — In-App Purchase, Game Center, Push Notifications, Sign In with Apple, Background Modes, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **Localization** — Auto-generate `.lproj/InfoPlist.strings` with multi-language app name support
 - **CocoaPods** — Replace Podfile default source, support multiple mirror sources
 - **XcScheme** — Inject environment variables and launch arguments
@@ -264,7 +264,12 @@ Applied to the Unity-iPhone (main) target only. All fields are optional.
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   }
 }
 ```
@@ -281,6 +286,11 @@ Applied to the Unity-iPhone (main) target only. All fields are optional.
 | `iCloud.customContainers` | string[] | iCloud custom containers |
 | `appGroups` | string[] | App Group identifiers |
 | `associatedDomains` | string[] | Associated domains (Universal Links) |
+| `keychainSharing` | bool or object | Keychain Sharing. `false` to disable, `true` for default group, or `{"accessGroups": ["group1"]}` for custom groups |
+| `healthKit` | bool | HealthKit |
+| `siri` | bool | Siri (SiriKit integration) |
+| `personalVPN` | bool | Personal VPN (per-app VPN) |
+| `dataProtection` | bool | Data Protection (file-level encryption) |
 
 ### localizations — Localization
 
@@ -416,7 +426,12 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   },
   "unityFramework": {
     "libs": {

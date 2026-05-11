@@ -27,7 +27,7 @@ Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 �
 - **Info.plist** — 문자열, 불리언, 정수, 배열, 딕셔너리 등의 타입을 지원하며 재귀적으로 작성
 - **시스템 프레임워크/라이브러리** — `.framework` / `.tbd` 자동 추가 및 제거
 - **빌드 속성** — Build Settings 설정, 추가, 제거 (예: `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
-- **Capabilities** — 인앱 결제, Game Center, 푸시 알림, Sign In with Apple, 백그라운드 모드, iCloud, App Groups, Associated Domains
+- **Capabilities** — 인앱 결제, Game Center, 푸시 알림, Sign In with Apple, 백그라운드 모드, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **현지화** — `.lproj/InfoPlist.strings` 자동 생성, 앱 이름 다국어 지원
 - **CocoaPods** — Podfile 기본 소스 교체, 여러 미러 소스 구성 지원
 - **XcScheme** — 환경 변수 및 실행 인수 주입
@@ -264,7 +264,12 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   }
 }
 ```
@@ -281,6 +286,11 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
 | `iCloud.customContainers` | string[] | iCloud 커스텀 컨테이너 |
 | `appGroups` | string[] | App Group 식별자 |
 | `associatedDomains` | string[] | 연관 도메인 (Universal Links) |
+| `keychainSharing` | bool 또는 object | Keychain Sharing. `false` 비활성화, `true` 기본 그룹 사용, 또는 `{"accessGroups": ["group1"]}` 커스텀 그룹 지정 |
+| `healthKit` | bool | HealthKit 건강 데이터 접근 |
+| `siri` | bool | Siri(SiriKit 통합) |
+| `personalVPN` | bool | Personal VPN(앱별 VPN) |
+| `dataProtection` | bool | Data Protection(파일 수준 암호화) |
 
 ### localizations — 현지화
 
@@ -416,7 +426,12 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
       "customContainers": []
     },
     "appGroups": [],
-    "associatedDomains": []
+    "associatedDomains": [],
+    "keychainSharing": false,
+    "healthKit": false,
+    "siri": false,
+    "personalVPN": false,
+    "dataProtection": false
   },
   "unityFramework": {
     "libs": {
