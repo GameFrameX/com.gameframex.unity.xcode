@@ -209,20 +209,24 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 ```json
 {
   "otherLinkerFlag": {
-    "OTHER_LDFLAGS": "-ObjC"
+    "OTHER_LDFLAGS": ["-ObjC"]
   }
 }
 ```
+
+- 值支持字符串和数组两种格式，推荐使用数组格式以确保多配置合并时正确去重合并
 
 #### runPathSearchPaths — 运行时搜索路径
 
 ```json
 {
   "runPathSearchPaths": {
-    "LD_RUNPATH_SEARCH_PATHS": "@executable_path/Frameworks"
+    "LD_RUNPATH_SEARCH_PATHS": ["@executable_path/Frameworks"]
   }
 }
 ```
+
+- 值支持字符串和数组两种格式，推荐使用数组格式以确保多配置合并时正确去重合并
 
 ### signing — 代码签名
 
@@ -453,7 +457,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}
@@ -473,7 +477,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
       "-": {}
     },
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}

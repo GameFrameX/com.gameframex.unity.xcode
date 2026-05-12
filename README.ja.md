@@ -209,20 +209,24 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 ```json
 {
   "otherLinkerFlag": {
-    "OTHER_LDFLAGS": "-ObjC"
+    "OTHER_LDFLAGS": ["-ObjC"]
   }
 }
 ```
+
+- 値は文字列と配列の両方をサポートします。複数設定のマージ時に正しく重複排除されるため、配列形式を推奨します
 
 #### runPathSearchPaths — ランタイム検索パス
 
 ```json
 {
   "runPathSearchPaths": {
-    "LD_RUNPATH_SEARCH_PATHS": "@executable_path/Frameworks"
+    "LD_RUNPATH_SEARCH_PATHS": ["@executable_path/Frameworks"]
   }
 }
 ```
+
+- 値は文字列と配列の両方をサポートします。複数設定のマージ時に正しく重複排除されるため、配列形式を推奨します
 
 ### signing — コード署名
 
@@ -453,7 +457,7 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}
@@ -473,7 +477,7 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
       "-": {}
     },
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}

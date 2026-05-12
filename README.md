@@ -209,20 +209,24 @@ Both share the same structure, targeting UnityFramework and Unity-iPhone respect
 ```json
 {
   "otherLinkerFlag": {
-    "OTHER_LDFLAGS": "-ObjC"
+    "OTHER_LDFLAGS": ["-ObjC"]
   }
 }
 ```
+
+- Values support both string and array format; array format is recommended for proper multi-config merging
 
 #### runPathSearchPaths — Runtime Search Paths
 
 ```json
 {
   "runPathSearchPaths": {
-    "LD_RUNPATH_SEARCH_PATHS": "@executable_path/Frameworks"
+    "LD_RUNPATH_SEARCH_PATHS": ["@executable_path/Frameworks"]
   }
 }
 ```
+
+- Values support both string and array format; array format is recommended for proper multi-config merging
 
 ### signing — Code Signing
 
@@ -453,7 +457,7 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}
@@ -473,7 +477,7 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
       "-": {}
     },
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}

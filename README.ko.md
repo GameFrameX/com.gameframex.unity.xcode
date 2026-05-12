@@ -209,20 +209,24 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 ```json
 {
   "otherLinkerFlag": {
-    "OTHER_LDFLAGS": "-ObjC"
+    "OTHER_LDFLAGS": ["-ObjC"]
   }
 }
 ```
+
+- 문자열과 배열 형식 모두 지원합니다. 다중 설정 병합 시 올바른 중복 제거를 위해 배열 형식을 권장합니다
 
 #### runPathSearchPaths — 런타임 검색 경로
 
 ```json
 {
   "runPathSearchPaths": {
-    "LD_RUNPATH_SEARCH_PATHS": "@executable_path/Frameworks"
+    "LD_RUNPATH_SEARCH_PATHS": ["@executable_path/Frameworks"]
   }
 }
 ```
+
+- 문자열과 배열 형식 모두 지원합니다. 다중 설정 병합 시 올바른 중복 제거를 위해 배열 형식을 권장합니다
 
 ### signing — 코드 서명
 
@@ -453,7 +457,7 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}
@@ -468,12 +472,12 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
       "-": []
     },
     "properties": {
-      "=": { "ENABLE_BITCODE": "NO" },
+      "="": { "ENABLE_BITCODE": "NO" },
       "+": {},
       "-": {}
     },
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {},
     "folders": {}
