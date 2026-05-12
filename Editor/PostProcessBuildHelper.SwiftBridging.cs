@@ -40,9 +40,7 @@ namespace GameFrameX.Xcode.Editor
             proj.SetBuildProperty(mainTargetGuid, "SWIFT_VERSION", "5.0");
             proj.SetBuildProperty(mainTargetGuid, "SWIFT_OBJC_BRIDGING_HEADER", SwiftBridgingHeaderName);
 
-            proj.AddFileToBuild(frameworkTargetGuid, proj.AddFile(swiftFile, SwiftBridgingFileName, PBXSourceTree.Source));
             proj.SetBuildProperty(frameworkTargetGuid, "SWIFT_VERSION", "5.0");
-            proj.SetBuildProperty(frameworkTargetGuid, "SWIFT_OBJC_BRIDGING_HEADER", SwiftBridgingHeaderName);
 
             LogHelper.Log("[SwiftBridging] Swift bridging header configured");
         }
