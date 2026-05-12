@@ -1,5 +1,6 @@
 #if UNITY_IOS
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -48,6 +49,106 @@ namespace GameFrameX.Xcode.Editor
 
             File.WriteAllText(podfilePath, stringBuilder.ToString());
             LogHelper.Log("修改PodFile 文件的源,  结束");
+        }
+
+        private static void AddPods(PBXProject proj, string path, ArrayList podSource, Hashtable pods)
+        {
+            if (pods == null || pods.Count <= 0) return;
+
+            string podfilePath = path + "/Podfile";
+            if (!File.Exists(podfilePath))
+            {
+                var iosVersion = proj.GetBuildProperty(proj.GetUnityMainTargetGuid(), "IPHONEOS_DEPLOYMENT_TARGET");
+                if (string.IsNullOrEmpty(iosVersion)) iosVersion = "12.0";
+
+                var sourceBuilder = new StringBuilder();
+                if (podSource != null && podSource.Count > 0)
+                {
+                    foreach (var source in podSource)
+                    {
+                        sourceBuilder.AppendLine($"source '{source}'");
+                    }
+                }
+                else
+                {
+                    sourceBuilder.AppendLine("source 'https://github.com/CocoaPods/Specs.git'");
+                }
+
+                File.WriteAllText(podfilePath,
+                    sourceBuilder.ToString() +
+                    $"platform :ios, '{iosVersion}'\n" +
+                    "\n" +
+                    "target 'Unity-iPhone' do\n" +
+                    "end\n");
+                LogHelper.Log($"[Pods] 自动创建 Podfile (iOS {iosVersion})");
+            }
+
+            var lines = new List<string>(File.ReadAllLines(podfilePath));
+
+            // 收集已有的 pod 名称用于去重
+            var existingPods = new System.Collections.Generic.HashSet<string>();
+            foreach (var line in lines)
+            {
+                var trimmed = line.Trim();
+                if (trimmed.StartsWith("pod "))
+                {
+                    var podContent = trimmed.Substring(4).Trim();
+                    if (podContent.StartsWith("'") || podContent.StartsWith("\""))
+                    {
+                        var quoteEnd = podContent.IndexOf(podContent[0], 1);
+                        if (quoteEnd > 0)
+                        {
+                            existingPods.Add(podContent.Substring(1, quoteEnd - 1));
+                        }
+                    }
+                }
+            }
+
+            // 查找 target 'Unity-iPhone' do 行
+            int targetIndex = -1;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].Trim().StartsWith("target") && lines[i].Contains("Unity-iPhone") && lines[i].TrimEnd().EndsWith("do"))
+                {
+                    targetIndex = i;
+                    break;
+                }
+            }
+
+            if (targetIndex < 0)
+            {
+                LogHelper.Warning("[Pods] 未找到 target 'Unity-iPhone' do, 跳过设置");
+                return;
+            }
+
+            // 构建 pod 行
+            var podLines = new System.Collections.Generic.List<string>();
+            foreach (DictionaryEntry kv in pods)
+            {
+                var podName = kv.Key.ToString().Trim();
+                if (existingPods.Contains(podName)) continue;
+
+                var version = kv.Value?.ToString()?.Trim();
+                if (string.IsNullOrEmpty(version))
+                {
+                    podLines.Add($"  pod '{podName}'");
+                }
+                else if (version.Contains("=>") || version.StartsWith(":"))
+                {
+                    podLines.Add($"  pod '{podName}', {version}");
+                }
+                else
+                {
+                    podLines.Add($"  pod '{podName}', '{version}'");
+                }
+            }
+
+            if (podLines.Count == 0) return;
+
+            // 插入到 target 行之后
+            lines.InsertRange(targetIndex + 1, podLines);
+            File.WriteAllLines(podfilePath, lines.ToArray());
+            LogHelper.Log($"[Pods] 已添加 {podLines.Count} 个 pod 依赖");
         }
     }
 }

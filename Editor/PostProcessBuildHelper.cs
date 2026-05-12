@@ -98,7 +98,9 @@ namespace GameFrameX.Xcode.Editor
                 RunLocalization(project, project.ProjectGuid(), path, finalConfig.Get("localizations") as ArrayList);
 
                 // PodFile
-                RunPodfile(path, finalConfig.Get("podSource") as ArrayList);
+                var podSourceList = finalConfig.Get("podSource") as ArrayList;
+                RunPodfile(path, podSourceList);
+                AddPods(project, path, podSourceList, finalConfig.Get<Hashtable>("pods"));
             }
             catch (Exception e)
             {
