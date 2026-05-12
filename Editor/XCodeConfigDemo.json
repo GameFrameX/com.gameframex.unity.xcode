@@ -1,4 +1,5 @@
 {
+  "swiftBridging": true,
   "signing": {
     "teamId": "XXXXXXXXXX",
     "bundleId": "com.company.app",

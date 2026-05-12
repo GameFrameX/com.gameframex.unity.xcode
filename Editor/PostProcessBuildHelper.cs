@@ -68,6 +68,10 @@ namespace GameFrameX.Xcode.Editor
                 // 设置签名配置（只在主项目上设置）
                 SetSigning(project, project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("signing"));
 
+                // 设置 Swift 桥接（默认开启）
+                bool swiftBridging = !finalConfig.ContainsKey("swiftBridging") || finalConfig.Get<bool>("swiftBridging");
+                SetupSwiftBridging(project, project.GetUnityMainTargetGuid(), project.GetUnityFrameworkTargetGuid(), path, swiftBridging);
+
                 // 保存 PBXProject
                 File.WriteAllText(projectPath, project.WriteToString());
 

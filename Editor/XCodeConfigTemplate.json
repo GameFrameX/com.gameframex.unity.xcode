@@ -1,4 +1,6 @@
 {
+  "tip_swiftBridging": "是否启用 Swift 桥接，自动创建空 Swift 文件和桥接头文件，默认开启",
+  "swiftBridging": true,
   "tip_signing": "签名配置，只在主项目上设置，所有字段均可选",
   "signing": {
     "tip0": "Apple Developer Team ID",
