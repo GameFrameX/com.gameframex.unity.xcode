@@ -100,7 +100,7 @@ namespace GameFrameX.Xcode.Editor
                 // PodFile
                 var podSourceList = finalConfig.Get("podSource") as ArrayList;
                 RunPodfile(path, podSourceList);
-                AddPods(project, path, podSourceList, finalConfig.Get<Hashtable>("pods"));
+                AddPods(path, podSourceList, finalConfig.Get<Hashtable>("pods"));
             }
             catch (Exception e)
             {

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using UnityEditor;
+using UnityEditor.iOS.Xcode;
 
 namespace GameFrameX.Xcode.Editor
 {
@@ -51,15 +53,21 @@ namespace GameFrameX.Xcode.Editor
             LogHelper.Log("修改PodFile 文件的源,  结束");
         }
 
-        private static void AddPods(PBXProject proj, string path, ArrayList podSource, Hashtable pods)
+        private static void AddPods(string path, ArrayList podSource, Hashtable pods)
         {
-            if (pods == null || pods.Count <= 0) return;
+            if (pods == null || pods.Count <= 0)
+            {
+                return;
+            }
 
-            string podfilePath = path + "/Podfile";
+            var podfilePath = path + "/Podfile";
             if (!File.Exists(podfilePath))
             {
-                var iosVersion = proj.GetBuildProperty(proj.GetUnityMainTargetGuid(), "IPHONEOS_DEPLOYMENT_TARGET");
-                if (string.IsNullOrEmpty(iosVersion)) iosVersion = "12.0";
+                var iosVersion = PlayerSettings.iOS.targetOSVersionString;
+                if (string.IsNullOrEmpty(iosVersion))
+                {
+                    iosVersion = "12.0";
+                }
 
                 var sourceBuilder = new StringBuilder();
                 if (podSource != null && podSource.Count > 0)
