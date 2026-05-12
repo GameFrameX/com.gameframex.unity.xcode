@@ -34,7 +34,10 @@ namespace GameFrameX.Xcode.Editor
                         }
                     }
 
-                    proj.AddBuildProperty(targetGuid, keyStr, string.Join(" ", parts));
+                    foreach (var part in parts)
+                    {
+                        proj.AddBuildProperty(targetGuid, keyStr, part);
+                    }
                 }
                 else
                 {
