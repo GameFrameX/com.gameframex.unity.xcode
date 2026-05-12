@@ -60,7 +60,7 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="filePath">文件路径</param>
         private static void AutoAddSearchPath(PBXProject proj, string xcodePath, string targetGuid, string filePath)
         {
-            if (filePath.EndsWith(".framework"))
+            if (filePath.EndsWith(".framework") || filePath.EndsWith(".xcframework"))
             {
                 //添加框架搜索路径
                 string addStr = "$PROJECT_DIR" + Path.GetDirectoryName(filePath.Replace(xcodePath, string.Empty));

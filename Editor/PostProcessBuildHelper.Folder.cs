@@ -44,9 +44,9 @@ namespace GameFrameX.Xcode.Editor
         {
             //获得源文件下所有目录文件
             string currDir = Path.Combine(xcodePath, root);
-            if (root.EndsWith(".framework") || root.EndsWith(".bundle"))
+            if (root.EndsWith(".framework") || root.EndsWith(".bundle") || root.EndsWith(".xcframework"))
             {
-                Debug.LogFormat("add framework or bundle to build:{0}->{1}", currDir, root);
+                Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", currDir, root);
                 proj.AddFileToBuild(targetGuid, proj.AddFile(currDir, root, PBXSourceTree.Source));
                 // 添加为 linked framework
                 proj.AddFrameworkToProject(targetGuid, root, false);
@@ -68,12 +68,12 @@ namespace GameFrameX.Xcode.Editor
                 string name = Path.GetFileName(folder);
                 string filePath = Path.Combine(currDir, name);
                 string projectPath = Path.Combine(root, name);
-                if (folder.EndsWith(".framework") || folder.EndsWith(".bundle"))
+                if (folder.EndsWith(".framework") || folder.EndsWith(".bundle") || folder.EndsWith(".xcframework"))
                 {
-                    Debug.LogFormat("add framework or bundle to build:{0}->{1}", filePath, projectPath);
+                    Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", filePath, projectPath);
                     string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
                     proj.AddFileToBuild(targetGuid, fileGuid);
-                    if (folder.EndsWith(".framework"))
+                    if (folder.EndsWith(".framework") || folder.EndsWith(".xcframework"))
                     {
                         proj.AddFrameworkToProject(targetGuid, name, false);
                     }
@@ -101,12 +101,12 @@ namespace GameFrameX.Xcode.Editor
                     string filePath = Path.Combine(currDir, name);
                     string projectPath = Path.Combine(root, name);
 
-                    if (file.EndsWith(".framework") || file.EndsWith(".bundle"))
+                    if (file.EndsWith(".framework") || file.EndsWith(".bundle") || file.EndsWith(".xcframework"))
                     {
-                        Debug.LogFormat("add framework or bundle to build:{0}->{1}", filePath, projectPath);
+                        Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", filePath, projectPath);
                         string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
                         proj.AddFileToBuild(targetGuid, fileGuid);
-                        if (file.EndsWith(".framework"))
+                        if (file.EndsWith(".framework") || file.EndsWith(".xcframework"))
                         {
                             proj.AddFrameworkToProject(targetGuid, name, false);
                         }
