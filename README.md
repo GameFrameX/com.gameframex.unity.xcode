@@ -36,6 +36,7 @@ An editor tool that automatically configures Xcode projects after Unity iOS buil
 - **Linker Flags** — Configure `OTHER_LDFLAGS` etc.
 - **Run Path Search Paths** — Configure runtime search paths
 - **Code Signing** — Configure Team ID, bundle identifier, code sign identity, and provisioning profile
+- **Swift Bridging** — Auto-create Swift bridging header for Objective-C/Swift interop, CI-friendly with no Xcode prompts
 - **Multi-Config Merge** — Support deep recursive merge of multiple `XCodeConfig.json` files for multi-module collaboration
 
 ## Installation
@@ -77,6 +78,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {},
   "plist": {},
   "environmentVariables": {},
@@ -91,6 +93,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
+| `swiftBridging` | bool | Enable Swift bridging header auto-generation (default: `true`) |
 | `signing` | object | Code signing configuration (see below) |
 | `plist` | object | Info.plist key-value pairs, values support any type |
 | `environmentVariables` | object | XcScheme environment variables, both keys and values are strings |
@@ -252,6 +255,20 @@ Applied to the Unity-iPhone (main) target only. All fields are optional.
 | `codeSignStyle` | string | Signing style: `Automatic` or `Manual` |
 | `provisioningProfileSpecifier` | string | Provisioning profile name (required for Manual mode) |
 
+### swiftBridging — Swift Bridging Header
+
+Applied to the Unity-iPhone (main) target only. When enabled (default), automatically creates a Swift file and bridging header for Objective-C/Swift interoperability. No Xcode prompts — suitable for CI environments.
+
+```json
+{
+  "swiftBridging": true
+}
+```
+
+- Default is `true`; set to `false` to disable
+- Creates `gameframex_swift_bridging.swift` and `Unity-iPhone-Bridging-Header.h` in the Xcode project
+- Sets `SWIFT_VERSION` to `5.0` and configures `SWIFT_OBJC_BRIDGING_HEADER`
+
 ### capabilities — App Capabilities
 
 ```json
@@ -358,6 +375,7 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {
     "teamId": "XXXXXXXXXX",
     "bundleId": "com.company.app",

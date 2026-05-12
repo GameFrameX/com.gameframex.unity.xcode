@@ -36,6 +36,7 @@ Unity iOS ビルド後に Xcode プロジェクトを自動設定するエディ
 - **リンカフラグ** — `OTHER_LDFLAGS` などの設定
 - **Run Path Search Paths** — ランタイム検索パスの設定
 - **コード署名** — Team ID、バンドル ID（Bundle Identifier）、署名アイデンティティ、プロビジョニングプロファイルの設定
+- **Swift ブリッジング** — Swift ブリッジングヘッダーを自動生成、Objective-C/Swift 相互運用、CI 環境でプロンプトなし
 - **マルチ設定マージ** — 複数の `XCodeConfig.json` の深層再帰マージをサポート、マルチモジュール連携に最適
 
 ## インストール
@@ -77,6 +78,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {},
   "plist": {},
   "environmentVariables": {},
@@ -91,6 +93,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | フィールド | 型 | 説明 |
 | :--- | :--- | :--- |
+| `swiftBridging` | bool | Swift ブリッジングヘッダーの自動生成を有効化（デフォルト：`true`） |
 | `signing` | object | コード署名設定（下記参照） |
 | `plist` | object | Info.plist のキーと値のペア、値は任意の型をサポート |
 | `environmentVariables` | object | XcScheme 環境変数、キーと値はともに文字列 |
@@ -252,6 +255,20 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
 | `codeSignStyle` | string | 署名方式：`Automatic` または `Manual` |
 | `provisioningProfileSpecifier` | string | プロビジョニングプロファイル名（Manual モードで必要） |
 
+### swiftBridging — Swift ブリッジング
+
+Unity-iPhone（メイン）ターゲットにのみ適用されます。有効時（デフォルト）Swift ファイルとブリッジングヘッダーを自動生成し、Objective-C/Swift 相互運用を実現します。Xcode のプロンプトが表示されず、CI 環境に適しています。
+
+```json
+{
+  "swiftBridging": true
+}
+```
+
+- デフォルトは `true`、`false` で無効化
+- `gameframex_swift_bridging.swift` と `Unity-iPhone-Bridging-Header.h` を自動生成
+- `SWIFT_VERSION` を `5.0` に設定し、`SWIFT_OBJC_BRIDGING_HEADER` を構成
+
 ### capabilities — アプリ機能
 
 ```json
@@ -358,6 +375,7 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。すべ�
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {
     "teamId": "XXXXXXXXXX",
     "bundleId": "com.company.app",

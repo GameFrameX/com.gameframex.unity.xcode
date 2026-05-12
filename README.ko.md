@@ -36,6 +36,7 @@ Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 �
 - **링커 플래그** — `OTHER_LDFLAGS` 등 구성
 - **Run Path Search Paths** — 런타임 검색 경로 구성
 - **코드 서명** — Team ID, 번들 ID(Bundle Identifier), 서명 아이덴티티, 프로비저닝 프로필 설정
+- **Swift 브릿징** — Swift 브릿징 헤더 자동 생성, Objective-C/Swift 상호 운용 지원, CI 환경에서 팝업 없음
 - **다중 설정 병합** — 여러 `XCodeConfig.json` 파일의 깊은 재귀 병합 지원, 다중 모듈 협업에 적합
 
 ## 설치
@@ -77,6 +78,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {},
   "plist": {},
   "environmentVariables": {},
@@ -91,6 +93,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | 필드 | 타입 | 설명 |
 | :--- | :--- | :--- |
+| `swiftBridging` | bool | Swift 브릿징 헤더 자동 생성 활성화 (기본값: `true`) |
 | `signing` | object | 코드 서명 설정 (아래 참조) |
 | `plist` | object | Info.plist 키-값 쌍, 값은 모든 타입 지원 |
 | `environmentVariables` | object | XcScheme 환경 변수, 키와 값 모두 문자열 |
@@ -252,6 +255,20 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
 | `codeSignStyle` | string | 서명 방식: `Automatic` 또는 `Manual` |
 | `provisioningProfileSpecifier` | string | 프로비저닝 프로필 이름 (Manual 모드에서 필요) |
 
+### swiftBridging — Swift 브릿징
+
+Unity-iPhone(메인) 타겟에만 적용됩니다. 활성화 시(기본값) Swift 파일과 브릿징 헤더를 자동 생성하여 Objective-C/Swift 상호 운용을 지원합니다. Xcode 팝업이 없어 CI 환경에 적합합니다.
+
+```json
+{
+  "swiftBridging": true
+}
+```
+
+- 기본값은 `true`, `false`로 비활성화 가능
+- `gameframex_swift_bridging.swift`와 `Unity-iPhone-Bridging-Header.h` 자동 생성
+- `SWIFT_VERSION`을 `5.0`으로 설정하고 `SWIFT_OBJC_BRIDGING_HEADER` 구성
+
 ### capabilities — 앱 기능
 
 ```json
@@ -358,6 +375,7 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 모든 필드는 선택 사�
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {
     "teamId": "XXXXXXXXXX",
     "bundleId": "com.company.app",

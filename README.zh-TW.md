@@ -36,6 +36,7 @@ Unity iOS 建構後自動配置 Xcode 專案的編輯器工具。透過 JSON 配
 - **連結器標誌** — 配置 `OTHER_LDFLAGS` 等
 - **Run Path Search Paths** — 配置執行時搜尋路徑
 - **程式碼簽名** — 配置 Team ID、包名（Bundle Identifier）、簽名身份和描述檔
+- **Swift 橋接** — 自動建立 Swift 橋接標頭檔案，支援 Objective-C/Swift 混編，CI 環境無彈窗
 - **多配置合併** — 支援多個 `XCodeConfig.json` 深度遞迴合併，適合多模組協作
 
 ## 安裝
@@ -77,6 +78,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {},
   "plist": {},
   "environmentVariables": {},
@@ -91,6 +93,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 | 欄位 | 型別 | 說明 |
 | :--- | :--- | :--- |
+| `swiftBridging` | bool | 啟用 Swift 橋接標頭檔案自動產生（預設：`true`） |
 | `signing` | object | 程式碼簽名配置（詳見下方） |
 | `plist` | object | Info.plist 鍵值對，值支援任意型別 |
 | `environmentVariables` | object | XcScheme 環境變數，鍵值均為字串 |
@@ -252,6 +255,20 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `codeSignStyle` | string | 簽名方式：`Automatic`（自動）或 `Manual`（手動） |
 | `provisioningProfileSpecifier` | string | 描述檔名稱（僅 Manual 模式需要） |
 
+### swiftBridging — Swift 橋接
+
+僅在 Unity-iPhone（主）target 上生效。啟用後（預設啟用）自動建立 Swift 檔案和橋接標頭檔案，實現 Objective-C/Swift 混編。無 Xcode 彈窗提示，適合 CI 自動化建構。
+
+```json
+{
+  "swiftBridging": true
+}
+```
+
+- 預設為 `true`，設為 `false` 可關閉
+- 自動建立 `gameframex_swift_bridging.swift` 和 `Unity-iPhone-Bridging-Header.h`
+- 設定 `SWIFT_VERSION` 為 `5.0` 並配置 `SWIFT_OBJC_BRIDGING_HEADER`
+
 ### capabilities — 應用能力
 
 ```json
@@ -358,6 +375,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ```json
 {
+  "swiftBridging": true,
   "signing": {
     "teamId": "XXXXXXXXXX",
     "bundleId": "com.company.app",
