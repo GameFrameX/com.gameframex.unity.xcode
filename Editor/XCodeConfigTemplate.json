@@ -40,11 +40,9 @@
   "folders": {},
   "tip3": "table的key是文件在工程内的路径，值是数组",
   "filesCompileFlag": {},
-  "otherLinkerFlag": [
-    {
-      "OTHER_LDFLAGS": "-ObjC"
-    }
-  ],
+  "otherLinkerFlag": {
+    "OTHER_LDFLAGS": ["-ObjC"]
+  },
   "tip4": "capabilities配置，用于设置iOS应用的各种能力",
   "capabilities": {
     "tip0": "In-App Purchase功能，布尔值",

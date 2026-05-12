@@ -21,7 +21,25 @@ namespace GameFrameX.Xcode.Editor
 
             foreach (DictionaryEntry kv in table)
             {
-                proj.AddBuildProperty(targetGuid, kv.Key.ToString().Trim(), kv.Value.ToString().Trim());
+                var keyStr = kv.Key.ToString().Trim();
+                if (kv.Value is ArrayList list)
+                {
+                    var parts = new System.Collections.Generic.List<string>(list.Count);
+                    foreach (var item in list)
+                    {
+                        var s = item?.ToString()?.Trim();
+                        if (!string.IsNullOrEmpty(s))
+                        {
+                            parts.Add(s);
+                        }
+                    }
+
+                    proj.AddBuildProperty(targetGuid, keyStr, string.Join(" ", parts));
+                }
+                else
+                {
+                    proj.AddBuildProperty(targetGuid, keyStr, kv.Value.ToString().Trim());
+                }
             }
         }
     }

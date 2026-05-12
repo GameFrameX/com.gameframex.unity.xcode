@@ -147,7 +147,7 @@
       "Classes/PluginBase/LifeCycleListener.mm": "-dsacz-dasdsa-dzxcxz-dsadsa"
     },
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {
       "ios_libs.txt": "Classes/ios_libs.txt"
@@ -191,10 +191,10 @@
     },
     "filesCompileFlag": {},
     "otherLinkerFlag": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "runPathSearchPaths": {
-      "OTHER_LDFLAGS": "-ObjC"
+      "OTHER_LDFLAGS": ["-ObjC"]
     },
     "files": {
       "ios_libsM.txt": "Classes/ios_libsM.txt"
