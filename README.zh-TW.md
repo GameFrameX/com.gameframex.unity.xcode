@@ -29,7 +29,7 @@ Unity iOS 建構後自動配置 Xcode 專案的編輯器工具。透過 JSON 配
 - **建構屬性** — 設定、追加、移除 Build Settings（如 `ENABLE_BITCODE`、`GCC_ENABLE_OBJC_EXCEPTIONS`）
 - **Capabilities** — 內購、Game Center、推播、Sign In with Apple、背景模式、iCloud、App Groups、Associated Domains、Keychain Sharing、HealthKit、Siri、Personal VPN、Data Protection
 - **本地化** — 自動產生 `.lproj/InfoPlist.strings`，支援應用名稱多語言
-- **CocoaPods** — 替換 Podfile 預設來源，支援配置多個鏡像來源
+- **CocoaPods** — 替換 Podfile 預設來源，透過配置注入 pod 依賴
 - **XcScheme** — 注入環境變數和啟動參數
 - **檔案/資料夾** — 自動複製到 Xcode 工程並加入編譯，識別 `.framework`/`.bundle`
 - **編譯標誌** — 對指定原始碼檔案設定編譯選項
@@ -84,6 +84,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +100,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 環境變數，鍵值均為字串 |
 | `launcherArgs` | string[] | XcScheme 啟動參數列表 |
 | `podSource` | string[] | CocoaPods 來源位址列表，替換 Podfile 預設來源 |
+| `pods` | object | CocoaPods 依賴庫，key 為 pod 名稱，value 為版本約束（詳見下方） |
 | `localizations` | array | 本地化配置（詳見下方） |
 | `capabilities` | object | iOS 應用能力配置（詳見下方） |
 | `unityFramework` | object | UnityFramework target 配置 |
@@ -361,6 +363,23 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 }
 ```
 
+### pods — CocoaPods 依賴庫
+
+向 Podfile 的 `target 'Unity-iPhone' do` 區塊注入 `pod` 宣告，自動跳過已存在的同名 pod。
+
+```json
+{
+  "pods": {
+    "FirebaseAnalytics": "",
+    "FBSDKLoginKit": "~> 14.0"
+  }
+}
+```
+
+- Key = pod 名稱，Value = 版本約束
+- 值為空 → `pod 'Name'`，值非空 → `pod 'Name', 'Value'`
+- **不會**自動執行 `pod install`，需手動或在 CI 中執行
+
 ## 多配置合併
 
 專案中可以放置多個 `XCodeConfig.json` 檔案（如不同模組各自維護一份），建構時會自動發現並深度合併：
@@ -436,6 +455,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

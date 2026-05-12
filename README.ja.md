@@ -29,7 +29,7 @@ Unity iOS ビルド後に Xcode プロジェクトを自動設定するエディ
 - **ビルドプロパティ** — Build Settings の設定・追加・削除（`ENABLE_BITCODE`、`GCC_ENABLE_OBJC_EXCEPTIONS` など）
 - **Capabilities** — アプリ内課金、Game Center、プッシュ通知、Sign In with Apple、バックグラウンドモード、iCloud、App Groups、Associated Domains、Keychain Sharing、HealthKit、Siri、Personal VPN、Data Protection
 - **ローカライズ** — `.lproj/InfoPlist.strings` の自動生成、アプリ名の多言語対応
-- **CocoaPods** — Podfile デフォルトソースの置き換え、複数ミラーソースの設定
+- **CocoaPods** — Podfile デフォルトソースの置き換え、設定による pod 依存関係の注入
 - **XcScheme** — 環境変数と起動引数の注入
 - **ファイル/フォルダ** — Xcode プロジェクトへの自動コピーとコンパイル追加、`.framework`/`.bundle` の自動認識
 - **コンパイルフラグ** — 特定のソースファイルにコンパイルオプションを設定
@@ -84,6 +84,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +100,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 環境変数、キーと値はともに文字列 |
 | `launcherArgs` | string[] | XcScheme 起動引数リスト |
 | `podSource` | string[] | CocoaPods ソース URL リスト、Podfile デフォルトソースを置き換え |
+| `pods` | object | CocoaPods 依存ライブラリ、key = pod 名、value = バージョン制約（下記参照） |
 | `localizations` | array | ローカライズ設定（下記参照） |
 | `capabilities` | object | iOS アプリ機能設定（下記参照） |
 | `unityFramework` | object | UnityFramework ターゲット設定 |
@@ -361,6 +363,23 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。有効�
 }
 ```
 
+### pods — CocoaPods 依存ライブラリ
+
+Podfile の `target 'Unity-iPhone' do` ブロックに `pod` 宣言を注入します。重複する pod 名は自動的にスキップされます。
+
+```json
+{
+  "pods": {
+    "FirebaseAnalytics": "",
+    "FBSDKLoginKit": "~> 14.0"
+  }
+}
+```
+
+- Key = pod 名、Value = バージョン制約
+- 値が空 → `pod 'Name'`、値が非空 → `pod 'Name', 'Value'`
+- `pod install` は自動実行されません。手動または CI で実行してください
+
 ## マルチ設定マージ
 
 プロジェクト内に複数の `XCodeConfig.json` ファイルを配置できます（各モジュールが独自に管理）。ビルド時に自動的に検出され、深層マージされます：
@@ -436,6 +455,7 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。有効�
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

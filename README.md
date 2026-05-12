@@ -29,7 +29,7 @@ An editor tool that automatically configures Xcode projects after Unity iOS buil
 - **Build Properties** — Set, append, or remove Build Settings (e.g. `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
 - **Capabilities** — In-App Purchase, Game Center, Push Notifications, Sign In with Apple, Background Modes, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **Localization** — Auto-generate `.lproj/InfoPlist.strings` with multi-language app name support
-- **CocoaPods** — Replace Podfile default source, support multiple mirror sources
+- **CocoaPods** — Replace Podfile default source, inject pod dependencies via config
 - **XcScheme** — Inject environment variables and launch arguments
 - **Files/Folders** — Auto-copy to Xcode project and add to compilation, recognize `.framework`/`.bundle`
 - **Compile Flags** — Set compile options for specific source files
@@ -84,6 +84,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +100,7 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 | `environmentVariables` | object | XcScheme environment variables, both keys and values are strings |
 | `launcherArgs` | string[] | XcScheme launch arguments list |
 | `podSource` | string[] | CocoaPods source URLs, replaces Podfile default source |
+| `pods` | object | CocoaPods dependencies, key = pod name, value = version constraint (see below) |
 | `localizations` | array | Localization configuration (see below) |
 | `capabilities` | object | iOS app capability configuration (see below) |
 | `unityFramework` | object | UnityFramework target configuration |
@@ -361,6 +363,23 @@ Supports arbitrary nested levels. Common configuration:
 }
 ```
 
+### pods — CocoaPods Dependencies
+
+Injects `pod` declarations into the `target 'Unity-iPhone' do` block of the Podfile. Duplicate pod names are skipped automatically.
+
+```json
+{
+  "pods": {
+    "FirebaseAnalytics": "",
+    "FBSDKLoginKit": "~> 14.0"
+  }
+}
+```
+
+- Key = pod name, Value = version constraint
+- Empty value → `pod 'Name'`, non-empty → `pod 'Name', 'Value'`
+- `pod install` is **not** executed automatically; run it manually or in CI
+
 ## Multi-Config Merging
 
 You can place multiple `XCodeConfig.json` files in the project (e.g., each module maintains its own). During build, they are automatically discovered and deep-merged:
@@ -436,6 +455,7 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

@@ -29,7 +29,7 @@ Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 �
 - **빌드 속성** — Build Settings 설정, 추가, 제거 (예: `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
 - **Capabilities** — 인앱 결제, Game Center, 푸시 알림, Sign In with Apple, 백그라운드 모드, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **현지화** — `.lproj/InfoPlist.strings` 자동 생성, 앱 이름 다국어 지원
-- **CocoaPods** — Podfile 기본 소스 교체, 여러 미러 소스 구성 지원
+- **CocoaPods** — Podfile 기본 소스 교체, 설정을 통한 pod 의존성 주입
 - **XcScheme** — 환경 변수 및 실행 인수 주입
 - **파일/폴더** — Xcode 프로젝트에 자동 복사 및 컴파일에 추가, `.framework`/`.bundle` 자동 인식
 - **컴파일 플래그** — 특정 소스 파일에 컴파일 옵션 설정
@@ -84,6 +84,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +100,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 환경 변수, 키와 값 모두 문자열 |
 | `launcherArgs` | string[] | XcScheme 실행 인수 목록 |
 | `podSource` | string[] | CocoaPods 소스 URL 목록, Podfile 기본 소스 교체 |
+| `pods` | object | CocoaPods 의존 라이브러리, key = pod 이름, value = 버전 제약 (아래 참조) |
 | `localizations` | array | 현지화 설정 (아래 참조) |
 | `capabilities` | object | iOS 앱 기능 설정 (아래 참조) |
 | `unityFramework` | object | UnityFramework 타겟 설정 |
@@ -361,6 +363,23 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 활성화 시(기본값) Swif
 }
 ```
 
+### pods — CocoaPods 의존 라이브러리
+
+Podfile의 `target 'Unity-iPhone' do` 블록에 `pod` 선언을 주입합니다. 중복되는 pod 이름은 자동으로 건너뜁니다.
+
+```json
+{
+  "pods": {
+    "FirebaseAnalytics": "",
+    "FBSDKLoginKit": "~> 14.0"
+  }
+}
+```
+
+- Key = pod 이름, Value = 버전 제약
+- 값이 비어있으면 → `pod 'Name'`, 값이 있으면 → `pod 'Name', 'Value'`
+- `pod install`은 자동 실행되지 않으며, 수동 또는 CI에서 실행해야 합니다
+
 ## 다중 설정 병합
 
 프로젝트에 여러 `XCodeConfig.json` 파일을 배치할 수 있습니다 (각 모듈이 자체 파일을 관리). 빌드 시 자동으로 감지되어 깊은 병합이 수행됩니다:
@@ -436,6 +455,7 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 활성화 시(기본값) Swif
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
