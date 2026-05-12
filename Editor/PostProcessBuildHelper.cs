@@ -61,9 +61,9 @@ namespace GameFrameX.Xcode.Editor
                 // 第一阶段：应用所有配置到 PBXProject
                 LogHelper.Log("[PBXProject] 正在应用最终合并配置...");
                 // 配置主项目
-                Run(project, project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("unityMain"), path);
+                Run(project, project.GetUnityMainTargetGuid(), project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("unityMain"), path);
                 // Unity项目
-                Run(project, project.GetUnityFrameworkTargetGuid(), finalConfig.Get<Hashtable>("unityFramework"), path);
+                Run(project, project.GetUnityFrameworkTargetGuid(), project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("unityFramework"), path);
 
                 // 设置签名配置（只在主项目上设置）
                 SetSigning(project, project.GetUnityMainTargetGuid(), finalConfig.Get<Hashtable>("signing"));
@@ -107,7 +107,7 @@ namespace GameFrameX.Xcode.Editor
         }
 
 
-        static void Run(PBXProject pbxProject, string targetGuid, Hashtable hashtable, string path)
+        static void Run(PBXProject pbxProject, string targetGuid, string mainTargetGuid, Hashtable hashtable, string path)
         {
             // 设置构建属性
             SetBuildProperties(pbxProject, targetGuid, hashtable.Get<Hashtable>("properties"));
@@ -118,7 +118,7 @@ namespace GameFrameX.Xcode.Editor
             // 复制文件
             RunCopyFiles(pbxProject, targetGuid, path, hashtable.Get<Hashtable>("files"));
             // 复制文件夹
-            CopyFolders(pbxProject, targetGuid, path, hashtable.Get<Hashtable>("folders"));
+            CopyFolders(pbxProject, targetGuid, mainTargetGuid, path, hashtable.Get<Hashtable>("folders"));
             // 设置文件编译标记
             SetFilesCompileFlag(pbxProject, targetGuid, hashtable.Get<Hashtable>("filesCompileFlag"));
             // Linker Flag

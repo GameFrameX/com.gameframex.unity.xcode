@@ -17,7 +17,7 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="targetGuid">目标 GUID</param>
         /// <param name="xcodePath">Xcode 工程路径</param>
         /// <param name="hashtable">配置数据，Key为源路径，Value为目标路径</param>
-        private static void CopyFolders(PBXProject proj, string targetGuid, string xcodePath, Hashtable hashtable)
+        private static void CopyFolders(PBXProject proj, string targetGuid, string mainTargetGuid, string xcodePath, Hashtable hashtable)
         {
             if (hashtable == null)
             {
@@ -29,7 +29,7 @@ namespace GameFrameX.Xcode.Editor
                 string src = Path.Combine(Environment.CurrentDirectory, map.Key.ToString().Trim());
                 string des = Path.Combine(xcodePath, map.Value.ToString().Trim());
                 CopyFolder(src, des);
-                AddFolderBuild(proj, targetGuid, xcodePath, map.Value.ToString().Trim());
+                AddFolderBuild(proj, targetGuid, mainTargetGuid, xcodePath, map.Value.ToString().Trim());
             }
         }
 
@@ -40,14 +40,19 @@ namespace GameFrameX.Xcode.Editor
         /// <param name="targetGuid">目标 GUID</param>
         /// <param name="xcodePath">Xcode 工程路径</param>
         /// <param name="root">相对根目录</param>
-        private static void AddFolderBuild(PBXProject proj, string targetGuid, string xcodePath, string root)
+        private static void AddFolderBuild(PBXProject proj, string targetGuid, string mainTargetGuid, string xcodePath, string root)
         {
             //获得源文件下所有目录文件
             string currDir = Path.Combine(xcodePath, root);
             if (root.EndsWith(".framework") || root.EndsWith(".bundle") || root.EndsWith(".xcframework"))
             {
                 Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", currDir, root);
-                proj.AddFileToBuild(targetGuid, proj.AddFile(currDir, root, PBXSourceTree.Source));
+                string fileGuid = proj.AddFile(currDir, root, PBXSourceTree.Source);
+                proj.AddFileToBuild(targetGuid, fileGuid);
+                if (root.EndsWith(".bundle"))
+                {
+                    proj.AddFileToBuild(mainTargetGuid, fileGuid);
+                }
                 // 添加为 linked framework
                 proj.AddFrameworkToProject(targetGuid, root, false);
                 return;
@@ -73,7 +78,11 @@ namespace GameFrameX.Xcode.Editor
                     Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", filePath, projectPath);
                     string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
                     proj.AddFileToBuild(targetGuid, fileGuid);
-                    if (folder.EndsWith(".framework") || folder.EndsWith(".xcframework"))
+                    if (folder.EndsWith(".bundle"))
+                    {
+                        proj.AddFileToBuild(mainTargetGuid, fileGuid);
+                    }
+                    else
                     {
                         proj.AddFrameworkToProject(targetGuid, name, false);
                     }
@@ -88,7 +97,7 @@ namespace GameFrameX.Xcode.Editor
                 }
                 else
                 {
-                    AddFolderBuild(proj, targetGuid, xcodePath, projectPath);
+                    AddFolderBuild(proj, targetGuid, mainTargetGuid, xcodePath, projectPath);
                 }
             }
 
@@ -106,7 +115,11 @@ namespace GameFrameX.Xcode.Editor
                         Debug.LogFormat("add framework/bundle/xcframework to build:{0}->{1}", filePath, projectPath);
                         string fileGuid = proj.AddFile(filePath, projectPath, PBXSourceTree.Source);
                         proj.AddFileToBuild(targetGuid, fileGuid);
-                        if (file.EndsWith(".framework") || file.EndsWith(".xcframework"))
+                        if (file.EndsWith(".bundle"))
+                        {
+                            proj.AddFileToBuild(mainTargetGuid, fileGuid);
+                        }
+                        else
                         {
                             proj.AddFrameworkToProject(targetGuid, name, false);
                         }
