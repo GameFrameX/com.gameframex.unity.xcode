@@ -34,7 +34,7 @@ namespace GameFrameX.Xcode.Editor
                     "\n");
             }
 
-            proj.AddFileToBuild(mainTargetGuid, proj.AddFile(swiftFile, SwiftBridgingFileName, PBXSourceTree.Source));
+            proj.AddFileToBuild(frameworkTargetGuid, proj.AddFile(swiftFile, SwiftBridgingFileName, PBXSourceTree.Source));
             proj.AddFile(bridgingHeaderFile, SwiftBridgingHeaderName, PBXSourceTree.Source);
 
             proj.SetBuildProperty(mainTargetGuid, "SWIFT_VERSION", "5.0");
