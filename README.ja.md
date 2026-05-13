@@ -84,7 +84,6 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
-  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -100,7 +99,6 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 環境変数、キーと値はともに文字列 |
 | `launcherArgs` | string[] | XcScheme 起動引数リスト |
 | `podSource` | string[] | CocoaPods ソース URL リスト、Podfile デフォルトソースを置き換え |
-| `pods` | object | CocoaPods 依存ライブラリ、key = pod 名、value = バージョン制約（下記参照） |
 | `localizations` | array | ローカライズ設定（下記参照） |
 | `capabilities` | object | iOS アプリ機能設定（下記参照） |
 | `unityFramework` | object | UnityFramework ターゲット設定 |
@@ -119,7 +117,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "folders": {},
   "filesCompileFlag": {},
   "otherLinkerFlag": {},
-  "runPathSearchPaths": {}
+  "runPathSearchPaths": {},
+  "pods": {}
 }
 ```
 
@@ -363,15 +362,22 @@ Unity-iPhone（メイン）ターゲットにのみ適用されます。有効�
 }
 ```
 
-### pods — CocoaPods 依存ライブラリ
+### pods — CocoaPods 依存ライブラリ（unityMain / unityFramework 内に設定）
 
-Podfile の `target 'Unity-iPhone' do` ブロックに `pod` 宣言を注入します。重複する pod 名は自動的にスキップされます。
+`pods` は `unityMain` や `unityFramework` の内部に設定します。各ターゲットの pods は対応する Podfile ターゲットブロック（`target 'Unity-iPhone' do` または `target 'UnityFramework' do`）に注入されます。重複する pod 名は自動的にスキップされます。
 
 ```json
 {
-  "pods": {
-    "FirebaseAnalytics": "",
-    "FBSDKLoginKit": "~> 14.0"
+  "unityFramework": {
+    "pods": {
+      "FirebaseAnalytics": "",
+      "FBSDKLoginKit": "~> 14.0"
+    }
+  },
+  "unityMain": {
+    "pods": {
+      "SomePod": "~> 1.0"
+    }
   }
 }
 ```
@@ -455,7 +461,6 @@ Podfile の `target 'Unity-iPhone' do` ブロックに `pod` 宣言を注入し�
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
-  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
@@ -496,6 +501,9 @@ Podfile の `target 'Unity-iPhone' do` ブロックに `pod` 宣言を注入し�
     "filesCompileFlag": {},
     "otherLinkerFlag": {
       "OTHER_LDFLAGS": ["-ObjC"]
+    },
+    "pods": {
+      "FirebaseAnalytics": ""
     },
     "files": {},
     "folders": {}

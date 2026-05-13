@@ -84,7 +84,6 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
-  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -100,7 +99,6 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 | `environmentVariables` | object | XcScheme environment variables, both keys and values are strings |
 | `launcherArgs` | string[] | XcScheme launch arguments list |
 | `podSource` | string[] | CocoaPods source URLs, replaces Podfile default source |
-| `pods` | object | CocoaPods dependencies, key = pod name, value = version constraint (see below) |
 | `localizations` | array | Localization configuration (see below) |
 | `capabilities` | object | iOS app capability configuration (see below) |
 | `unityFramework` | object | UnityFramework target configuration |
@@ -119,7 +117,8 @@ Both share the same structure, targeting UnityFramework and Unity-iPhone respect
   "folders": {},
   "filesCompileFlag": {},
   "otherLinkerFlag": {},
-  "runPathSearchPaths": {}
+  "runPathSearchPaths": {},
+  "pods": {}
 }
 ```
 
@@ -363,15 +362,22 @@ Supports arbitrary nested levels. Common configuration:
 }
 ```
 
-### pods — CocoaPods Dependencies
+### pods — CocoaPods Dependencies (inside unityMain / unityFramework)
 
-Injects `pod` declarations into the `target 'Unity-iPhone' do` block of the Podfile. Duplicate pod names are skipped automatically.
+`pods` is configured inside `unityMain` and/or `unityFramework` sections. Each target's pods are injected into the corresponding Podfile target block (`target 'Unity-iPhone' do` or `target 'UnityFramework' do`). Duplicate pod names are skipped automatically.
 
 ```json
 {
-  "pods": {
-    "FirebaseAnalytics": "",
-    "FBSDKLoginKit": "~> 14.0"
+  "unityFramework": {
+    "pods": {
+      "FirebaseAnalytics": "",
+      "FBSDKLoginKit": "~> 14.0"
+    }
+  },
+  "unityMain": {
+    "pods": {
+      "SomePod": "~> 1.0"
+    }
   }
 }
 ```
@@ -455,7 +461,6 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
-  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
@@ -496,6 +501,9 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
     "filesCompileFlag": {},
     "otherLinkerFlag": {
       "OTHER_LDFLAGS": ["-ObjC"]
+    },
+    "pods": {
+      "FirebaseAnalytics": ""
     },
     "files": {},
     "folders": {}

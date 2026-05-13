@@ -84,7 +84,6 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
-  "pods": {},
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -100,7 +99,6 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 環境變數，鍵值均為字串 |
 | `launcherArgs` | string[] | XcScheme 啟動參數列表 |
 | `podSource` | string[] | CocoaPods 來源位址列表，替換 Podfile 預設來源 |
-| `pods` | object | CocoaPods 依賴庫，key 為 pod 名稱，value 為版本約束（詳見下方） |
 | `localizations` | array | 本地化配置（詳見下方） |
 | `capabilities` | object | iOS 應用能力配置（詳見下方） |
 | `unityFramework` | object | UnityFramework target 配置 |
@@ -119,7 +117,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "folders": {},
   "filesCompileFlag": {},
   "otherLinkerFlag": {},
-  "runPathSearchPaths": {}
+  "runPathSearchPaths": {},
+  "pods": {}
 }
 ```
 
@@ -363,15 +362,22 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 }
 ```
 
-### pods — CocoaPods 依賴庫
+### pods — CocoaPods 依賴庫（在 unityMain / unityFramework 內配置）
 
-向 Podfile 的 `target 'Unity-iPhone' do` 區塊注入 `pod` 宣告，自動跳過已存在的同名 pod。
+`pods` 配置在 `unityMain` 和/或 `unityFramework` 內部。每個 target 的 pods 會注入到對應的 Podfile target 區塊（`target 'Unity-iPhone' do` 或 `target 'UnityFramework' do`）中。自動跳過已存在的同名 pod。
 
 ```json
 {
-  "pods": {
-    "FirebaseAnalytics": "",
-    "FBSDKLoginKit": "~> 14.0"
+  "unityFramework": {
+    "pods": {
+      "FirebaseAnalytics": "",
+      "FBSDKLoginKit": "~> 14.0"
+    }
+  },
+  "unityMain": {
+    "pods": {
+      "SomePod": "~> 1.0"
+    }
   }
 }
 ```
@@ -455,7 +461,6 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
-  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
@@ -496,6 +501,9 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
     "filesCompileFlag": {},
     "otherLinkerFlag": {
       "OTHER_LDFLAGS": ["-ObjC"]
+    },
+    "pods": {
+      "FirebaseAnalytics": ""
     },
     "files": {},
     "folders": {}
