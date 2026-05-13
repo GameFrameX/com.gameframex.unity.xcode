@@ -45,7 +45,7 @@
   "otherLinkerFlag": {
     "OTHER_LDFLAGS": ["-ObjC"]
   },
-  "tip_pods": "CocoaPods 依赖库，key 为 pod 名称，value 为版本约束（空字符串表示无约束）",
+  "tip_pods": "CocoaPods 依赖库（放在 unityMain 或 unityFramework 内），key 为 pod 名称，value 为版本约束（空字符串表示无约束）",
   "pods": {},
   "tip4": "capabilities配置，用于设置iOS应用的各种能力",
   "capabilities": {

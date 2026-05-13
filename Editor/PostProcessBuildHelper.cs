@@ -100,7 +100,16 @@ namespace GameFrameX.Xcode.Editor
                 // PodFile
                 var podSourceList = finalConfig.Get("podSource") as ArrayList;
                 RunPodfile(path, podSourceList);
-                AddPods(path, podSourceList, finalConfig.Get<Hashtable>("pods"));
+
+                // Pods — 从 unityMain 和 unityFramework 中读取，按 target 注入
+                var mainPods = finalConfig.Get<Hashtable>("unityMain")?.Get<Hashtable>("pods");
+                var frameworkPods = finalConfig.Get<Hashtable>("unityFramework")?.Get<Hashtable>("pods");
+                if ((mainPods != null && mainPods.Count > 0) || (frameworkPods != null && frameworkPods.Count > 0))
+                {
+                    EnsurePodfileExists(path, podSourceList);
+                    AddPodsForTarget(path, "Unity-iPhone", mainPods);
+                    AddPodsForTarget(path, "UnityFramework", frameworkPods);
+                }
             }
             catch (Exception e)
             {

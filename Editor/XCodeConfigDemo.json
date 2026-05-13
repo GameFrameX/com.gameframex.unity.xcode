@@ -89,7 +89,6 @@
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
-  "pods": {},
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
@@ -153,6 +152,9 @@
     },
     "files": {
       "ios_libs.txt": "Classes/ios_libs.txt"
+    },
+    "pods": {
+      "Ads-CN-Beta": ", :subspecs => ['CSJMediation']"
     },
     "folders": {
       "XC": "Classes/XC"

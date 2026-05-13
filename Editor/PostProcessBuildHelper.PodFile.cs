@@ -53,47 +53,52 @@ namespace GameFrameX.Xcode.Editor
             LogHelper.Log("修改PodFile 文件的源,  结束");
         }
 
-        private static void AddPods(string path, ArrayList podSource, Hashtable pods)
+        private static void EnsurePodfileExists(string path, ArrayList podSource)
         {
-            if (pods == null || pods.Count <= 0)
+            var podfilePath = path + "/Podfile";
+            if (File.Exists(podfilePath)) return;
+
+            var iosVersion = PlayerSettings.iOS.targetOSVersionString;
+            if (string.IsNullOrEmpty(iosVersion))
             {
-                return;
+                iosVersion = "12.0";
             }
+
+            var sourceBuilder = new StringBuilder();
+            if (podSource != null && podSource.Count > 0)
+            {
+                foreach (var source in podSource)
+                {
+                    sourceBuilder.AppendLine($"source '{source}'");
+                }
+            }
+            else
+            {
+                sourceBuilder.AppendLine("source 'https://github.com/CocoaPods/Specs.git'");
+            }
+
+            File.WriteAllText(podfilePath,
+                sourceBuilder.ToString() +
+                $"platform :ios, '{iosVersion}'\n" +
+                "\n" +
+                "target 'Unity-iPhone' do\n" +
+                "end\n" +
+                "\n" +
+                "target 'UnityFramework' do\n" +
+                "end\n");
+            LogHelper.Log($"[Pods] 自动创建 Podfile (iOS {iosVersion})");
+        }
+
+        private static void AddPodsForTarget(string path, string targetName, Hashtable pods)
+        {
+            if (pods == null || pods.Count <= 0) return;
 
             var podfilePath = path + "/Podfile";
-            if (!File.Exists(podfilePath))
-            {
-                var iosVersion = PlayerSettings.iOS.targetOSVersionString;
-                if (string.IsNullOrEmpty(iosVersion))
-                {
-                    iosVersion = "12.0";
-                }
-
-                var sourceBuilder = new StringBuilder();
-                if (podSource != null && podSource.Count > 0)
-                {
-                    foreach (var source in podSource)
-                    {
-                        sourceBuilder.AppendLine($"source '{source}'");
-                    }
-                }
-                else
-                {
-                    sourceBuilder.AppendLine("source 'https://github.com/CocoaPods/Specs.git'");
-                }
-
-                File.WriteAllText(podfilePath,
-                    sourceBuilder.ToString() +
-                    $"platform :ios, '{iosVersion}'\n" +
-                    "\n" +
-                    "target 'Unity-iPhone' do\n" +
-                    "end\n");
-                LogHelper.Log($"[Pods] 自动创建 Podfile (iOS {iosVersion})");
-            }
+            if (!File.Exists(podfilePath)) return;
 
             var lines = new List<string>(File.ReadAllLines(podfilePath));
 
-            // 收集已有的 pod 名称用于去重
+            // 收集已有 pod 名称用于去重
             var existingPods = new System.Collections.Generic.HashSet<string>();
             foreach (var line in lines)
             {
@@ -112,11 +117,11 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
 
-            // 查找 target 'Unity-iPhone' do 行
+            // 查找 target 块
             int targetIndex = -1;
             for (int i = 0; i < lines.Count; i++)
             {
-                if (lines[i].Trim().StartsWith("target") && lines[i].Contains("Unity-iPhone") && lines[i].TrimEnd().EndsWith("do"))
+                if (lines[i].Trim().StartsWith("target") && lines[i].Contains($"'{targetName}'") && lines[i].TrimEnd().EndsWith("do"))
                 {
                     targetIndex = i;
                     break;
@@ -125,7 +130,7 @@ namespace GameFrameX.Xcode.Editor
 
             if (targetIndex < 0)
             {
-                LogHelper.Warning("[Pods] 未找到 target 'Unity-iPhone' do, 跳过设置");
+                LogHelper.Warning($"[Pods] 未找到 target '{targetName}' do, 跳过设置");
                 return;
             }
 
@@ -153,10 +158,9 @@ namespace GameFrameX.Xcode.Editor
 
             if (podLines.Count == 0) return;
 
-            // 插入到 target 行之后
             lines.InsertRange(targetIndex + 1, podLines);
             File.WriteAllLines(podfilePath, lines.ToArray());
-            LogHelper.Log($"[Pods] 已添加 {podLines.Count} 个 pod 依赖");
+            LogHelper.Log($"[Pods] 已为 {targetName} 添加 {podLines.Count} 个 pod 依赖");
         }
     }
 }
