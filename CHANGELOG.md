@@ -1,3 +1,26 @@
+# [1.8.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.7.0...1.8.0) (2026-05-13)
+
+
+### Bug Fixes
+
+* **xcode:** bundle 资源包同时添加到主项目构建引用 ([b910f82](https://github.com/gameframex/com.gameframex.unity.xcode/commit/b910f82f4276447a38730118b9fced23b0d25d6f))
+* **xcode:** 使用 PlayerSettings 获取 iOS 版本 ([b9917e0](https://github.com/gameframex/com.gameframex.unity.xcode/commit/b9917e0ec67bbb03f9ae1aa2d35ac29b3d5741df))
+* **xcode:** 修复 build property 数组值未逐项追加 ([846160d](https://github.com/gameframex/com.gameframex.unity.xcode/commit/846160d024652ef4fe78fe086fe7fd6fd344fccf))
+* **xcode:** 修复 framework target 桥接头文件编译错误 ([18170f9](https://github.com/gameframex/com.gameframex.unity.xcode/commit/18170f988f61d7c6ec692148eda43cdb41fda358))
+* **xcode:** 修复文件夹复制时 framework/bundle/静态库链接 ([3ed071a](https://github.com/gameframex/com.gameframex.unity.xcode/commit/3ed071ae2935567bdf8ed3dfce1fadd7194d3b93))
+* **xcode:** 将 swift bridging 文件添加到 UnityFramework target ([de0784d](https://github.com/gameframex/com.gameframex.unity.xcode/commit/de0784db62cf2f232c0f0a399587a7033e1da8be))
+* **xcode:** 移除 xcframework 的 framework 引用 ([b4602b9](https://github.com/gameframex/com.gameframex.unity.xcode/commit/b4602b9cb501b3b84cc070b1c760ef7135b7bf5f))
+
+
+### Features
+
+* **xcode:** 修复 libs 配置未生效 ([b69e4d3](https://github.com/gameframex/com.gameframex.unity.xcode/commit/b69e4d3d7c518b430d5122b3bdbe06171d25f386)), closes [#12](https://github.com/gameframex/com.gameframex.unity.xcode/issues/12)
+* **xcode:** 支持 build property 数组值格式 ([10b94e9](https://github.com/gameframex/com.gameframex.unity.xcode/commit/10b94e97ea858fe125be7945b97d6700d3665672))
+* **xcode:** 添加 CocoaPods 依赖库自动注入 ([92d840a](https://github.com/gameframex/com.gameframex.unity.xcode/commit/92d840aae611902f906f380a706802968a7b6efb))
+* **xcode:** 添加 Swift 桥接头文件自动生成 ([460ff97](https://github.com/gameframex/com.gameframex.unity.xcode/commit/460ff97c781dd6b526b5d2e749831073e426a9ce))
+* **xcode:** 添加 xcframework 支持 ([1e0f5d7](https://github.com/gameframex/com.gameframex.unity.xcode/commit/1e0f5d7919fc73631ed89241d0b02bcb99b80f99))
+* **xcode:** 重构 pods 配置为按 target 独立设置 ([35726e6](https://github.com/gameframex/com.gameframex.unity.xcode/commit/35726e638dd0cccbc867925eceb4422571a9457e))
+
 # [1.7.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.6.0...1.7.0) (2026-05-11)
 
 
