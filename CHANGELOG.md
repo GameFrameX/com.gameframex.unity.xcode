@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.8.0...1.9.0) (2026-05-26)
+
+
+### Features
+
+* **xcode:** 支持渠道专属 Xcode 配置合并 ([8cde132](https://github.com/gameframex/com.gameframex.unity.xcode/commit/8cde132c3ccffff07a4a1fe5e45755f93ea7e178))
+
 # [1.8.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.7.0...1.8.0) (2026-05-13)
 
 

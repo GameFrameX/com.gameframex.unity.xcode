@@ -3,7 +3,7 @@
   "displayName": "Game Frame X XCode",
   "category": "Game Framework X",
   "description": "Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配置文件声明式管理 Info.plist、系统框架/库、构建属性、Capabilities（内购/Game Center/推送/Sign In with Apple/后台模式/iCloud/App Groups/Associated Domains）、CocoaPods 源、XcScheme 环境变量与启动参数、本地化、文件/文件夹复制、编译标志和链接器标志等，支持多配置文件深度合并。Automates Xcode project configuration after Unity iOS builds via declarative JSON — manages Info.plist, frameworks, libraries, build properties, capabilities, CocoaPods sources, XcScheme env/args, localization, file/folder copying, compile flags, and linker flags with multi-config deep merge support.",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "unity": "2019.4",
   "keywords": [
     "GameFrameX"
