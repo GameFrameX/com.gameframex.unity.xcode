@@ -10,9 +10,10 @@ namespace GameFrameX.Xcode.Editor
     public class SettingLoader
     {
         private const string CHANNEL_ARG = "-channel";
+        private const string CHANNEL_EDITOR_PREFS_KEY = "XCodeBuild_Channel";
 
         /// <summary>
-        /// 从命令行参数中获取当前渠道标识
+        /// 从命令行参数中获取当前渠道标识，回退到 EditorPrefs
         /// </summary>
         public static string GetChannel()
         {
@@ -25,7 +26,28 @@ namespace GameFrameX.Xcode.Editor
                 }
             }
 
+            string editorChannel = EditorPrefs.GetString(CHANNEL_EDITOR_PREFS_KEY, "");
+            if (!string.IsNullOrEmpty(editorChannel))
+            {
+                return editorChannel;
+            }
+
             return null;
+        }
+
+        /// <summary>
+        /// 设置 Editor 中的渠道（供菜单项或构建脚本调用）
+        /// </summary>
+        public static void SetChannel(string channel)
+        {
+            if (string.IsNullOrEmpty(channel))
+            {
+                EditorPrefs.DeleteKey(CHANNEL_EDITOR_PREFS_KEY);
+            }
+            else
+            {
+                EditorPrefs.SetString(CHANNEL_EDITOR_PREFS_KEY, channel);
+            }
         }
 
         /// <summary>
