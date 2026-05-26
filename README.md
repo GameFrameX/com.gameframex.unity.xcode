@@ -535,7 +535,7 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
 
 - The configuration file must be named `XCodeConfig.json`, otherwise it will not be recognized
 - All code is under `#if UNITY_IOS` conditional compilation, no impact on other platforms
-- The tool runs at `[PostProcessBuild(ushort.MaxValue)]` priority, executing after all other post-processing
+- The tool runs at `[PostProcessBuild(888)]` priority, executing after most other post-processing
 - Folder copy raises an error if the destination exists; file copy deletes the existing destination first
 
 ## Requirements

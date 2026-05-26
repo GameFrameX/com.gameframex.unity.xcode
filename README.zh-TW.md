@@ -535,7 +535,7 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 - 配置檔案名稱必須為 `XCodeConfig.json`，否則不會被識別
 - 所有程式碼在 `#if UNITY_IOS` 條件編譯下，不會影響其他平台
-- 工具在 `[PostProcessBuild(ushort.MaxValue)]` 優先級執行，即所有其他後處理完成後執行
+- 工具在 `[PostProcessBuild(888)]` 優先級執行，在大多數其他後處理完成後執行
 - 資料夾複製時如目標已存在會報錯；檔案複製時如目標已存在會先刪除再複製
 
 ## 環境要求
