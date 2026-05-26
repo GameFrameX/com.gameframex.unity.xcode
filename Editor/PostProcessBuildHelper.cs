@@ -48,6 +48,34 @@ namespace GameFrameX.Xcode.Editor
                     finalConfig.Merge(table);
                 }
 
+                // 合并渠道专属配置（优先级最高，最后合并覆盖）
+                string channel = SettingLoader.GetChannel();
+                if (!string.IsNullOrEmpty(channel))
+                {
+                    var channelPaths = SettingLoader.LoadChannelSettingsData("XCodeConfig.json", channel);
+                    if (channelPaths.Count > 0)
+                    {
+                        LogHelper.Log($"[MergeConfig] 检测到渠道: {channel}，正在合并渠道配置...");
+                        foreach (var channelPath in channelPaths)
+                        {
+                            LogHelper.Log($"[MergeConfig] 正在合并渠道配置: {channelPath}");
+                            string channelJson = File.ReadAllText(channelPath);
+                            Hashtable channelTable = channelJson.HashtableFromJson();
+                            if (channelTable == null)
+                            {
+                                LogHelper.Error($"{channelPath} 解析失败, 跳过合并");
+                                continue;
+                            }
+
+                            finalConfig.Merge(channelTable);
+                        }
+                    }
+                    else
+                    {
+                        LogHelper.Log($"[MergeConfig] 未找到渠道 [{channel}] 的专属配置文件 XCodeConfig.{channel}.json");
+                    }
+                }
+
                 if (finalConfig.Count == 0)
                 {
                     LogHelper.Error("合并后的配置为空，跳过设置");
