@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.9.0...1.10.0) (2026-05-26)
+
+
+### Features
+
+* **xcode:** 支持自定义 Podfile 路径 ([9ec2b65](https://github.com/gameframex/com.gameframex.unity.xcode/commit/9ec2b65bda9de9f762b5a7433bdcbf0890756103))
+
 # [1.9.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.8.0...1.9.0) (2026-05-26)
 
 
