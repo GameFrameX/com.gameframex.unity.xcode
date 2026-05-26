@@ -11,7 +11,7 @@ namespace GameFrameX.Xcode.Editor
 {
     internal partial class PostProcessBuildHelper
     {
-        [PostProcessBuild(ushort.MaxValue)]
+        [PostProcessBuild(888)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
             if (target != BuildTarget.iOS)
