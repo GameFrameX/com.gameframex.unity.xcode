@@ -45,8 +45,10 @@
   "otherLinkerFlag": {
     "OTHER_LDFLAGS": ["-ObjC"]
   },
-  "tip_pods": "CocoaPods 依赖库（放在 unityMain 或 unityFramework 内），key 为 pod 名称，value 为版本约束（空字符串表示无约束）",
+  "tip_pods": "CocoaPods 依赖库（放在 unityMain 或 unityFramework 内），key 为 pod 名称，value 为版本约束（空字符串表示无约束）。如果设置了 podfile，则忽略 pods 配置",
   "pods": {},
+  "tip_podfile": "Podfile 文件路径（支持相对路径和绝对路径）。如果设置，将直接复制该 Podfile 到构建输出，忽略 pods 配置",
+  "podfile": "",
   "tip4": "capabilities配置，用于设置iOS应用的各种能力",
   "capabilities": {
     "tip0": "In-App Purchase功能，布尔值",

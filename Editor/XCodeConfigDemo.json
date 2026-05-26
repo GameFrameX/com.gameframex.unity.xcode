@@ -89,6 +89,7 @@
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "podfile": "",
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

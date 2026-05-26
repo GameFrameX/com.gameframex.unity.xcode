@@ -89,6 +89,30 @@ namespace GameFrameX.Xcode.Editor
             LogHelper.Log($"[Pods] 自动创建 Podfile (iOS {iosVersion})");
         }
 
+        private static bool CopyPodfile(string buildPath, string podfileConfigPath)
+        {
+            if (string.IsNullOrEmpty(podfileConfigPath))
+            {
+                return false;
+            }
+
+            var trimmedPath = podfileConfigPath.Trim();
+            string src = Path.IsPathRooted(trimmedPath)
+                ? trimmedPath
+                : Path.Combine(Directory.GetParent(UnityEngine.Application.dataPath).FullName, trimmedPath);
+
+            if (!File.Exists(src))
+            {
+                LogHelper.Warning($"[Pods] 配置指定的 Podfile 不存在: {src}");
+                return false;
+            }
+
+            string dest = buildPath + "/Podfile";
+            File.Copy(src, dest, true);
+            LogHelper.Log($"[Pods] 已从 {podfileConfigPath} 复制 Podfile 到构建输出");
+            return true;
+        }
+
         private static void AddPodsForTarget(string path, string targetName, Hashtable pods)
         {
             if (pods == null || pods.Count <= 0) return;

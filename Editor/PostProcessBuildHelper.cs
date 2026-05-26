@@ -127,16 +127,25 @@ namespace GameFrameX.Xcode.Editor
 
                 // PodFile
                 var podSourceList = finalConfig.Get("podSource") as ArrayList;
-                RunPodfile(path, podSourceList);
+                string podfileConfigPath = finalConfig.Get("podfile") as string;
+                bool podfileCopied = CopyPodfile(path, podfileConfigPath);
 
-                // Pods — 从 unityMain 和 unityFramework 中读取，按 target 注入
-                var mainPods = finalConfig.Get<Hashtable>("unityMain")?.Get<Hashtable>("pods");
-                var frameworkPods = finalConfig.Get<Hashtable>("unityFramework")?.Get<Hashtable>("pods");
-                if ((mainPods != null && mainPods.Count > 0) || (frameworkPods != null && frameworkPods.Count > 0))
+                if (podfileCopied)
                 {
-                    EnsurePodfileExists(path, podSourceList);
-                    AddPodsForTarget(path, "Unity-iPhone", mainPods);
-                    AddPodsForTarget(path, "UnityFramework", frameworkPods);
+                    // 新路径：已复制完整 Podfile，仅需重写 source URL
+                    RunPodfile(path, podSourceList);
+                }
+                else
+                {
+                    // 旧路径（向后兼容）：从 JSON 配置的 pods 字段逐行注入
+                    var mainPods = finalConfig.Get<Hashtable>("unityMain")?.Get<Hashtable>("pods");
+                    var frameworkPods = finalConfig.Get<Hashtable>("unityFramework")?.Get<Hashtable>("pods");
+                    if ((mainPods != null && mainPods.Count > 0) || (frameworkPods != null && frameworkPods.Count > 0))
+                    {
+                        EnsurePodfileExists(path, podSourceList);
+                        AddPodsForTarget(path, "Unity-iPhone", mainPods);
+                        AddPodsForTarget(path, "UnityFramework", frameworkPods);
+                    }
                 }
             }
             catch (Exception e)
