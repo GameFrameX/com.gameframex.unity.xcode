@@ -1,3 +1,11 @@
+# [1.11.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.10.0...1.11.0) (2026-05-28)
+
+
+### Features
+
+* **xcode:** GetChannel 支持 EditorPrefs 回退并添加 SetChannel 方法 ([10776a0](https://github.com/gameframex/com.gameframex.unity.xcode/commit/10776a076ae37143e0e0fff99495c1ed1fbb99f0))
+* **xcode:** 支持自动执行 pod install ([67766e7](https://github.com/gameframex/com.gameframex.unity.xcode/commit/67766e745ede29bd4beeabc278b6a476f6e92a65))
+
 # [1.10.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.9.0...1.10.0) (2026-05-26)
 
 
