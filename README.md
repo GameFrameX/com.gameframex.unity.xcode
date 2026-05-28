@@ -29,7 +29,7 @@ An editor tool that automatically configures Xcode projects after Unity iOS buil
 - **Build Properties** — Set, append, or remove Build Settings (e.g. `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
 - **Capabilities** — In-App Purchase, Game Center, Push Notifications, Sign In with Apple, Background Modes, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **Localization** — Auto-generate `.lproj/InfoPlist.strings` with multi-language app name support
-- **CocoaPods** — Replace Podfile default source, inject pod dependencies via config
+- **CocoaPods** — Replace Podfile default source, inject pod dependencies via config, auto-run `pod install`
 - **XcScheme** — Inject environment variables and launch arguments
 - **Files/Folders** — Auto-copy to Xcode project and add to compilation, recognize `.framework`/`.bundle`
 - **Compile Flags** — Set compile options for specific source files
@@ -84,6 +84,8 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "podfile": "",
+  "podInstall": true,
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +101,8 @@ The configuration file must be named `XCodeConfig.json`. It can be placed anywhe
 | `environmentVariables` | object | XcScheme environment variables, both keys and values are strings |
 | `launcherArgs` | string[] | XcScheme launch arguments list |
 | `podSource` | string[] | CocoaPods source URLs, replaces Podfile default source |
+| `podfile` | string | Path to a custom Podfile to copy into the build output (takes priority over `pods`) |
+| `podInstall` | bool | Auto-run `pod install` after Podfile processing (default: `true`) |
 | `localizations` | array | Localization configuration (see below) |
 | `capabilities` | object | iOS app capability configuration (see below) |
 | `unityFramework` | object | UnityFramework target configuration |
@@ -339,6 +343,66 @@ Applied to the Unity-iPhone (main) target only. When enabled (default), automati
 - `validMap` — Key-value pairs, each with `key` and `value`
 - Automatically generates `.lproj/InfoPlist.strings` and adds them to the project
 
+#### Supported languageCode values
+
+Reference: [Apple Developer - Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html)
+
+Common codes are in **bold**.
+
+| Code | Language | Code | Language | Code | Language | Code | Language |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **en** | **English** | **zh** | **Chinese** | **ja** | **Japanese** | **ko** | **Korean** |
+| **es** | **Spanish** | **fr** | **French** | **de** | **German** | **it** | **Italian** |
+| **pt** | **Portuguese** | **ru** | **Russian** | **ar** | **Arabic** | **hi** | **Hindi** |
+| **tr** | **Turkish** | **vi** | **Vietnamese** | **th** | **Thai** | **id** | **Indonesian** |
+| aa | Afar | ab | Abkhazian | ae | Avestan | af | Afrikaans |
+| ak | Akan | am | Amharic | an | Aragonese | as | Assamese |
+| av | Avaric | ay | Aymara | az | Azerbaijani | ba | Bashkir |
+| be | Belarusian | bg | Bulgarian | bh | Bihari | bi | Bislama |
+| bm | Bambara | bn | Bengali | bo | Tibetan | br | Breton |
+| bs | Bosnian | ca | Catalan | ce | Chechen | ch | Chamorro |
+| co | Corsican | cr | Cree | cs | Czech | cu | Church Slavic |
+| cv | Chuvash | cy | Welsh | da | Danish | dv | Divehi |
+| dz | Dzongkha | ee | Ewe | el | Greek | eo | Esperanto |
+| et | Estonian | eu | Basque | fa | Persian | ff | Fulah |
+| fi | Finnish | fj | Fijian | fo | Faroese | fy | Western Frisian |
+| ga | Irish | gd | Scottish Gaelic | gl | Galician | gn | Guarani |
+| gu | Gujarati | gv | Manx | ha | Hausa | he | Hebrew |
+| ho | Hiri Motu | hr | Croatian | ht | Haitian | hu | Hungarian |
+| hy | Armenian | hz | Herero | ia | Interlingua | ie | Interlingue |
+| ig | Igbo | ii | Sichuan Yi | ik | Inupiaq | io | Ido |
+| is | Icelandic | iu | Inuktitut | jv | Javanese | ka | Georgian |
+| kg | Kongo | ki | Kikuyu | kj | Kuanyama | kk | Kazakh |
+| kl | Kalaallisut | km | Khmer | kn | Kannada | kr | Kanuri |
+| ks | Kashmiri | ku | Kurdish | kv | Komi | kw | Cornish |
+| ky | Kirghiz | la | Latin | lb | Luxembourgish | lg | Ganda |
+| li | Limburgish | ln | Lingala | lo | Lao | lt | Lithuanian |
+| lu | Luba-Katanga | lv | Latvian | mg | Malagasy | mh | Marshallese |
+| mi | Maori | mk | Macedonian | ml | Malayalam | mn | Mongolian |
+| mr | Marathi | ms | Malay | mt | Maltese | my | Burmese |
+| na | Nauru | nb | Norwegian Bokmål | nd | North Ndebele | ne | Nepali |
+| ng | Ndonga | nl | Dutch | nn | Norwegian Nynorsk | no | Norwegian |
+| nr | South Ndebele | nv | Navajo | ny | Chichewa | oc | Occitan |
+| oj | Ojibwa | om | Oromo | or | Oriya | os | Ossetian |
+| pa | Punjabi | pi | Pali | pl | Polish | ps | Pashto |
+| qu | Quechua | rm | Romansh | rn | Rundi | ro | Romanian |
+| rw | Kinyarwanda | sa | Sanskrit | sc | Sardinian | sd | Sindhi |
+| se | Northern Sami | sg | Sango | si | Sinhala | sk | Slovak |
+| sl | Slovenian | sm | Samoan | sn | Shona | so | Somali |
+| sq | Albanian | sr | Serbian | ss | Swati | st | Southern Sotho |
+| su | Sundanese | sv | Swedish | sw | Swahili | ta | Tamil |
+| te | Telugu | tg | Tajik | ti | Tigrinya | tk | Turkmen |
+| tl | Tagalog | tn | Tswana | to | Tonga | ts | Tsonga |
+| tt | Tatar | tw | Twi | ty | Tahitian | ug | Uighur |
+| uk | Ukrainian | ur | Urdu | uz | Uzbek | ve | Venda |
+| vo | Volapuk | wa | Walloon | wo | Wolof | xh | Xhosa |
+| yi | Yiddish | yo | Yoruba | za | Zhuang | zu | Zulu |
+
+> **Notes**:
+> - **Chinese**: Use `zh-Hans` (Simplified) and `zh-Hant` (Traditional).
+> - **Portuguese**: Common variants are `pt-BR` (Brazil) and `pt-PT` (Portugal).
+> - Other variants can be composed as `code-Region`, e.g. `en-GB`, `fr-CA`.
+
 ### plist — Info.plist Configuration
 
 Supports arbitrary nested levels. Common configuration:
@@ -384,7 +448,33 @@ Supports arbitrary nested levels. Common configuration:
 
 - Key = pod name, Value = version constraint
 - Empty value → `pod 'Name'`, non-empty → `pod 'Name', 'Value'`
-- `pod install` is **not** executed automatically; run it manually or in CI
+
+### podfile — Custom Podfile
+
+Instead of injecting individual pods, you can provide a complete Podfile. When set, this takes priority over the `pods` config — the file is copied directly into the build output, then `podSource` URLs are applied.
+
+```json
+{
+  "podfile": "XcodePodfile/Podfile"
+}
+```
+
+- Supports relative paths (relative to the Unity project root, i.e. the parent of `Assets/`) and absolute paths
+- If the file does not exist, a warning is logged and the legacy `pods` path is used as fallback
+
+### podInstall — Auto pod install
+
+Controls whether `pod install` is automatically executed after Podfile processing. Requires the `pod` CLI to be available in the system `PATH`.
+
+```json
+{
+  "podInstall": true
+}
+```
+
+- Default is `true`; `pod install` runs when a Podfile exists in the build output
+- Set to `false` to skip (e.g., when running `pod install` separately in CI)
+- Stdout is logged at info level; stderr on non-zero exit is logged as an error
 
 ## Multi-Config Merging
 
@@ -461,6 +551,8 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "podfile": "",
+  "podInstall": true,
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

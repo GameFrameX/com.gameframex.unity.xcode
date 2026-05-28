@@ -29,7 +29,7 @@ Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配
 - **构建属性** — 设置、追加、移除 Build Settings（如 `ENABLE_BITCODE`、`GCC_ENABLE_OBJC_EXCEPTIONS`）
 - **Capabilities** — 内购、Game Center、推送、Sign In with Apple、后台模式、iCloud、App Groups、Associated Domains、Keychain Sharing、HealthKit、Siri、Personal VPN、Data Protection
 - **本地化** — 自动生成 `.lproj/InfoPlist.strings`，支持应用名多语言
-- **CocoaPods** — 替换 Podfile 默认源，通过配置注入 pod 依赖
+- **CocoaPods** — 替换 Podfile 默认源，通过配置注入 pod 依赖，自动执行 `pod install`
 - **XcScheme** — 注入环境变量和启动参数
 - **文件/文件夹** — 自动复制到 Xcode 工程并加入编译，识别 `.framework`/`.bundle`
 - **编译标志** — 对指定源文件设置编译选项
@@ -84,6 +84,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "podfile": "",
+  "podInstall": true,
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +101,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 环境变量，键值均为字符串 |
 | `launcherArgs` | string[] | XcScheme 启动参数列表 |
 | `podSource` | string[] | CocoaPods 源地址列表，替换 Podfile 默认源 |
+| `podfile` | string | 自定义 Podfile 文件路径，复制到构建输出目录（优先级高于 `pods`） |
+| `podInstall` | bool | Podfile 处理完毕后自动执行 `pod install`（默认：`true`） |
 | `localizations` | array | 本地化配置（详见下方） |
 | `capabilities` | object | iOS 应用能力配置（详见下方） |
 | `unityFramework` | object | UnityFramework target 配置 |
@@ -384,7 +388,33 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 - Key = pod 名称，Value = 版本约束
 - 值为空 → `pod 'Name'`，值非空 → `pod 'Name', 'Value'`
-- **不会**自动执行 `pod install`，需手动或在 CI 中执行
+
+### podfile — 自定义 Podfile
+
+除了通过 `pods` 逐个注入依赖，也可以直接提供一个完整的 Podfile 文件。设置后优先级高于 `pods` 配置——文件会被直接复制到构建输出目录，然后再应用 `podSource` 中配置的源地址。
+
+```json
+{
+  "podfile": "XcodePodfile/Podfile"
+}
+```
+
+- 支持相对路径（相对于 Unity 工程根目录，即 `Assets/` 的上级目录）和绝对路径
+- 如果文件不存在，会输出警告并回退到 `pods` 配置路径
+
+### podInstall — 自动执行 pod install
+
+控制 Podfile 处理完毕后是否自动执行 `pod install`。需要系统 `PATH` 中有 `pod` 命令行工具。
+
+```json
+{
+  "podInstall": true
+}
+```
+
+- 默认为 `true`，当构建输出中存在 Podfile 时自动执行
+- 设为 `false` 可跳过（例如在 CI 中单独执行 `pod install` 的场景）
+- 标准输出以 info 级别记录日志；非零退出码的 stderr 以 error 级别记录
 
 ## 多配置合并
 
@@ -461,6 +491,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "podfile": "",
+  "podInstall": true,
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,

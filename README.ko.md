@@ -29,7 +29,7 @@ Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 �
 - **빌드 속성** — Build Settings 설정, 추가, 제거 (예: `ENABLE_BITCODE`, `GCC_ENABLE_OBJC_EXCEPTIONS`)
 - **Capabilities** — 인앱 결제, Game Center, 푸시 알림, Sign In with Apple, 백그라운드 모드, iCloud, App Groups, Associated Domains, Keychain Sharing, HealthKit, Siri, Personal VPN, Data Protection
 - **현지화** — `.lproj/InfoPlist.strings` 자동 생성, 앱 이름 다국어 지원
-- **CocoaPods** — Podfile 기본 소스 교체, 설정을 통한 pod 의존성 주입
+- **CocoaPods** — Podfile 기본 소스 교체, 설정을 통한 pod 의존성 주입, `pod install` 자동 실행
 - **XcScheme** — 환경 변수 및 실행 인수 주입
 - **파일/폴더** — Xcode 프로젝트에 자동 복사 및 컴파일에 추가, `.framework`/`.bundle` 자동 인식
 - **컴파일 플래그** — 특정 소스 파일에 컴파일 옵션 설정
@@ -84,6 +84,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
   "environmentVariables": {},
   "launcherArgs": [],
   "podSource": [],
+  "podfile": "",
+  "podInstall": true,
   "localizations": [],
   "capabilities": {},
   "unityFramework": {},
@@ -99,6 +101,8 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 | `environmentVariables` | object | XcScheme 환경 변수, 키와 값 모두 문자열 |
 | `launcherArgs` | string[] | XcScheme 실행 인수 목록 |
 | `podSource` | string[] | CocoaPods 소스 URL 목록, Podfile 기본 소스 교체 |
+| `podfile` | string | 커스텀 Podfile 경로, 빌드 출력에 복사 (`pods`보다 우선) |
+| `podInstall` | bool | Podfile 처리 후 `pod install` 자동 실행 (기본값: `true`) |
 | `localizations` | array | 현지화 설정 (아래 참조) |
 | `capabilities` | object | iOS 앱 기능 설정 (아래 참조) |
 | `unityFramework` | object | UnityFramework 타겟 설정 |
@@ -384,7 +388,33 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 활성화 시(기본값) Swif
 
 - Key = pod 이름, Value = 버전 제약
 - 값이 비어있으면 → `pod 'Name'`, 값이 있으면 → `pod 'Name', 'Value'`
-- `pod install`은 자동 실행되지 않으며, 수동 또는 CI에서 실행해야 합니다
+
+### podfile — 커스텀 Podfile
+
+`pods`로 개별 의존성을 주입하는 대신, 완전한 Podfile을 직접 제공할 수도 있습니다. 설정 시 `pods`보다 우선하며, 파일이 빌드 출력에 직접 복사된 후 `podSource`에 설정된 소스 URL이 적용됩니다.
+
+```json
+{
+  "podfile": "XcodePodfile/Podfile"
+}
+```
+
+- 상대 경로 (Unity 프로젝트 루트, 즉 `Assets/`의 상위 디렉토리 기준)와 절대 경로를 지원
+- 파일이 존재하지 않으면 경고를 출력하고 `pods` 설정 경로로 폴백
+
+### podInstall — pod install 자동 실행
+
+Podfile 처리 후 `pod install`을 자동으로 실행할지 제어합니다. 시스템 `PATH`에 `pod` CLI가 필요합니다.
+
+```json
+{
+  "podInstall": true
+}
+```
+
+- 기본값은 `true`, 빌드 출력에 Podfile이 존재하면 자동 실행
+- `false`로 설정하면 건너뜀 (예: CI에서 별도로 `pod install`을 실행하는 경우)
+- 표준 출력은 info 레벨로 로그 기록, 종료 코드가 0이 아닌 경우의 stderr은 error 레벨로 기록
 
 ## 다중 설정 병합
 
@@ -461,6 +491,8 @@ Unity-iPhone(메인) 타겟에만 적용됩니다. 활성화 시(기본값) Swif
   "podSource": [
     "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
   ],
+  "podfile": "",
+  "podInstall": true,
   "capabilities": {
     "inAppPurchase": true,
     "gameCenter": false,
