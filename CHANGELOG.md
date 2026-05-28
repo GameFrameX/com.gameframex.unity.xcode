@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.11.0...1.11.1) (2026-05-28)
+
+
+### Bug Fixes
+
+* **xcode:** 修复 Unity 子进程找不到 pod 命令及编码错误 ([7a52e4e](https://github.com/gameframex/com.gameframex.unity.xcode/commit/7a52e4e6c5d9e99a893798c4563eefbd48f8bec8))
+
 # [1.11.0](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.10.0...1.11.0) (2026-05-28)
 
 
