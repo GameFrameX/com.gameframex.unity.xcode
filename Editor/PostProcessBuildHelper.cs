@@ -147,6 +147,13 @@ namespace GameFrameX.Xcode.Editor
                         AddPodsForTarget(path, "UnityFramework", frameworkPods);
                     }
                 }
+
+                // Podfile 处理完毕后执行 pod install（默认开启，配置 podInstall: false 可跳过）
+                bool podInstall = !finalConfig.ContainsKey("podInstall") || finalConfig.Get<bool>("podInstall");
+                if (podInstall)
+                {
+                    RunPodInstall(path);
+                }
             }
             catch (Exception e)
             {

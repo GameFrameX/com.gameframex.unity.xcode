@@ -186,6 +186,50 @@ namespace GameFrameX.Xcode.Editor
             File.WriteAllLines(podfilePath, lines.ToArray());
             LogHelper.Log($"[Pods] 已为 {targetName} 添加 {podLines.Count} 个 pod 依赖");
         }
+
+        private static void RunPodInstall(string path)
+        {
+            var podfilePath = path + "/Podfile";
+            if (!File.Exists(podfilePath))
+            {
+                LogHelper.Log("[PodInstall] Podfile 不存在，跳过 pod install");
+                return;
+            }
+
+            LogHelper.Log("[PodInstall] 开始执行 pod install...");
+
+            var process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "pod";
+            process.StartInfo.Arguments = "install";
+            process.StartInfo.WorkingDirectory = path;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+
+            if (!string.IsNullOrEmpty(output))
+            {
+                LogHelper.Log($"[PodInstall] {output}");
+            }
+
+            if (process.ExitCode != 0)
+            {
+                LogHelper.Error($"[PodInstall] pod install 失败 (退出码: {process.ExitCode}): {error}");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                LogHelper.Warning($"[PodInstall] {error}");
+            }
+
+            LogHelper.Log("[PodInstall] pod install 完成");
+        }
     }
 }
 #endif
