@@ -198,14 +198,27 @@ namespace GameFrameX.Xcode.Editor
 
             LogHelper.Log("[PodInstall] 开始执行 pod install...");
 
+            // Unity 子进程不继承 shell PATH，需要解析 pod 的绝对路径
+            string podPath = GetPodFullPath();
+            if (string.IsNullOrEmpty(podPath))
+            {
+                LogHelper.Error("[PodInstall] 未找到 pod 命令，请确认已安装 CocoaPods (sudo gem install cocoapods)");
+                return;
+            }
+
+            LogHelper.Log($"[PodInstall] 使用 pod 路径: {podPath}");
+
             var process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = "pod";
+            process.StartInfo.FileName = podPath;
             process.StartInfo.Arguments = "install";
             process.StartInfo.WorkingDirectory = path;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.CreateNoWindow = true;
+            // CocoaPods 要求 UTF-8 编码，Unity 子进程默认不带这些环境变量
+            process.StartInfo.EnvironmentVariables["LANG"] = "en_US.UTF-8";
+            process.StartInfo.EnvironmentVariables["LC_ALL"] = "en_US.UTF-8";
 
             process.Start();
             string output = process.StandardOutput.ReadToEnd();
@@ -229,6 +242,51 @@ namespace GameFrameX.Xcode.Editor
             }
 
             LogHelper.Log("[PodInstall] pod install 完成");
+        }
+
+        private static string GetPodFullPath()
+        {
+            // 常见的 pod 安装路径，按优先级尝试
+            string[] candidates = new string[]
+            {
+                "/opt/homebrew/bin/pod",
+                "/usr/local/bin/pod",
+                System.IO.Path.Combine(System.Environment.GetEnvironmentVariable("HOME") ?? "", ".gem/ruby/bin/pod"),
+                "/usr/bin/pod",
+            };
+
+            foreach (var candidate in candidates)
+            {
+                if (System.IO.File.Exists(candidate))
+                {
+                    return candidate;
+                }
+            }
+
+            // 尝试通过 shell 解析
+            try
+            {
+                var which = new System.Diagnostics.Process();
+                which.StartInfo.FileName = "/bin/zsh";
+                which.StartInfo.Arguments = "-lc \"which pod\"";
+                which.StartInfo.UseShellExecute = false;
+                which.StartInfo.RedirectStandardOutput = true;
+                which.StartInfo.CreateNoWindow = true;
+                which.Start();
+                string result = which.StandardOutput.ReadToEnd().Trim();
+                which.WaitForExit();
+
+                if (!string.IsNullOrEmpty(result) && System.IO.File.Exists(result))
+                {
+                    return result;
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return null;
         }
     }
 }
