@@ -1,27 +1,24 @@
 <div align="center">
 
-![GameFrameX Logo](https://download.alianblank.com/gameframex/gameframex_logo_320.png)
+<img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
 
 # GameFrameX Xcode Config
 
-[![Version](https://img.shields.io/github/v/release/gameframex/com.gameframex.unity.xcode?label=version&color=green)](https://github.com/gameframex/com.gameframex.unity.xcode/releases)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE.md)
-[![Documentation](https://img.shields.io/badge/docs-gameframex-brightgreen.svg)](https://gameframex.doc.alianblank.com)
+[![License](https://img.shields.io/github/license/GameFrameX/com.gameframex.unity.xcode)](https://github.com/GameFrameX/com.gameframex.unity.xcode/blob/main/LICENSE.md)
+[![Version](https://img.shields.io/github/v/release/GameFrameX/com.gameframex.unity.xcode)](https://github.com/GameFrameX/com.gameframex.unity.xcode/releases)
+[![Documentation](https://img.shields.io/badge/Documentation-docs-blue)](https://gameframex.doc.alianblank.com)
 
-**인디 게임 개발자를 위한 올인원 솔루션 · 인디 개발자의 꿈을 실현**
+인디 게임 개발자를 위한 올인원 솔루션 · 인디 개발자의 꿈을 실현
 
-[📖 문서](https://gameframex.doc.alianblank.com) • [🚀 빠른 시작](#빠른-시작)
+<br />
 
----
+[문서](https://gameframex.doc.alianblank.com) · [빠른 시작](#quick-start) · [QQ 그룹](https://qm.qq.com/q/5U9Fvebw)
 
-🌐 **언어**: [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
+<br />
 
----
+[English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
 
 </div>
-
-Unity iOS 빌드 후 Xcode 프로젝트를 자동으로 구성하는 에디터 도구입니다. JSON 설정 파일을 통해 Info.plist, 프레임워크, 라이브러리, 빌드 속성, Capabilities, CocoaPods 소스, 현지화 등 모든 Xcode 설정을 선언적으로 관리하며, 수동 Xcode 조작이 필요 없습니다.
-
 ## 기능
 
 - **Info.plist** — 문자열, 불리언, 정수, 배열, 딕셔너리 등의 타입을 지원하며 재귀적으로 작성

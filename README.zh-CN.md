@@ -1,27 +1,24 @@
 <div align="center">
 
-![GameFrameX Logo](https://download.alianblank.com/gameframex/gameframex_logo_320.png)
+<img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
 
 # GameFrameX Xcode 配置
 
-[![Version](https://img.shields.io/github/v/release/gameframex/com.gameframex.unity.xcode?label=version&color=green)](https://github.com/gameframex/com.gameframex.unity.xcode/releases)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE.md)
-[![Documentation](https://img.shields.io/badge/docs-gameframex-brightgreen.svg)](https://gameframex.doc.alianblank.com)
+[![License](https://img.shields.io/github/license/GameFrameX/com.gameframex.unity.xcode)](https://github.com/GameFrameX/com.gameframex.unity.xcode/blob/main/LICENSE.md)
+[![Version](https://img.shields.io/github/v/release/GameFrameX/com.gameframex.unity.xcode)](https://github.com/GameFrameX/com.gameframex.unity.xcode/releases)
+[![Documentation](https://img.shields.io/badge/Documentation-docs-blue)](https://gameframex.doc.alianblank.com)
 
-**独立游戏前后端一体化解决方案 · 独立游戏开发者的圆梦大使**
+独立游戏前后端一体化解决方案 · 独立游戏开发者的圆梦大使
 
-[📖 文档](https://gameframex.doc.alianblank.com) • [🚀 快速开始](#快速开始)
+<br />
 
----
+[文档](https://gameframex.doc.alianblank.com) · [快速开始](#quick-start) · [QQ群](https://qm.qq.com/q/5U9Fvebw)
 
-🌐 **语言**: [English](README.md) | **简体中文** | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
+<br />
 
----
+[English](README.md) | **简体中文** | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
 
 </div>
-
-Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配置文件声明式管理 Info.plist、框架、库、构建属性、Capabilities、CocoaPods 源、本地化等所有 Xcode 设置，无需手动操作 Xcode。
-
 ## 功能特性
 
 - **Info.plist** — 支持字符串、布尔、整数、数组、字典等类型，递归写入
