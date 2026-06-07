@@ -94,7 +94,6 @@ Then add the package to `dependencies`:
 }
 ```
 
-
 ## 配置文件结构
 
 配置文件必须命名为 `XCodeConfig.json`，支持放在项目任意位置，支持多个文件并存（会自动合并）。
@@ -663,4 +662,4 @@ Then add the package to `dependencies`:
 
 ## 开源协议
 
-[Apache License 2.0](LICENSE.md)
+详见 [LICENSE.md](LICENSE.md) 文件。

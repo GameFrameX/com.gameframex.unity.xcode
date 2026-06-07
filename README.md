@@ -94,7 +94,6 @@ Then add the package to `dependencies`:
 }
 ```
 
-
 ## Configuration Reference
 
 The configuration file must be named `XCodeConfig.json`. It can be placed anywhere in the project, and multiple files are supported (they will be merged automatically).
@@ -663,4 +662,4 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
 
 ## License
 
-[Apache License 2.0](LICENSE.md)
+See [LICENSE.md](LICENSE.md) for license information.

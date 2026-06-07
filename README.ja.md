@@ -94,7 +94,6 @@ Then add the package to `dependencies`:
 }
 ```
 
-
 ## 設定ファイル構造
 
 設定ファイルは `XCodeConfig.json` という名前にする必要があります。プロジェクト内の任意の場所に配置でき、複数ファイルの同時配置もサポート（自動マージされます）。
@@ -663,4 +662,4 @@ Podfile 処理後に `pod install` を自動的に実行するかどうかを制
 
 ## ライセンス
 
-[Apache License 2.0](LICENSE.md)
+詳しくは [LICENSE.md](LICENSE.md) をご参照ください。
