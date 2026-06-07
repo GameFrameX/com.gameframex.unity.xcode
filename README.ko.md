@@ -64,10 +64,36 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ## 빠른 시작
 
-1. 패키지 내의 `Editor/XCodeConfigDemo.json`을 프로젝트 내 임의의 디렉토리에 복사
-2. `XCodeConfig.json`으로 이름 변경
-3. 필요에 따라 설정 항목 수정 (아래 설정 참조)
-4. iOS 프로젝트를 빌드하면 도구가 모든 설정을 자동으로 적용
+### 설치
+
+Unity 프로젝트의 `Packages/manifest.json`을 편집하여 `scopedRegistries` 섹션을 추가하세요:
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
+
+`scopes`는 이 레지스트리를 통해 어떤 패키지를 해석할지 제어합니다. `com.gameframex`로 시작하는 패키지만 이 레지스트리에서 가져옵니다.
+
+Then add the package to `dependencies`:
+
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.xcode": "1.11.1"
+  }
+}
+```
+
 
 ## 설정 파일 구조
 

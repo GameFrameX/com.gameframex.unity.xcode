@@ -64,10 +64,36 @@ https://github.com/gameframex/com.gameframex.unity.xcode.git
 
 ## 快速开始
 
-1. 将包内 `Editor/XCodeConfigDemo.json` 复制到项目任意目录
-2. 重命名为 `XCodeConfig.json`
-3. 按需修改配置项（参见下方配置说明）
-4. 构建 iOS 项目，工具将自动应用所有配置
+### 安装
+
+编辑 Unity 项目的 `Packages/manifest.json`，添加 `scopedRegistries` 部分：
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
+
+`scopes` 控制哪些包通过此注册表解析。只有以 `com.gameframex` 开头的包才会从这个注册表获取。
+
+Then add the package to `dependencies`:
+
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.xcode": "1.11.1"
+  }
+}
+```
+
 
 ## 配置文件结构
 

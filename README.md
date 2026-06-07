@@ -64,10 +64,36 @@ Clone or download this repository and place it in your Unity project's `Packages
 
 ## Quick Start
 
-1. Copy `Editor/XCodeConfigDemo.json` from the package to any directory in your project
-2. Rename it to `XCodeConfig.json`
-3. Modify the configuration as needed (see Configuration Reference below)
-4. Build the iOS project — the tool will automatically apply all settings
+### Installation
+
+Edit your Unity project's `Packages/manifest.json` and add the `scopedRegistries` section:
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
+
+`scopes` controls which packages are resolved through this registry. Only packages whose names start with `com.gameframex` will be fetched from it.
+
+Then add the package to `dependencies`:
+
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.xcode": "1.11.1"
+  }
+}
+```
+
 
 ## Configuration Reference
 
