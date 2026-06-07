@@ -20,6 +20,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
 
 </div>
+
 ## 기능
 
 - **Info.plist** — 문자열, 불리언, 정수, 배열, 딕셔너리 등의 타입을 지원하며 재귀적으로 작성

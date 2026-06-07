@@ -20,6 +20,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | **日本語** | [한국어](README.ko.md)
 
 </div>
+
 ## 機能概要
 
 - **Info.plist** — 文字列、ブール値、整数、配列、辞書などの型をサポート、再帰的に書き込み
