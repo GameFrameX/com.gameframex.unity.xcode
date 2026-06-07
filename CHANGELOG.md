@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.11.1...1.11.2) (2026-06-07)
+
+
+### Bug Fixes
+
+* 补全包规范文件（LICENSE/CHANGELOG/URL 字段/unity 字段） ([2f6ade4](https://github.com/gameframex/com.gameframex.unity.xcode/commit/2f6ade4bbde2fab8be7b57706940f0f738b7437b))
+
 ## [1.11.1](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.11.0...1.11.1) (2026-05-28)
 
 
