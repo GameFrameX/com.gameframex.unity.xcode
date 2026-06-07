@@ -38,30 +38,6 @@
 - **Swift 브릿징** — Swift 브릿징 헤더 자동 생성, Objective-C/Swift 상호 운용 지원, CI 환경에서 팝업 없음
 - **다중 설정 병합** — 여러 `XCodeConfig.json` 파일의 깊은 재귀 병합 지원, 다중 모듈 협업에 적합
 
-## 설치
-
-다음 방법 중 하나를 선택하세요:
-
-**방법 1: manifest.json 수정**
-
-`Packages/manifest.json`의 `dependencies`에 추가:
-
-```json
-"com.gameframex.unity.xcode": "https://github.com/gameframex/com.gameframex.unity.xcode.git"
-```
-
-**방법 2: Package Manager Git URL**
-
-Unity 에디터 → Window → Package Manager → Add package from git URL에 다음을 입력:
-
-```
-https://github.com/gameframex/com.gameframex.unity.xcode.git
-```
-
-**방법 3: 수동 다운로드**
-
-이 저장소를 클론하거나 다운로드하여 Unity 프로젝트의 `Packages` 디렉토리에 넣으면 자동으로 인식됩니다.
-
 ## 빠른 시작
 
 ### 설치
@@ -660,6 +636,25 @@ Podfile 처리 후 `pod install`을 자동으로 실행할지 제어합니다. �
 - iOS 빌드 타겟
 - Xcode (Unity가 iOS 프로젝트를 내보낼 때 자동으로 필요)
 
+
+## 의존성
+
+| 패키지 | 설명 |
+|--------|------|
+| (无) | - |
+
+
+## 문서 및 자료
+
+- [문서](https://gameframex.doc.alianblank.com)
+
+## 커뮤니티 및 지원
+
+- QQ 그룹: 467608841 / 233840761
+
+## 변경 로그
+
+[Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.xcode/releases)에서 변경 로그를 확인하세요.
 ## 라이선스
 
 자세한 내용은 [LICENSE.md](LICENSE.md) 파일을 참조하세요.

@@ -38,30 +38,6 @@ All-in-One Solution for Indie Game Development · Empowering Indie Developers' D
 - **Swift Bridging** — Auto-create Swift bridging header for Objective-C/Swift interop, CI-friendly with no Xcode prompts
 - **Multi-Config Merge** — Support deep recursive merge of multiple `XCodeConfig.json` files for multi-module collaboration
 
-## Installation
-
-Choose one of the following methods:
-
-**Method 1: Edit manifest.json**
-
-Add to `Packages/manifest.json` under `dependencies`:
-
-```json
-"com.gameframex.unity.xcode": "https://github.com/gameframex/com.gameframex.unity.xcode.git"
-```
-
-**Method 2: Package Manager Git URL**
-
-Unity Editor → Window → Package Manager → Add package from git URL, enter:
-
-```
-https://github.com/gameframex/com.gameframex.unity.xcode.git
-```
-
-**Method 3: Manual Download**
-
-Clone or download this repository and place it in your Unity project's `Packages` directory. It will be recognized automatically.
-
 ## Quick Start
 
 ### Installation
@@ -660,6 +636,25 @@ This allows Xcode configurations from multiple SDKs / modules to be managed inde
 - iOS build target
 - Xcode (automatically required when Unity exports iOS project)
 
+
+## Dependencies
+
+| Package | Description |
+|---------|-------------|
+| (无) | - |
+
+
+## Documentation & Resources
+
+- [Documentation](https://gameframex.doc.alianblank.com)
+
+## Community & Support
+
+- QQ Group: 467608841 / 233840761
+
+## Changelog
+
+See [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.xcode/releases) for changelog.
 ## License
 
 See [LICENSE.md](LICENSE.md) for license information.

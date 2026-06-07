@@ -38,30 +38,6 @@
 - **Swift ブリッジング** — Swift ブリッジングヘッダーを自動生成、Objective-C/Swift 相互運用、CI 環境でプロンプトなし
 - **マルチ設定マージ** — 複数の `XCodeConfig.json` の深層再帰マージをサポート、マルチモジュール連携に最適
 
-## インストール
-
-以下のいずれかの方法を選択してください：
-
-**方法 1: manifest.json を編集**
-
-`Packages/manifest.json` の `dependencies` に追加：
-
-```json
-"com.gameframex.unity.xcode": "https://github.com/gameframex/com.gameframex.unity.xcode.git"
-```
-
-**方法 2: Package Manager の Git URL**
-
-Unity エディタ → Window → Package Manager → Add package from git URL に以下を入力：
-
-```
-https://github.com/gameframex/com.gameframex.unity.xcode.git
-```
-
-**方法 3: 手動ダウンロード**
-
-このリポジトリをクローンまたはダウンロードし、Unity プロジェクトの `Packages` ディレクトリに配置すると自動的に認識されます。
-
 ## クイックスタート
 
 ### インストール
@@ -660,6 +636,25 @@ Podfile 処理後に `pod install` を自動的に実行するかどうかを制
 - iOS ビルドターゲット
 - Xcode（Unity が iOS プロジェクトをエクスポートする際に自動的に必要）
 
+
+## 依存関係
+
+| パッケージ | 説明 |
+|----------|------|
+| (无) | - |
+
+
+## ドキュメントとリソース
+
+- [ドキュメント](https://gameframex.doc.alianblank.com)
+
+## コミュニティとサポート
+
+- QQグループ: 467608841 / 233840761
+
+## 変更履歴
+
+[Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.xcode/releases) で変更履歴を確認してください。
 ## ライセンス
 
 詳しくは [LICENSE.md](LICENSE.md) をご参照ください。

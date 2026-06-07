@@ -38,30 +38,6 @@
 - **Swift 桥接** — 自动创建 Swift 桥接头文件，支持 Objective-C/Swift 混编，CI 环境无弹窗
 - **多配置合并** — 支持多个 `XCodeConfig.json` 深度递归合并，适合多模块协作
 
-## 安装
-
-任选以下方式之一：
-
-**方式一：修改 manifest.json**
-
-在 `Packages/manifest.json` 的 `dependencies` 中添加：
-
-```json
-"com.gameframex.unity.xcode": "https://github.com/gameframex/com.gameframex.unity.xcode.git"
-```
-
-**方式二：Package Manager Git URL**
-
-Unity 编辑器 → Window → Package Manager → Add package from git URL，输入：
-
-```
-https://github.com/gameframex/com.gameframex.unity.xcode.git
-```
-
-**方式三：手动下载**
-
-克隆或下载本仓库，放入 Unity 项目的 `Packages` 目录即可自动识别。
-
 ## 快速开始
 
 ### 安装
@@ -660,6 +636,25 @@ Then add the package to `dependencies`:
 - iOS 构建目标
 - Xcode（Unity 导出 iOS 工程时自动依赖）
 
+
+## 依赖
+
+| 包 | 说明 |
+|----|------|
+| (无) | - |
+
+
+## 文档与资源
+
+- [官方文档](https://gameframex.doc.alianblank.com)
+
+## 社区与支持
+
+- QQ群: 467608841 / 233840761
+
+## 更新日志
+
+查看 [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.xcode/releases) 了解更新日志。
 ## 开源协议
 
 详见 [LICENSE.md](LICENSE.md) 文件。
