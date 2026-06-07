@@ -42,34 +42,36 @@
 
 ### 설치
 
-Unity 프로젝트의 `Packages/manifest.json`을 편집하여 `scopedRegistries` 섹션을 추가하세요:
+다음 방법 중 하나를 선택하세요:
 
-```json
-{
-  "scopedRegistries": [
-    {
-      "name": "GameFrameX",
-      "url": "https://gameframex.upm.alianblank.uk",
-      "scopes": [
-        "com.gameframex"
-      ]
-    }
-  ]
-}
-```
+1. Unity 프로젝트의 `Packages/manifest.json`을 편집하여 `scopedRegistries` 섹션을 추가하세요:
+   ```json
+   {
+     "scopedRegistries": [
+       {
+         "name": "GameFrameX",
+         "url": "https://gameframex.upm.alianblank.uk",
+         "scopes": [
+           "com.gameframex"
+         ]
+       }
+     ],
+     "dependencies": {
+       "com.gameframex.unity.xcode": "1.11.1"
+     }
+   }
+   ```
 
-`scopes`는 이 레지스트리를 통해 어떤 패키지를 해석할지 제어합니다. `com.gameframex`로 시작하는 패키지만 이 레지스트리에서 가져옵니다.
+   `scopes`는 이 레지스트리를 통해 어떤 패키지를 해석할지 제어합니다. `com.gameframex`로 시작하는 패키지만 이 레지스트리에서 가져옵니다.
 
-Then add the package to `dependencies`:
-
-```json
-{
-  "dependencies": {
-    "com.gameframex.unity.xcode": "1.11.1"
-  }
-}
-```
-
+2. `manifest.json`의 `dependencies`에 직접 추가:
+   ```json
+   {
+      "com.gameframex.unity.xcode": "https://github.com/gameframex/com.gameframex.unity.xcode.git"
+   }
+   ```
+3. Unity의 **Package Manager**에서 **Git URL**을 사용하여 추가: `https://github.com/gameframex/com.gameframex.unity.xcode.git`
+4. 리포지토리를 Unity 프로젝트의 `Packages` 디렉토리에 클론하세요. 자동으로 로드됩니다.
 ## 설정 파일 구조
 
 설정 파일은 `XCodeConfig.json`이라는 이름이어야 합니다. 프로젝트 내 어디에나 배치할 수 있으며, 여러 파일 동시 배치를 지원합니다 (자동 병합됨).
