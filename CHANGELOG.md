@@ -1,3 +1,10 @@
+## [1.11.3](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.11.2...1.11.3) (2026-07-29)
+
+
+### Bug Fixes
+
+* 添加依赖项 com.gameframex.unity 版本 2.5.1 到 package.json ([496e153](https://github.com/gameframex/com.gameframex.unity.xcode/commit/496e15393eef788142bbae988bcb90880064184b))
+
 ## [1.11.2](https://github.com/gameframex/com.gameframex.unity.xcode/compare/1.11.1...1.11.2) (2026-06-07)
 
 
