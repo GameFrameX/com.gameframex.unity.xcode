@@ -18,7 +18,9 @@
     "email": "alianblank@outlook.com",
     "url": "https://gameframex.doc.alianblank.com"
   },
-  "dependencies": {},
+  "dependencies": {
+    "com.gameframex.unity": "2.5.1"
+  },
   "devDependencies": {
     "semantic-release": "^24.2.0",
     "@semantic-release/changelog": "^6.0.3",
