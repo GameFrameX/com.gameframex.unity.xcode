@@ -19,7 +19,7 @@
     "url": "https://gameframex.doc.alianblank.com"
   },
   "dependencies": {
-    "com.gameframex.unity": "2.5.1"
+    "com.gameframex.unity": "3.0.0"
   },
   "devDependencies": {
     "semantic-release": "^24.2.0",
