@@ -1,8 +1,8 @@
 {
   "name": "com.gameframex.unity.xcode",
   "displayName": "Game Frame X XCode",
-  "category": "Game Framework X",
-  "description": "Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配置文件声明式管理 Info.plist、系统框架/库、构建属性、Capabilities（内购/Game Center/推送/Sign In with Apple/后台模式/iCloud/App Groups/Associated Domains）、CocoaPods 源、XcScheme 环境变量与启动参数、本地化、文件/文件夹复制、编译标志和链接器标志等，支持多配置文件深度合并。Automates Xcode project configuration after Unity iOS builds via declarative JSON — manages Info.plist, frameworks, libraries, build properties, capabilities, CocoaPods sources, XcScheme env/args, localization, file/folder copying, compile flags, and linker flags with multi-config deep merge support.",
+  "category": "Game Frame X",
+  "description": "GameFrameX XCode — Unity editor tool that configures Xcode projects after iOS builds. Manages Info.plist entries, system frameworks and libraries, build properties, capabilities (in-app purchase, Game Center, push, Sign In with Apple, background modes, iCloud, App Groups, Associated Domains), CocoaPods sources, XcScheme environment variables and launch arguments, localization, file/folder copying, compile flags, and linker flags through declarative JSON config files, with deep merge across multiple config files. Docs: https://gameframex.doc.alianblank.com\n\nGameFrameX XCode — 在 Unity iOS 构建后自动配置 Xcode 项目的编辑器工具。通过 JSON 配置文件声明式管理 Info.plist、系统框架与库、构建属性、Capabilities（内购、Game Center、推送、Sign In with Apple、后台模式、iCloud、App Groups、Associated Domains）、CocoaPods 源、XcScheme 环境变量与启动参数、本地化、文件/文件夹复制、编译标志和链接器标志，并支持多配置文件深度合并。文档：https://gameframex.doc.alianblank.com",
   "version": "1.11.3",
   "unity": "2019.4",
   "keywords": [
